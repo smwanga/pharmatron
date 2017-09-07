@@ -1,23 +1,40 @@
 @extends('layouts.auth')
 
 @section('page-content')
-    <div class="login-box panel">
-        <div class="panel-body">
-            <a href="#" class="logo-name text-lg text-center">{{config('app.name')}}</a>
-            <p class="text-center m-t-md">@lang('auth.login')</p>
-            <form class="m-t-md" action="{{ route('login') }}" method="post">
-                {{csrf_field()}}
-                <div class="form-group">
-                    <input type="text" value="{{old('email')}}" name="email" class="form-control" placeholder="@lang('main.username')" required>
+    <div class="p-t-30 p-l-40 p-b-20 xs-p-t-10 xs-p-l-10 xs-p-b-10">
+        <h2 class="normal">
+          Sign in to {{config('app.name')}}
+        </h2>
+            <p>
+              Use Facebook, Twitter or your email to sign in.
+              <br>
+            </p>
+             @include('components.errors')
+          </div>
+          <div class="tiles white p-b-20 no-margin text-black tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab_login">
+              <form class="animated fadeIn validate" action="{{ route('login') }}" method="post">
+                {{ csrf_field() }}
+                <div class="row form-row m-l-20 m-r-20 xs-m-l-10 xs-m-r-10">
+                  <div class="col-md-6 col-sm-6">
+                    <input value="{{old('email')}}" class="form-control" id="login_username" name="email" placeholder="Email" type="email" required>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <input class="form-control" id="login_pass" name="password" placeholder="Password" type="password" required>
+                  </div>
                 </div>
-                <div class="form-group">
-                    <input name="password" type="password" class="form-control" placeholder="@lang('main.password')" required>
+                <div class="row p-t-10 m-l-20 m-r-20 xs-m-l-10 xs-m-r-10">
+                  <div class="control-group col-md-10">
+                    <div class="checkbox checkbox check-success">
+                      <a href="{{ route('password.request') }}">Trouble login in?</a>&nbsp;&nbsp;
+                      <input id="remember" name="remember" type="checkbox" {{old('remember') ? 'checked' : ''}} >
+                      <label for="remember" name="remember">Keep me reminded</label>
+                    </div>
+                     <button class="btn btn-primary btn-cons pull-right" type="submit"><i class="fa fa-sign-in"></i> &nbsp; Login</a>
+                  </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-block">@lang('main.login')</button>
-                <a href="forgot.html" class="display-block text-center m-t-md text-sm">@lang('auth.forgot')</a>
-                
-            </form>
-            <p class="text-center m-t-xs text-sm">{{date('Y')}} &copy; {{config('app.name')}}.</p>
+              </form>
+            </div>
+          </div>
         </div>
-    </div>
 @endsection
