@@ -1,0 +1,24 @@
+.content-box {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+
+.content-box .content-left {
+  float: left;
+  width: 20%;
+  height: 100%;
+  overflow: auto !important;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.content-box .content-right {
+  float: right;
+  width: 80%;
+  height: 100%;
+  overflow: auto !important;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+

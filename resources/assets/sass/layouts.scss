@@ -1,0 +1,19 @@
+
+@mixin position($position, $width) {
+    float: $position;
+    width: $width;
+    height: 100%;
+    overflow: auto !important;
+    box-sizing: border-box;
+}
+  .content-box {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    .content-left{
+        @include position(left, 20%);
+    }
+    .content-right {
+        @include position(right, 80%);
+    }
+}
