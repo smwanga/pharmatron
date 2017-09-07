@@ -6,8 +6,7 @@
           Sign in to {{config('app.name')}}
         </h2>
             <p>
-              Use Facebook, Twitter or your email to sign in.
-              <br>
+            Please provide your logi credentials
             </p>
              @include('components.errors')
           </div>
