@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->integer('qty');
             $table->integer('pack_size');
+            $table->integer('stock_available');
             $table->double('marked_price', 8, 4);
             $table->double('selling_price', 8, 4);
             $table->timestamp('expire_at')->nullable();

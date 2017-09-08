@@ -6,7 +6,7 @@
           Sign in to {{config('app.name')}}
         </h2>
             <p>
-            Please provide your logi credentials
+            Please provide your login credentials
             </p>
              @include('components.errors')
           </div>

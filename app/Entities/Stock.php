@@ -9,25 +9,31 @@ use Illuminate\Database\Eloquent\Builder;
 class Stock extends Model
 {
     /**
+     * Hook into the model bootstraper and atach event listeners.
+     *
+     * @author
+     **/
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->attributes['stock_available'] = $model->attributes['pack_size'] * $model->attributes['qty'];
+        });
+    }
+
+    /**
      * Whitelisted database fields.
      *
      * @var array
      **/
-    protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'invoice_id', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id'];
+    protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'invoice_id', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id', 'stock_available'];
 
-    protected $casts = [
-        'expire_at' => 'date',
+    protected $dates = [
+        'expire_at',
+        'created_at',
+        'updated_at',
     ];
-
-    /**
-     * undocumented function.
-     *
-     * @param
-     **/
-    protected function setEpireAtAttribute($epiry_date)
-    {
-        $this->attributes['expire_at'] = Carbon::parse($expiry_date);
-    }
 
     /**
      * Return stock that is not expired and is set as active.

@@ -29,6 +29,7 @@ $.fn.alpha_num = function (length) {
 }
 if($.fn.datepicker){
 	$('.date-picker').datepicker({
+		format:'yyyy-mm-dd',
         orientation: "top auto",
         autoclose: true,
         todayHighlight:true

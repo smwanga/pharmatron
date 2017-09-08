@@ -16,7 +16,7 @@
     <link href="{{asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.css')}}" rel="stylesheet" type="text/css" />
     @isset($forms)
      <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/select2/select2.css')}}" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ asset('assets/plugins/bootstrap-select2/select2.css')}}" rel="stylesheet" type="text/css" media="screen" />
     @endisset
     @isset($datatables)
     <link href="{{asset('assets/plugins/jquery-datatable/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css" />
@@ -73,8 +73,9 @@
     
     @isset($forms)
     <script src="{{asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
+    <script src="{{asset('assets/plugins/bootstrap-select2/select2.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/jquery.autocomplete.min.js')}}" type="text/javascript"></script>
     @endisset
     @isset($datatables)
     <script src="{{asset('assets/plugins/jquery-datatable/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>

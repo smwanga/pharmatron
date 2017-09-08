@@ -15,13 +15,13 @@ class CreateInvoiceItemsTable extends Migration
             $table->increments('id');
             $table->double('qty')->nullable();
             $table->integer('invoice_id')->unsigned();
-            $table->integer('stock_id')->unsigned()->nullable();
+            $table->integer('product_id')->unsigned()->nullable();
             $table->double('unit_cost')->nullable();
             $table->text('instructions');
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('CASCADE');
-            $table->foreign('stock_id')->references('id')->on('stocks')->onDelete('SET NULL');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('SET NULL');
         });
     }
 

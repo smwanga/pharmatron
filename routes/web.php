@@ -48,6 +48,8 @@ Route::group(['prefix' => 'settings'], function () {
 });
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', 'UsersController@index')->name('users.index');
+    Route::get('create', 'UsersController@create')->name('users.create');
+    Route::post('save-user', 'UsersController@save')->name('users.save');
 });
 
 Route::group(['prefix' => 'invoices'], function () {

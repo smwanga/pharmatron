@@ -28,3 +28,10 @@ Breadcrumbs::register('products.show', function ($breadcrumbs, $product) {
     $breadcrumbs->parent('products.index');
     $breadcrumbs->push($product->stock_code, route('products.show', $product->id));
 });
+Breadcrumbs::register('users.index', function ($breadcrumbs) {
+    $breadcrumbs->push('Users', route('users.index'));
+});
+Breadcrumbs::register('users.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('users.index');
+    $breadcrumbs->push('Create a new User', route('users.create'));
+});

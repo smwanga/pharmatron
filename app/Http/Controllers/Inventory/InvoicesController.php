@@ -44,8 +44,8 @@ class InvoicesController extends Controller
      **/
     public function search(Request $request)
     {
-        $invoices = collect([['text' => 'DFH47KFJGGJ [Dawa Bora Suppliers]', 'id' => 1, 'amount' => 1000], ['text' => 'FHR54VFG76', 'id' => 2, 'amount' => 1400], ['text' => 'RTG46GR45', 'id' => 3, 'amount' => 2000]]);
-
-        return $invoices->all();
+        return $this->repository->all(function ($query) use ($request) {
+            return $query->where('reference_no', 'like', '%'.$request->get('query')).'%';
+        });
     }
 }

@@ -67,4 +67,7 @@ return [
         'ref_to_invoice' => 'Reference to an Invoice',
         'stock_value' => 'Stock Value',
         'available_stock' => 'Stock Available',
+        'city' => 'City',
+        'confirm_password' => 'Confirm Password',
+        'create_user' => 'Create User',
 ];

@@ -85,21 +85,9 @@
                                                 </div>
                                                 <div class="form-group col-md-12 {{error('supplier_id')}}">
                                                     <strong for="">@lang('main.ref_to_invoice')</strong>
-                                                    <div id="el"></div>
-                                                    <script type="text/x-template" id="demo-template">
-                                                      <div>
-                                                        <select2 :options="options" v-model="selected">
-                                                          <option disabled value="">No Invoice Referenced</option>
-                                                        </select2>
-                                                      </div>
-                                                    </script>
-
-                                                    <script type="text/x-template" id="select2-template">
-                                                      <select name="invoice_id" style="width: 100%;">
-                                                        <slot></slot>
-                                                      </select>
-                                                    </script>
+                                                      <input value="{{old('invoice_ref')}}" type="text" class="form-control col-md-6" name="invoice_ref" id="invoice_ref" placeholder="Invoice Refference">
                                                 </div>
+                                                <input type="hidden" id="invoice" name="invoice_id" value="">
                                         </div>
                                             <div class="col-md-6">
                                                 <div class="form-group col-md-12 {{error('marked_price')}}">
@@ -145,52 +133,13 @@
                                 $('#ref_number').alpha_num(12);
                             })
 
-                            Vue.component('select2', {
-                              props: ['options', 'value'],
-                              template: '#select2-template',
-                              mounted: function () {
-                                var vm = this
-                                $(this.$el)
-                                  // init select2
-                                  .select2({ data: this.options, width:'100%'})
-                                  .val(this.value)
-                                  .trigger('change')
-                                  // emit event on change.
-                                  .on('change', function () {
-                                    vm.$emit('input', this.value)
-                                  })
-                              },
-                              watch: {
-                                value: function (value) {
-                                  // update value
-                                  $(this.$el).val(value).trigger('change');
-                                },
-                                options: function (options) {
-                                  // update options
-                                  $(this.$el).select2({ data: options })
+                            $('#invoice_ref').autocomplete({
+                                serviceUrl: '{{ route('invoices.search') }}',
+                                onSelect: function (suggestion) {
+                                    $('#invoice').val(suggestion.data)
                                 }
-                              },
-                              destroyed: function () {
-                                $(this.$el).off().select2('destroy')
-                              }
-                            })
-
-                            var vm = new Vue({
-                              el: '#el',
-                              template: '#demo-template',
-                              data: {
-                                options: [
-                                  
-                                ]
-                              },
-
-                              mounted : function () {
-                                axios.get('{{ route('invoices.search') }}').then(response => {
-                                    this.options = response.data
-                                })
-                              }
+                                
                             });
-
                         </script>
                     @endpush
                        
