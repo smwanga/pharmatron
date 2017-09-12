@@ -35,3 +35,12 @@ Breadcrumbs::register('users.create', function ($breadcrumbs) {
     $breadcrumbs->parent('users.index');
     $breadcrumbs->push('Create a new User', route('users.create'));
 });
+
+Breadcrumbs::register('sales.index', function ($breadcrumbs) {
+    $breadcrumbs->push('Sales', route('sales.index'));
+});
+
+Breadcrumbs::register('sales.invoice', function ($breadcrumbs, $sale) {
+    $breadcrumbs->parent('sales.index');
+    $breadcrumbs->push('Sales invoice '.$sale->ref_number, route('sales.invoice', $sale->id));
+});

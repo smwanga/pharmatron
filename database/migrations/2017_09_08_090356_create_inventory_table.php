@@ -27,13 +27,18 @@ class CreateInventoryTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ref_number');
-            $table->string('customer_name');
+            $table->string('customer_name')->nullable();
             $table->double('amount', 6, 4)->nullable();
             $table->double('discount', 6, 4)->nullable();
             $table->double('tax', 6, 4)->nullable();
+            $table->string('status', 16)->nullable();
+            $table->string('type', 16)->nullable();
+            $table->double('amount_paid', 6, 4)->nullable();
+            $table->integer('customer_id')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();
 
+            $table->foreign('customer_id')->references('id')->on('people')->onDelete('SET NULL');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('SET NULL');
         });
         Schema::create('sale_items', function (Blueprint $table) {

@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +27,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function person()
+    {
+        return $this->hasOne(Entities\Person::class);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

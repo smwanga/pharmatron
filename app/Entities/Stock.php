@@ -29,11 +29,7 @@ class Stock extends Model
      **/
     protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'invoice_id', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id', 'stock_available'];
 
-    protected $dates = [
-        'expire_at',
-        'created_at',
-        'updated_at',
-    ];
+    protected $dates = ['expire_at'];
 
     /**
      * Return stock that is not expired and is set as active.
@@ -42,7 +38,7 @@ class Stock extends Model
      **/
     public function scopeAvailable(Builder $query)
     {
-        return $query->whereDate('expire_at', '>', Carbon::now())->where('active', true)->orderBy('expire_at', 'ASC');
+        return $query->whereDate('expire_at', '>', Carbon::now())->where('active', true)->orderBy('expire_at', 'ASC')->where('stock_available', '>', 0);
     }
 
     /**
@@ -55,5 +51,15 @@ class Stock extends Model
         return $query->get()->map(function ($stock, $key) {
             return $stock->stock_value = $stock->selling_price * $stock->stock_available;
         })->get('0');
+    }
+
+    /**
+     * Product relation.
+     *
+     * @return Product
+     **/
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

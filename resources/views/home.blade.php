@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">Dashboard</div>
-                <div class="panel-body">
+        <div class="grid horizontal simple green">
+            <div class="grid-title"><h4>Dashboard</h4></div>
+                <div class="grid-body">
                 @if (session('status'))
                     <div class="alert alert-success">
                             {{ session('status') }}
@@ -14,6 +12,4 @@
                     You are logged in!
             </div>
         </div>
-    </div>
-</div>
 @endsection

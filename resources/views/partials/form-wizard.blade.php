@@ -2,8 +2,9 @@
     @section('content')
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-white">
-                        <div class="panel-body">
+                    <div class="grid simple horizontal green">
+                        <div class="grid-title"><h4><strong class="text-uppercase">{{$pagetitle}}</strong></h4></div>
+                        <div class="grid-body">
                             <div id="rootwizard">
                                 <ul class="nav nav-tabs" role="tablist">
                                     @foreach($titles as $title)
@@ -15,8 +16,9 @@
                                         $per = 100/count($titles);
                                     @endphp
                                 </ul>
-                                <form id="wizardForm" novalidate="novalidate" action="{{$wizard->form->action}}" method="{{$wizard->form->method}}" enctype="mulipart/form-data">
+                                <form id="wizardForm" novalidate="novalidate" action="{{$wizard->form->action}}" method="post" enctype="mulipart/form-data">
                                     {{csrf_field()}}
+                                    {{method_field($wizard->form->method)}}
                                     <div class="tab-content">
                                         @yield('form-body')
                                         @yield('form-footer')

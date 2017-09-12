@@ -19,7 +19,7 @@
                                         <div class="row">
                                         <div class="form-group col-sm-6">
                                             <label for="phone">@lang('main.phone')</label>
-                                            <input type="text" value="{{old('supplier_phone')}}" class="form-control" name="supplier_phone" id="phone" placeholder="Primary phone number">
+                                            <input type="text" value="{{old('phone_number')}}" class="form-control" name="phone_number" id="phone" placeholder="Primary phone number">
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="city">@lang('main.city')</label>
@@ -29,16 +29,16 @@
                                         <div class="row">
                                         <div class="form-group col-sm-6">
                                             <label for="address">@lang('main.address')</label>
-                                            <input type="text" value="{{old('supplier_address')}}" class="form-control" name="supplier_address" id="address" placeholder="Full Address">
+                                            <input type="text" value="{{old('address')}}" class="form-control" name="address" id="address" placeholder="Full Address">
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="address">@lang('main.user_role')</label>
                                             <select class="select2" name="role">
                                                 <optgroup label="Roles">
                                                     <option value="" selected disabled="">Please Attach a role to a user </option>
-                                                    <option value="admin">Administrator</option>
-                                                    <option value="sales">Sales Person</option>
-                                                    <option value="cashier">Cashier</option>
+                                                    @foreach($roles as $role)
+                                                    <option value="{{$role}}">{{$role}}</option>
+                                                    @endforeach
                                                 </optgroup>
                                             </select>
                                         </div>
@@ -46,11 +46,11 @@
                                         <div class="row">
                                         <div class="form-group col-sm-6">
                                             <label for="password">@lang('main.password')</label>
-                                            <input value="{{old('password')}}" type="password" class="form-control" name="password" id="password" placeholder="Enter A Strong Password">
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter A Strong Password">
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="password_confirmation">@lang('main.confirm_password')</label>
-                                            <input type="password" value="{{old('supplier_address')}}" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Your password">
+                                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Your password">
                                         </div>
                                         </div>
                                         <div class="row">

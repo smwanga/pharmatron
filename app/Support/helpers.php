@@ -15,8 +15,25 @@ if (!function_exists('flash_message')) {
         $message = $message ?: trans('messages.success');
         $title = $title ?: trans('messages.success_title');
         $type = $type ?: 'successss';
+        switch ($type) {
+            case 'success':
+                $icon = 'fa fa-check';
+                break;
+             case 'error':
+                $icon = 'fa fa-check';
+                break;
+             case 'warning':
+                $icon = 'fa fa-exclamation-triangle';
+                break;
+             case 'info':
+                $icon = 'fa fa-bell-o';
+                break;
 
-        request()->session()->flash('messages', compact('type', 'title', 'message'));
+            default:
+                // code...
+                break;
+        }
+        request()->session()->flash('messages', compact('type', 'title', 'message', 'icon'));
     }
 }
 

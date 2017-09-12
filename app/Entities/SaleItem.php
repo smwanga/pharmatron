@@ -11,5 +11,15 @@ class SaleItem extends Model
      *
      * @var array
      **/
-    protected $fillable = ['qty', 'sale_d', 'product_id', 'unit_cost', 'instructions'];
+    protected $fillable = ['qty', 'sale_id', 'product_id', 'unit_cost', 'instructions'];
+
+    /**
+     * Product relation.
+     *
+     * @return Product
+     **/
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -1,5 +1,5 @@
 
-      <div class="page-sidebar " id="main-menu">
+      <div class="page-sidebar hidden-print" id="main-menu" >
         <!-- BEGIN MINI-PROFILE -->
         <div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
           <div class="user-info-wrapper sm">
@@ -8,7 +8,7 @@
               <div class="availability-bubble online"></div>
             </div>
             <div class="user-info sm">
-              <div class="username">Fred <span class="semi-bold">Smith</span></div>
+              <div class="username">{{Auth::user()->name}}</div>
               <div class="status">Life goes on...</div>
             </div>
           </div>
@@ -19,7 +19,7 @@
             <li class="start active "> <a href="{{ route('home') }}"><i class="material-icons">home</i> <span class="title">@lang('main.dashboard')</span> <span class="selected"></span> </a>
             </li>
             <li class="">
-              <a href="#"> <i class="fa fa-shopping-cart"></i> <span class="title">POS</span></a>
+              <a href="{{ route('sales.index') }}"> <i class="fa fa-shopping-cart"></i> <span class="title">POS</span></a>
             </li>
             <li class="">
               <a href="javascript:;"> <i class="fa fa-folder-open"></i> <span class="title">@lang('main.stock')</span> <span class=" arrow"></span> </a>
@@ -47,12 +47,16 @@
               <a href="{{ route('settings.index') }}"> <i class="material-icons">contacts_child</i> <span class="title">@lang('main.users')</span></a>
             </li>
             <li class="">
+              <a href="{{ route('categories.index') }}"> <i class="fa fa-wrench"></i> <span class="title">@lang('main.categories')</span></a>
+            </li>
+            <li class="">
               <a href="{{ route('settings.index') }}"> <i class="material-icons">settings</i> <span class="title">@lang('main.settings')</span></a>
             </li>
           </ul>
           <div class="clearfix"></div>
           <!-- END SIDEBAR MENU -->
         </div>
+        @yield('side-menu-nav')
       </div>
       <a href="#" class="scrollup">Scroll</a>
       <div class="footer-widget">

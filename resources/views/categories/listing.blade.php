@@ -42,7 +42,7 @@
 @push('scripts')
 <script>
 $(function() {
-    tableElement.fnDestroy()
+   // tableElement.fnDestroy()
     $('#products-table').DataTable({
         processing: true,
         serverSide: true,

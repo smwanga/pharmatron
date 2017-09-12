@@ -5,3 +5,67 @@
 
 // Layouts
 @import "layouts";
+@import "cards";
+
+.autocomplete-suggestions {
+    font-family: 'Lato' sans-serif;
+    position: absolute;
+    list-style: none;
+    background: #f8f8f8;
+    padding: 10px 5px;
+    margin: 0;
+    display: inline-block;
+    min-width: 15%;
+    margin-top: 10px;
+    overflow: auto;
+}
+.autocomplete-suggestion { 
+    text-decoration: none;
+    display: block;
+    background: #f8f8f8;
+    color: #2b2b2b;
+    padding: 5px;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.autocomplete-selected {
+    color: white;
+    background: #087d6f;
+    cursor: pointer;
+    padding: 15px;
+}
+.autocomplete-suggestions strong {
+    font-weight: normal; color: #0090d9;
+}
+.autocomplete-group {
+    padding: 2px 5px;
+}
+.autocomplete-group strong {
+    display: block; border-bottom: 1px solid #000;
+}
+.autocomplete-suggestions, .autocomplete-suggestions div{
+  transition:all 0.3s ease-out;
+  -moz-transition:all 0.3s ease-out;
+  -webkit-transition:all 0.3s ease-out;
+  -o-transition:all 0.3s ease-out;
+}
+.autocomplete-suggestions div:before{
+  content: "";
+  display: block;
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: 10px solid transparent;
+  border-bottom: 10px solid #f8f8f8;
+  left: 46%;
+  top: -20px
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}

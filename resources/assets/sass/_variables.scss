@@ -10,12 +10,17 @@ $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
 // Brands
-$brand-primary: #3097D1;
-$brand-info: #8eb4cb;
-$brand-success: #2ab27b;
-$brand-warning: #cbb956;
-$brand-danger: #bf5329;
+$brand-base:                #0aa699;
+$brand-light:               lighten($brand-base, 15%);
+$brand-lighter:             lighten($brand-base, 28%);
+$brand-dark:                #3e4a59;
+$brand-darker:              #2c343f;
 
+$brand-primary:             $brand-base;
+$brand-success:             #46c37b;
+$brand-info:                #70b9eb;
+$brand-warning:             #f3b760;
+$brand-danger:              #d26a5c;
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Raleway", sans-serif;
@@ -36,3 +41,20 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+// colour stuff
+$white: #ffffff;
+$lightBG: #dce1df;
+$salmon: #ff6666;
+
+$teal: #0096a0;
+$tealMid: #0ebac7;
+$tealContrast: #33ffff;
+$tealShade:	#007c85;
+
+$darkGrey: #4f585e;
+$font-size-base:          14px;
+$font-size-large:         16px;
+$font-size-small:         12px;
+$font-size-mini:          12px;
+$border-radius-base:      2px;

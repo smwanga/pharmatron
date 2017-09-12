@@ -71,4 +71,14 @@ class Product extends Model
 
         return $available->count() ? $available->stockValue() : 0;
     }
+
+    /**
+     * Return the available stock for sale.
+     *
+     * @return Stock
+     **/
+    protected function getForSaleAttribute()
+    {
+        return $this->stock()->available()->first();
+    }
 }

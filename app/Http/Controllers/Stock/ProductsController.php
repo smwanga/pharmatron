@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stock;
 use DataTables;
 use App\Entities\Product;
 use App\Entities\Category;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Transformers\ProductsTransformer;
@@ -53,32 +54,65 @@ class ProductsController extends Controller
     }
 
     /**
+     * Set default page data.
+     *
+     * @param array $param
+     **/
+    protected function setPageData($params)
+    {
+        $this->data = [
+            'categories' => $this->getCategory('product'),
+            'dispense_unit' => $this->getCategory('dispense_unit'),
+            'forms' => true,
+            'pagetitle' => $params['title'],
+            'titles' => [(object)
+                [
+                'title' => trans('titles.product_information'),
+                'icon' => 'fa fa-home',
+                ],
+            ],
+            'wizard' => (object) [
+                'form' => (object) [
+                    'action' => $params['action'],
+                    'method' => $params['method'],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Display form for creating a new product.
      *
      * @return Illuminate\View\Factory
      **/
     public function create()
     {
-        $this->data = [
-            'categories' => $this->getCategory('product'),
-            'dispense_unit' => $this->getCategory('dispense_unit'),
-            'forms' => true,
-            'pagetitle' => trans('main.create_stock'),
-            'titles' => [(object)
-                [
-                'title' => 'Product Information',
-                'icon' => 'fa fa-home',
-                ],
-            ],
-            'wizard' => (object) [
-                'form' => (object) [
-                    'action' => route('products.save'),
-                    'method' => 'post',
-                ],
-            ],
+        $params = [
+            'method' => 'post',
+            'action' => route('products.save'),
+            'title' => trans('main.create_product'),
         ];
+        $this->setPageData($params);
 
         return view('stock.add-product', $this->data);
+    }
+
+    /**
+     * Display form for creating a new product.
+     *
+     * @return Illuminate\View\Factory
+     **/
+    public function edit(Product $product)
+    {
+        $params = [
+            'method' => 'patch',
+            'action' => route('products.update', $product->id),
+            'title' => trans('main.edit_product'),
+        ];
+        $this->setPageData($params);
+        $this->data['product'] = $product;
+
+        return view('stock.edit-product', $this->data);
     }
 
     /**
@@ -106,9 +140,9 @@ class ProductsController extends Controller
     }
 
     /**
-     * undocumented function.
+     * Show view for displaying product information.
      *
-     * @author
+     * @return \Illuminate\View\Factory
      **/
     public function show(Product $product)
     {
@@ -119,14 +153,36 @@ class ProductsController extends Controller
     }
 
     /**
-     * undocumented function.
+     * Get json data for datatables API.
      *
-     * @author
+     * @return array Table rows
      **/
     public function getData()
     {
         return DataTables::eloquent($this->repository->getModel()::query())
          ->setTransformer(new ProductsTransformer())
          ->make();
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function update(Request $request, Product $product)
+    {
+        $rules = [
+            'generic_name' => 'required',
+            'stock_code' => 'required|unique:products,stock_code,'.$product->id,
+            'barcode' => 'nullable|numeric|unique:products,barcode,'.$product->id,
+            'category_id' => 'required',
+            'unit' => 'required',
+            'alert_level' => 'nullable|numeric|min:0',
+            'description' => 'required|string',
+        ];
+        $this->validate($request, $rules);
+        $product->update($request->input());
+
+        return redirect_with_info(route('products.index'));
     }
 }

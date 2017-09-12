@@ -1,19 +1,51 @@
+@mixin uipnotifyvariant($background) {
+    background-color: $background;
+    border-color: $background;
+}
+.ui-pnotify {
+        .alert-warning {@include uipnotifyvariant($brand-warning)}
+        .alert-success {@include uipnotifyvariant($brand-success)}
+        .alert-danger {@include uipnotifyvariant($brand-danger)}
+        .alert-info {@include uipnotifyvariant($brand-info)}
+        .alert-primary {@include uipnotifyvariant($brand-primary)}
 
-@mixin position($position, $width) {
-    float: $position;
-    width: $width;
-    height: 100%;
-    overflow: auto !important;
-    box-sizing: border-box;
-}
-  .content-box {
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    .content-left{
-        @include position(left, 20%);
+        color: #fff;
+
+        hr {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+        .alert-link {
+            color: darken(#fff, 10%);
+        }
+
+        h1, h2, h3, h4, h5, h6, 
+        .h1, .h2, .h3, .h4, .h5, .h6 {
+            color: #fff;
+            small {
+                color: #fff; 
+            }
+        }
+
+        .ui-pnotify-shadow {
+            box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.24) !important;
+        }
     }
-    .content-right {
-        @include position(right, 80%);
+
+    .ui-pnotify-closer, .ui-pnotify-sticker {
+        padding: 2px 8px;
+        margin: -14px 0 0 0 !important;
+        background: rgba(0, 0, 0, 0.1);
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+        &:hover, &:active, &:focus {background: rgba(0, 0, 0, 0.2);}
     }
-}
+
+    .ui-pnotify-closer {border-bottom-right-radius: $border-radius-base;}
+    .ui-pnotify-sticker {border-bottom-left-radius: $border-radius-base;}
+
+    .ui-pnotify-text {font-size: $font-size-small !important; color: #fff;}
+    .ui-pnotify-title {font-size: $font-size-base !important; color: #fff;}
+
+    .ui-pnotify-icon, .ui-pnotify-icon span {margin-top: 0.05em !important; color: #fff;}
+    .lead{font-size:16px;}
+    

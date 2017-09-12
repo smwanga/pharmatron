@@ -14,11 +14,11 @@ class CreatePeopleTable extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
-            $table->string('phone_number', 15);
-            $table->string('email', 65);
-            $table->string('slug', 255);
-            $table->string('address', 255);
-            $table->string('city', 65);
+            $table->string('phone_number', 15)->nullable();
+            $table->string('email', 65)->nullable();
+            $table->string('slug', 255)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->string('city', 65)->nullable();
             $table->string('role', 255);
             $table->string('img', 255)->nullable();
             $table->dateTime('date_employed')->nullable();
