@@ -48,7 +48,7 @@ return [
         'example_email' => 'username@example.com',
         'primary_phone' => 'Primary phone number',
         'full_address' => 'Full Address',
-        'example_site' => 'www.example.com',
+        'example_site' => 'http://www.example.com',
         'products' => 'Products',
         'edit_product' => 'Edit Product',
         'adjust_stock' => 'Adjust Stock',
@@ -90,4 +90,6 @@ return [
         'available' => 'Available',
         'view' => 'View',
         'update' => 'Update',
+        'edit' => 'Edit',
+        'user_profile' => ':user Profile',
 ];

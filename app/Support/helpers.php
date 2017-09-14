@@ -17,20 +17,20 @@ if (!function_exists('flash_message')) {
         $type = $type ?: 'successss';
         switch ($type) {
             case 'success':
-                $icon = 'fa fa-check';
+                $icon = 'fa fa-check fa-lg';
                 break;
-             case 'error':
-                $icon = 'fa fa-check';
+            case 'error':
+                $icon = 'fa fa-times fa-lg';
                 break;
-             case 'warning':
-                $icon = 'fa fa-exclamation-triangle';
+            case 'warning':
+                $icon = 'fa fa-exclamation-triangle fa-lg';
                 break;
-             case 'info':
-                $icon = 'fa fa-bell-o';
+            case 'info':
+                $icon = 'fa fa-bell-o fa-lg';
                 break;
 
             default:
-                // code...
+                $icon = 'fa fa-bell-o fa-lg';
                 break;
         }
         request()->session()->flash('messages', compact('type', 'title', 'message', 'icon'));

@@ -296,9 +296,9 @@
     display: block;
     margin: 8px 14px 0 14px;
     overflow: hidden;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    line-height: 18px;
+    line-height: 14px;
     color: #404040;
 }
 
@@ -306,8 +306,9 @@
     display: block;
     margin: 8px 14px 0 14px;
     overflow: hidden;
-    font-size: 12px;
-    line-height: 16px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
     color: #737373;
     text-overflow: ellipsis;
 }
@@ -335,7 +336,7 @@
 }
 
 .card.hovercard .cardheader {
-    background: url("https://images.freecreatives.com/wp-content/uploads/2016/03/Colorful-Material-Design-Background.jpg");
+    background: url("/../img/placeholder.jpg");
     background-size: cover;
     height: 135px;
 }
@@ -363,7 +364,7 @@
 
 .card.hovercard .info .title {
     margin-bottom: 4px;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 1;
     color: #262626;
     vertical-align: middle;
@@ -383,3 +384,192 @@
 }
 
 .fab-btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+.card-link{
+      color:#fff; 
+      border-radius:50%;  
+      width:50px; 
+      height:50px; 
+      line-height:40px; 
+      text-align:center; 
+      font-size:20px;
+  i{
+      text-align:center; 
+    }
+}
+
+.fl-left{float: left}
+
+.fl-right{float: right}
+
+h1
+{
+  text-transform: uppercase;
+  font-weight: 900;
+  border-left: 10px solid #fec500;
+  padding-left: 10px;
+  margin-bottom: 30px
+}
+
+
+.card-tile
+{
+  display: table-row;
+  width: 49%;
+  background-color: #fff;
+  color: #989898;
+  margin-bottom: 10px;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  border-radius: 4px;
+  position: relative
+}
+
+.card-tile + .card-tile{margin-left: 2%}
+
+.date
+{
+  display: table-cell;
+  width: 25%;
+  position: relative;
+  text-align: center;
+  border-right: 2px dashed #dadde6
+}
+
+.date:before,
+.date:after
+{
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: #DADDE6;
+  position: absolute;
+  top: -15px ;
+  right: -15px;
+  z-index: 1;
+  border-radius: 50%
+}
+
+.date:after
+{
+  top: auto;
+  bottom: -15px
+}
+
+.date time
+{
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%)
+}
+
+.date time span{display: block}
+
+.date time span:first-child
+{
+  color: #2b2b2b;
+  font-weight: 600;
+  font-size: 250%
+}
+
+.date time span:last-child
+{
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: -10px
+}
+
+.card-cont
+{
+  display: table-cell;
+  width: 75%;
+  font-size: 85%;
+  padding: 10px 10px 30px 50px
+}
+
+.card-cont h3
+{
+  color: #3C3C3C;
+  font-size: 130%
+}
+
+.row:last-child .card:last-of-type .card-cont h3
+{
+  text-decoration: line-through
+}
+
+.card-cont > div
+{
+  display: table-row
+}
+
+.card-cont .even-date i,
+.card-cont .even-info i,
+.card-cont .even-date time,
+.card-cont .even-info p
+{
+  display: table-cell
+}
+
+.card-cont .even-date i,
+.card-cont .even-info i
+{
+  padding: 5% 5% 0 0
+}
+
+.card-cont .even-info p
+{
+  padding: 30px 50px 0 0
+}
+
+.card-cont .even-date time span
+{
+  display: block
+}
+
+.card-cont a
+{
+  display: block;
+  text-decoration: none;
+  width: 80px;
+  height: 36px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 2px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px
+}
+
+.row:last-child .card:first-child .card-cont a
+{
+  background-color: #037FDD
+}
+
+.row:last-child .card:last-child .card-cont a
+{
+  background-color: #F8504C
+}
+
+@media screen and (max-width: 860px)
+{
+  .card-tile
+  {
+    display: block;
+    float: none;
+    width: 100%;
+    margin-bottom: 10px
+  }
+  
+  .card-tile + .card-tile{margin-left: 0}
+  
+  .card-cont .even-date,
+  .card-cont .even-info
+  {
+    font-size: 75%
+  }
+}

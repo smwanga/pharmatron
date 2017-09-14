@@ -11,6 +11,7 @@ return [
         'suppliers' => [
             'required' => 'Please choose a supplier from the dropdown',
             'after' => 'The drug seems to have already expired',
+            'url' => 'The url provided is not valid',
         ],
     ],
 ];

@@ -9,7 +9,21 @@
                             {{ session('status') }}
                     </div>
                  @endif
-                    You are logged in!
+                     <div class="card hovercard">
+                <div class="cardheader">
+
+                </div>
+                <div class="avatar">
+                    <img alt="" src="https://avatars1.githubusercontent.com/u/11767240?v=3&s=400">
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <a target="_blank" href="">Kalyanasundaram</a>
+                    </div>
+                    <div class="desc">Backend Developer, ML</div>
+                    <div class="desc">Developer at <b>Freshdesk</b></div>
+                </div>
+            </div>
             </div>
         </div>
 @endsection

@@ -27,6 +27,7 @@ class SupplierRequest extends FormRequest
             'supplier_email' => 'nullable|email|unique:suppliers',
             'supplier_name' => 'required|string',
             'supplier_phone' => 'required|unique:suppliers',
+            'supplier_website' => 'nullable|string|url',
         ];
     }
 
@@ -37,6 +38,20 @@ class SupplierRequest extends FormRequest
      **/
     public function messages()
     {
-        return [];
+        return [
+            'supplier_website.url' => trans('messages.validation.suppliers.url'),
+        ];
+    }
+
+    /**
+     * Error messages.
+     *
+     * @return array
+     **/
+    public static function getMessages()
+    {
+        $instance = new static();
+
+        return $instance->messages();
     }
 }

@@ -37,6 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'Suppliers\SuppliersController@index')->name('suppliers.index');
         Route::get('create', 'Suppliers\SuppliersController@create')->name('suppliers.create');
         Route::post('create', 'Suppliers\SuppliersController@store')->name('suppliers.save');
+        Route::get('edit-profile/{supplier}', 'Suppliers\SuppliersController@edit')->name('suppliers.edit');
+        Route::get('show-profile/{supplier}', 'Suppliers\SuppliersController@show')->name('suppliers.show');
+        Route::patch('update-profile/{supplier}', 'Suppliers\SuppliersController@update')->name('suppliers.update');
     });
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', 'CategoriesController@index')->name('categories.index');
