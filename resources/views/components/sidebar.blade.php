@@ -9,31 +9,31 @@
             </div>
             <div class="user-info sm">
               <div class="username">{{Auth::user()->name}}</div>
-              <div class="status">Life goes on...</div>
+              <div class="status">{{Auth::user()->email}}</div>
             </div>
           </div>
           <!-- END MINI-PROFILE -->
           <!-- BEGIN SIDEBAR MENU -->
-          <p class="menu-title sm">BROWSE <span class="pull-right"><a href="javascript:;"><i class="material-icons">refresh</i></a></span></p>
           <ul>
             <li class="start active "> <a href="{{ route('home') }}"><i class="material-icons">home</i> <span class="title">@lang('main.dashboard')</span> <span class="selected"></span> </a>
             </li>
             <li class="">
-              <a href="{{ route('sales.index') }}"> <i class="fa fa-shopping-cart"></i> <span class="title">POS</span></a>
+              <a href="{{ route('sales') }}"> <i class="fa fa-shopping-cart"></i> <span class="title">@lang('main.sales')</span></a>
             </li>
             <li class="">
               <a href="javascript:;"> <i class="fa fa-folder-open"></i> <span class="title">@lang('main.stock')</span> <span class=" arrow"></span> </a>
               <ul class="sub-menu">
+                  <li><a href="{{ route('stock.add') }}">@lang('main.add_stock')</a></li>
                   <li><a href="{{ route('products.create') }}">@lang('main.create_stock')</a></li>
-                  <li><a href="{{ route('products.index') }}">@lang('main.stock_listing')</a></li>
+                  <li><a href="{{ route('stock.index') }}">@lang('main.stock_listing')</a></li>
               </ul>
             </li>
               <li class="">
               <a href="javascript:;"> <i class="fa fa-credit-card"></i> <span class="title">@lang('main.inventory')</span> <span class=" arrow"></span> </a>
               <ul class="sub-menu">
-                  <li><a href="#">@lang('main.invoices')</a></li>
-                  <li><a href="#">@lang('main.payments')</a></li>
-                  <li><a href="#">@lang('main.estimates')</a></li>
+                  <li><a href="{{ route('products.index') }}">@lang('main.products')</a></li>
+                  <li><a href="#">@lang('main.expenses')</a></li>
+                  <li><a href="#">@lang('main.purchase_orders')</a></li>
               </ul>
             </li>
             <li class="">
@@ -44,7 +44,7 @@
               </ul>
             </li>
             <li class="">
-              <a href="{{ route('settings.index') }}"> <i class="material-icons">contacts_child</i> <span class="title">@lang('main.users')</span></a>
+              <a href="{{ route('users.index') }}"> <i class="material-icons">contacts_child</i> <span class="title">@lang('main.users')</span></a>
             </li>
             <li class="">
               <a href="{{ route('categories.index') }}"> <i class="fa fa-wrench"></i> <span class="title">@lang('main.categories')</span></a>

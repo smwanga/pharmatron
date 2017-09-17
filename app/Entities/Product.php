@@ -81,4 +81,40 @@ class Product extends Model
     {
         return $this->stock()->available()->first();
     }
+
+    /**
+     * Decrement the stock by the specified items.
+     *
+     * @param int $items
+     *
+     * @return bool
+     **/
+    public function sell(int $items)
+    {
+        if ($this->available_stock < $items) {
+            return false;
+        }
+        $first = $this->for_sale;
+        if ($first->stock_available >= $items) {
+            $new_level = $first->stock_available - $items;
+            Stock::where('id', $first->id)->update(['stock_available' => $new_level]);
+
+            return $new_level;
+        } else {
+            while ($items > 0) {
+                $for_sale = $this->getForSaleAttribute();
+                $new_level = 0;
+                if ($for_sale->stock_available <= $items) {
+                    $items = $items - $for_sale->stock_available;
+                    Stock::where('id', $for_sale->id)->update(['stock_available' => $new_level]);
+                } else {
+                    $new_level = $for_sale->stock_available - $items;
+                    Stock::where('id', $for_sale->id)->update(['stock_available' => $new_level]);
+                    $items = 0;
+                }
+            }
+
+            return $new_level;
+        }
+    }
 }

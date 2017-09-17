@@ -37,6 +37,19 @@ class StockController extends Controller
     }
 
     /**
+     * undocumented function.
+     *
+     * @return Illuminate\Http\Response
+     **/
+    public function index()
+    {
+        $stock = $this->repository->paginate();
+        $stock_value = $this->repository->getStockValue();
+
+        return view('stock.stock-listing', compact('stock', 'stock_value'));
+    }
+
+    /**
      * Show page for adding products stock.
      *
      * @param Product $product

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pos;
 
+use DB;
 use App\Entities\Sale;
 use App\Entities\SaleItem;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,19 @@ class PointOfSaleController extends Controller
     public function __construct(Repository $repository)
     {
         $this->products = $repository;
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function index()
+    {
+        $sales = Sale::orderBy('created_at', 'DESC')->paginate(30);
+        $forms = true;
+
+        return view('pos.sales', compact('sales', 'forms'));
     }
 
     /**
@@ -111,7 +125,7 @@ class PointOfSaleController extends Controller
             return response(['status' => 'success', 'message' => 'Item was deleted']);
         }
 
-        return response('Failed');
+        return response(['status' => 'error', 'message' => 'Failed Bad Request'], 405);
     }
 
     /**
@@ -119,8 +133,30 @@ class PointOfSaleController extends Controller
      *
      * @author
      **/
-    public function makeSale(Sale $sale)
+    public function payInvoice(Sale $sale, Request $request)
     {
+        return DB::transaction(function () use ($sale, $request) {
+            if ($request->get('cash') >= $sale->due && $sale->due > 0) {
+                $sale->items->each(function ($item) {
+                    $item->product->sell($item->qty);
+                });
+                $sale->payments()->create(['amount' => $sale->due, 'person_name' => $sale->customer_name, 'mode' => 'Cash']);
+
+                return redirect_with_info(route('sales.invoice', $sale->id));
+            }
+
+            return with_info('Error processing payment', 'Error', 'error');
+        });
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function showPayInvoice(Sale $sale)
+    {
+        return view('pos.modals.accept-payment', compact('sale'));
     }
 
     /**
@@ -153,7 +189,8 @@ class PointOfSaleController extends Controller
      **/
     public function showInvoice(Sale $sale)
     {
-        $data = ['pagetitle' => 'Sales invoice '.$sale->ref_number, 'hide_title' => true, 'sale' => $sale];
+        $ribbon = sale_ribbon($sale->due, $sale->total);
+        $data = ['pagetitle' => 'Sales invoice '.$sale->ref_number, 'forms' => true, 'sale' => $sale, 'ribbon' => $ribbon];
 
         return view('pos.sale-invoice', $data);
     }

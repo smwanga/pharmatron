@@ -43,11 +43,15 @@
                   </li>
                   <li class="divider"></li>
                   <li>
-                    <a href="login.html"><i class="material-icons">power_settings_new</i>&nbsp;&nbsp;Log Out</a>
+                    <a href="{{url('logout')}}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();"><i class="material-icons">power_settings_new</i>&nbsp;&nbsp;Log Out</a>
                   </li>
                 </ul>
-              </li>
-          </ul>
+              <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+              </form>
+               </li>
+            </ul>
         </div>
         <!-- END RESPONSIVE MENU TOGGLER -->
         <div class="header-quick-nav">
@@ -132,10 +136,15 @@
                     </a>
                   </li>
                   <li class="divider"></li>
-                  <li>
-                    <a href="login.html"><i class="material-icons">power_settings_new</i>&nbsp;&nbsp;Log Out</a>
+                 <li>
+                    <a href="{{url('logout')}}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();"><i class="material-icons">power_settings_new</i>&nbsp;&nbsp;Log Out</a>
                   </li>
                 </ul>
+              <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+              </form>
+
               </li>
             </ul>
           </div>

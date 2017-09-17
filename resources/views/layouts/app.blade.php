@@ -8,7 +8,6 @@
     <meta content="" name="description" />
     <meta content="{{csrf_token()}}" name="csrf-token" />
     <!-- BEGIN PLUGIN CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="{{asset('assets/plugins/pace/pace-theme-flash.css')}}" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{asset('assets/plugins/bootstrapv3/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/plugins/bootstrapv3/css/bootstrap-theme.min.css')}}" rel="stylesheet" type="text/css" />
@@ -28,8 +27,7 @@
     <!-- BEGIN CORE CSS FRAMEWORK -->
     <link href="{{asset('css/materialfonts.css')}}" rel="stylesheet">
     <link href="{{asset('webarch/css/webarch.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('css/vue-autocomplete.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
   </head>
   <body >
@@ -86,7 +84,6 @@
     <script src="{{asset('webarch/js/webarch.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/js/chat.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/vue-autocomplete.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/pharmatron.js')}}" type="text/javascript"></script>
     <!-- END CORE TEMPLATE JS -->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true"></div>
@@ -94,6 +91,9 @@
         $(".ajaxModal").on('click',function(e) {
             var url;
             url = $(this).attr('href');
+            if(typeof url == 'undefined'){
+              url = $(this).data('url');
+            }
             md = $('#modal');
             md.load(url ,function( response, status, xhr ) {
                 if ( status == "error" ) {

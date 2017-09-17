@@ -11,7 +11,7 @@ class Sale extends Model
      *
      * @var array
      **/
-    protected $fillable = ['ref_number', 'customer_name', 'amount', 'discount', 'tax', 'created_by', 'status', 'type'];
+    protected $fillable = ['ref_number', 'customer_name', 'amount', 'discount', 'tax', 'created_by', 'status', 'type', 'customer_id'];
 
     /**
      * Hook into the model bootstraper and atach event listeners.
@@ -23,7 +23,7 @@ class Sale extends Model
         parent::boot();
         static::creating(function ($sale) {
             $sale->ref_number = static::saleUUID();
-            // $sale->created_by = auth()->user()->id;
+            $sale->created_by = auth()->user()->id;
         });
     }
 
@@ -38,9 +38,9 @@ class Sale extends Model
     }
 
     /**
-     * undocumented function.
+     * Generate a unique sale uuid.
      *
-     * @author
+     * @return string
      **/
     private static function saleUUID($entropy = false)
     {
@@ -54,14 +54,98 @@ class Sale extends Model
     }
 
     /**
+     * Get the toal amount after all deductions are made.
+     *
+     * @return float
+     **/
+    protected function getTotalAttribute()
+    {
+        return (int) (($this->sub_total + $this->tax_amount) - $this->discount_amount);
+    }
+
+    /**
+     * Get the taxable amount for this sale.
+     *
+     * @return float
+     **/
+    protected function getTaxAmountAttribute()
+    {
+        return $this->sub_total * $this->tax / 100;
+    }
+
+    /**
+     * Get the sale discount amount after taxes are applied.
+     *
+     * @return float
+     **/
+    protected function getDiscountAmountAttribute()
+    {
+        return ($this->sub_total + $this->tax_amount) * $this->discount / 100;
+    }
+
+    /**
+     * Get the sub total amount before taxes and discounts are applied.
+     *
+     * @return float
+     **/
+    protected function getSubTotalAttribute()
+    {
+        return $this->items->map(function ($item) {
+            return $item->qty * $item->unit_cost;
+        })->sum();
+    }
+
+    /**
+     * Get the total due Amount for a sale.
+     *
+     * @return float
+     **/
+    protected function getDueAttribute()
+    {
+        return $this->total - $this->paid;
+    }
+
+    /**
+     * Get the total amount paid for a sold item.
+     *
+     * @return float
+     **/
+    protected function getPaidAttribute()
+    {
+        return $this->payments()->sum('amount');
+    }
+
+    /**
+     * Get payments relation to a sale.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get the user relation.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    /**
      * undocumented function.
      *
      * @author
      **/
-    protected function getTotalAttribute()
+    public function getMetaAttribute()
     {
-        return (int) $this->items->map(function ($item) {
-            return $item->qty * $item->unit_cost;
-        })->sum();
+        if ($this->type == 'invoice') {
+            return ['class' => 'success', 'text' => trans('main.sale')];
+        }
+
+        return ['class' => 'warning', 'text' => trans('main.draft')];
     }
 }

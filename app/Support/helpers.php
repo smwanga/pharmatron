@@ -119,3 +119,62 @@ function error_bag()
 {
     return request()->session()->get('errors') ?: new ViewErrorBag();
 }
+if (!function_exists('optinal')) {
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    function optional($value)
+    {
+        return new App\Support\Optional($value);
+    }
+}
+
+if (!function_exists('sale_ribbon')) {
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    function sale_ribbon(int $due, int $total)
+    {
+        if ($total - $due === 0) {
+            return ['message' => trans('main.not_paid'), 'class' => 'danger red'];
+        }
+        if ($total - $due === $total) {
+            return ['message' => trans('main.fully_paid'), 'class' => 'success'];
+        } else {
+            return ['message' => trans('main.partially_paid'), 'class' => 'primary base'];
+        }
+    }
+}
+if (!function_exists('progress_bar')) {
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    function progress_bar(int $max, int $min)
+    {
+        $value = ($min / $max * 100);
+
+        switch ($value) {
+            case $value >= 75:
+                $class = 'success';
+                break;
+            case $value >= 50:
+                $class = 'primary';
+                break;
+            case $value >= 35:
+                $class = 'warning';
+                break;
+
+            default:
+                $class = 'danger';
+                break;
+        }
+
+        return ['value' => number_format($value, 2), 'class' => $class];
+    }
+}

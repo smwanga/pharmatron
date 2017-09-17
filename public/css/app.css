@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Kumar+One);.ui-pnotify {
+.ui-pnotify {
   color: #fff;
 }
 
@@ -464,7 +464,7 @@
 .card.hovercard .cardheader {
   background: url("/../img/placeholder.jpg");
   background-size: cover;
-  height: 135px;
+  height: 95px;
 }
 
 .card.hovercard .avatar {
@@ -550,7 +550,7 @@ h1 {
   background-color: #fff;
   color: #989898;
   margin-bottom: 10px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   border-radius: 4px;
   position: relative;
@@ -691,62 +691,178 @@ h1 {
   }
 }
 
-/* ==== */
-
-.cover-photo {
-  width: 100%;
-  height: 180px;
-  margin: 0 auto;
-  background-color: #f5f5f5;
-  position: relative;
-  z-index: 1;
-  background-size: 100% auto;
-  background-image: url(/img/placeholder.jpg);
+.glyphicon-lg {
+  font-size: 2.8em;
 }
 
-.profile-body {
+.info-block {
+  border-right: 5px solid #E6E6E6;
+  margin-bottom: 25px;
   width: 100%;
-  margin: 0 auto;
-  z-index: 4;
-  position: relative;
 }
 
-.profile-content {
-  width: 100%;
-  height: auto;
+.info-block .square-box {
+  width: 80px;
+  min-height: 80px;
+  margin-right: 22px;
+  text-align: center !important;
+  background-color: #676767;
+  padding: 20px 0;
+  border-radius: 50%;
+}
+
+.info-block.block-info {
+  border-color: #20819e;
+}
+
+.info-block.block-info .square-box {
+  background-color: #20819e;
+  color: #FFF;
+}
+
+.ribbon {
   position: absolute;
-  top: 60px;
+  top: 20px;
+  right: -5px;
+  padding: 8px;
 }
 
-.user-info {
-  margin-right: 24px;
+.ribbon:before,
+.ribbon:after {
+  content: '';
   position: absolute;
-  top: -100px;
-  left: 8px;
+  left: -9px;
+  border-left: 10px solid transparent;
 }
 
-.profile-avatar {
-  width: 160px;
-  height: 160px;
-  border: 1px solid #e1e1e1;
-  background-color: #fff;
-  right: 0;
+.ribbon:before {
+  top: 0;
 }
 
-.profile-avatar .inner {
-  width: 150px;
-  height: 150px;
-  margin: 5px;
-  background-size: 100% 100%;
-  background-image: url(/img/logo.jpg);
+.ribbon:after {
+  bottom: 0;
 }
 
-.content {
-  max-height: 100%;
+.ribbon span {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ribbon.base {
+  background: #0aa699;
+  color: #fff;
+  border-right: 5px solid #8bc4ea;
+}
+
+.ribbon.base:before {
+  border-top: 27px solid #0aa699;
+}
+
+.ribbon.base:after {
+  border-bottom: 27px solid #0aa699;
+}
+
+.ribbon.success {
+  background: #46c37b;
+  color: #fff;
+  border-right: 5px solid #93dcb2;
+}
+
+.ribbon.success:before {
+  border-top: 27px solid #46c37b;
+}
+
+.ribbon.success:after {
+  border-bottom: 27px solid #46c37b;
+}
+
+.ribbon.light {
+  background: #ecf0f1;
+  color: #2c3e50;
+  border-right: 5px solid #dde4e6;
+}
+
+.ribbon.light:before {
+  border-top: 27px solid #ecf0f1;
+}
+
+.ribbon.light:after {
+  border-bottom: 27px solid #ecf0f1;
+}
+
+.ribbon.dark {
+  background: #131313;
+  color: #fff;
+  border-right: 5px solid #464646;
+}
+
+.ribbon.dark:before {
+  border-top: 27px solid #131313;
+}
+
+.ribbon.dark:after {
+  border-bottom: 27px solid #131313;
+}
+
+.ribbon.red {
+  background: #e91b23;
+  color: #fff;
+  border-right: 5px solid #f2787d;
+}
+
+.ribbon.red:before {
+  border-top: 27px solid #e91b23;
+}
+
+.ribbon.red:after {
+  border-bottom: 27px solid #e91b23;
+}
+
+.ribbon.orange {
+  background: #ff8a3c;
+  color: #fff;
+  border-right: 5px solid #ffc7a2;
+}
+
+.ribbon.orange:before {
+  border-top: 27px solid #ff8a3c;
+}
+
+.ribbon.orange:after {
+  border-bottom: 27px solid #ff8a3c;
+}
+
+.ribbon.yellow {
+  background: #ffd800;
+  color: #fff;
+  border-right: 5px solid #ffe866;
+}
+
+.ribbon.yellow:before {
+  border-top: 27px solid #ffd800;
+}
+
+.ribbon.yellow:after {
+  border-bottom: 27px solid #ffd800;
+}
+
+.ribbon-content {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background: inherit;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("/fonts/Roboto-Condensed-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .autocomplete-suggestions {
-  font-family: 'Lato' sans-serif;
+  font-family: 'Roboto' sans-serif;
   position: absolute;
   list-style: none;
   background: #f8f8f8;
@@ -818,5 +934,15 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+@media print {
+  #main-wrapper,
+  .invoice-body,
+  .content,
+  .page-container {
+    top: 0 !important;
+    margin-top: 0 !important;
+  }
 }
 

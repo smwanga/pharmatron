@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'stock'], function () {
             Route::get('/', 'Stock\StockController@index')->name('stock.index');
+            Route::get('add', 'Stock\StockController@addStock')->name('stock.add');
             Route::get('{product}/add', 'Stock\StockController@create')->name('stock.create');
             Route::post('{product}/save-stock', 'Stock\StockController@store')->name('stock.save');
         });
@@ -51,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', function () {
             return view('settings.app-settings');
         })->name('settings.index');
+        Route::get('create-config-item', 'Settings\SettingsController@createConfigItem')->name('settings.config.create');
+        Route::post('save-config-item', 'Settings\SettingsController@saveConfigItem')->name('settings.config.save');
     });
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', 'UsersController@index')->name('users.index');
@@ -63,6 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => 'sales'], function () {
+        Route::get('/', 'Pos\PointOfSaleController@index')->name('sales');
         Route::get('make-sale/{sale?}', 'Pos\PointOfSaleController@create')->name('sales.index');
         Route::get('search', 'Pos\PointOfSaleController@searchItem')->name('sales.search');
         Route::post('add-item/{sale?}', 'Pos\PointOfSaleController@addItem')->name('sales.item.add');
@@ -70,5 +74,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete-item/{item}', 'Pos\PointOfSaleController@deleteItem')->name('sales.item.delete');
         Route::post('update-sale/{sale}', 'Pos\PointOfSaleController@update')->name('sales.update');
         Route::get('sales-invoice/{sale}', 'Pos\PointOfSaleController@showInvoice')->name('sales.invoice');
+        Route::get('sales-invoice/{sale}/pay', 'Pos\PointOfSaleController@showPayInvoice')->name('sales.invoice.pay');
+        Route::post('sales-invoice/{sale}/pay', 'Pos\PointOfSaleController@payInvoice')->name('sales.invoice.accept_pay');
+    });
+    Route::group(['prefix' => 'customers'], function () {
+        Route::get('create', 'CustomersController@create')->name('customers.create');
+        Route::post('create', 'CustomersController@store')->name('customers.save');
+        Route::get('search', 'CustomersController@searchCustomer')->name('customers.search');
     });
 });

@@ -19,6 +19,8 @@
         "vue": "^2.1.10"
     },
     "dependencies": {
+        "browser-sync": "^2.18.13",
+        "browser-sync-webpack-plugin": "^1.2.0",
         "collect.js": "^3.0.50",
         "cropper": "^3.0.0",
         "devbridge-autocomplete": "^1.4.2",

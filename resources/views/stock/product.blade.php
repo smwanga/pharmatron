@@ -139,10 +139,7 @@
     @push('scripts')
     <script type="text/javascript" src="{{asset('assets/js/JsBarcode.all.min.js')}}"></script>
     <script type="text/javascript">
-        JsBarcode(".barcode")
-                          .EAN13("{{$product->barcode}}", {fontSize: 18, textMargin: 0})
-                          .blank(20) // Create space between the barcodes
-                          .render()
+        JsBarcode(".barcode", "{{$product->barcode}}")
         $('.barcode').css('height', 70).css('width', 180);
     </script>
     @endpush

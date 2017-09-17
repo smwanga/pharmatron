@@ -49,7 +49,7 @@ class Stock extends Model
     public function scopeStockValue(Builder $query)
     {
         return $query->get()->map(function ($stock, $key) {
-            return $stock->stock_value = $stock->selling_price * $stock->stock_available;
+            return $stock->selling_price * $stock->stock_available;
         })->get('0');
     }
 
@@ -61,5 +61,15 @@ class Stock extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Supplier relation.
+     *
+     * @return Supplier
+     **/
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Event;
+use Closure;
 use App\Entities\Stock;
 use App\Events\StockAdded;
 use App\Contracts\Repositories\StockRepository as Repository;
@@ -33,5 +34,27 @@ class StockRepository extends BaseRepository implements Repository
         Event::fire(new StockAdded($stock));
 
         return $stock;
+    }
+
+    /**
+     * Get the the total stock value.
+     *
+     * @return float
+     **/
+    public function getStockValue()
+    {
+        return $this->model->available()->get()->map(function ($stock) {
+            return $stock->selling_price * $stock->stock_available;
+        })->sum();
+    }
+
+    /**
+     * Get paginated results.
+     *
+     * @return Illuminate\Database\Collection
+     **/
+    public function paginate(Closure $callback = null)
+    {
+        return $this->runCallback($callback)->paginate(30);
     }
 }

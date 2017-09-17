@@ -8,11 +8,7 @@
                     <div class="col-sm-4">
                          <div class="card hovercard">
                             <div class="cardheader">
-                            <a data-toggle="dropdown" href="#" class="dropdown-toggle card-link pull-right btn btn-warning"><i class="fa fa-chevron-down m-r-md"></i></a>
-                            <ul class="dropdown-menu pull-right" style="position: static;">
-                                <li><a href="{{ route('suppliers.edit', $supplier->id) }}"><i class="fa fa-pencil"></i> &nbsp; @lang('main.edit')</a></li>
-                                <li><a href="{{ route('suppliers.show', $supplier->id) }}"><i class="fa fa-eye"></i> &nbsp; @lang('main.view')</a></li>
-                            </ul>
+                            <a href="{{ route('suppliers.show', $supplier->id) }}" class="card-link pull-right btn btn-primary"><i class="fa fa-arrow-right"></i></a>
                             </div>
                             <div class="avatar">
                                 <img alt="" src="{{ asset('img/avatar.png') }}">

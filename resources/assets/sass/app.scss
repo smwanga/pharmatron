@@ -7,9 +7,18 @@
 @import "layouts";
 @import "cards";
 @import "profile";
+@import "ribbons";
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto-Condensed-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 .autocomplete-suggestions {
-    font-family: 'Lato' sans-serif;
+    font-family: 'Roboto' sans-serif;
     position: absolute;
     list-style: none;
     background: #f8f8f8;
@@ -69,4 +78,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 input[type="number"] {
     -moz-appearance: textfield;
+}
+@media print {
+  
+  #main-wrapper, .invoice-body, .content, .page-container {
+    top: 0 !important;
+    margin-top: 0 !important;
+  }
 }

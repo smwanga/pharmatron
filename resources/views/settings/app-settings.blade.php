@@ -3,7 +3,7 @@
       <div class="inner-menu nav-collapse">
           <div id="inner-menu">
             <div class="inner-wrapper">
-              <a class="btn btn-block btn-primary" href="send_email.html"><span class="bold">COMPOSE</span></a>
+              <a class="btn btn-block btn-primary ajaxModal" href="{{ route('settings.config.create') }}"><span class="bold">ADD CONFIG</span></a>
             </div>
             <div class="inner-menu-content">
               <p class="menu-title">
@@ -12,16 +12,16 @@
             </div>
             <ul class="big-items">
               <li class="active">
-                <span class="badge badge-important">2</span> <a href="email.html">Inbox</a>
+                <a style="width: 100%; display: inline-block;" href="email.html">General Settings</a>
               </li>
               <li>
-                <a href="sent.html">Sent</a>
+                <a style="width: 100%; display: inline-block;" href="sent.html">Email Settings</a>
               </li>
               <li>
-                <a href="draft.html">Draft</a>
+                <a style="width: 100%; display: inline-block;" href="draft.html">Invoice Settings</a>
               </li>
               <li>
-                <a href="trash.html">Trash</a>
+                <a style="width: 100%; display: inline-block;" href="trash.html">Product Settings</a>
               </li>
             </ul>
           </div>
@@ -34,7 +34,10 @@
             App Settings
           </div>
           <div class="grid-body">
-            
+            <div class="form-group">
+              <strong>Site Name</strong>
+              <input type="text" name="app_name" class="form-control">
+            </div>
           </div>
         </div>
         <!-- END PAGE -->

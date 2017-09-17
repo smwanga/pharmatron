@@ -39,7 +39,7 @@
                                   <form action="{{ route('sales.item.update', $item->id) }}" method="post">
                                     <td>{{++$key}}</td>
                                     <td>{{$item->product->generic_name}}</td>
-                                    <td><input type="number" name="qty" class="item-qty form-control" value="{{$item->qty}}"></td>
+                                    <td><input type="number" name="qty" class="item-qty form-control" value="{{$item->qty}}" data-max="{{$item->product->available_stock}}"></td>
                                     <td><input type="number" step="0.01" name="unit_cost" class="unit-cost form-control" value="{{$item->unit_cost}}"></td>
                                     <td class="total">{{number_format($item->qty * $item->unit_cost, 2)}}</td>
                                     <td><textarea class="instructions form-control" name="instructions">{{$item->instructions}}</textarea></td>
@@ -58,7 +58,7 @@
                                     <td width="22%" class="form-group">
                                       <div class="input-group">
                                         <input id="customer-name" type="text" value="{{$sale->customer_name}}" class="sale-invoice pull-right form-control">
-                                          <span style="cursor: pointer; color:#fff !important;" class="input-group-addon primary">
+                                          <span data-url="{{ route('customers.create') }}" style="cursor: pointer; color:#fff !important;" class="input-group-addon primary ajaxModal">
                                             <span class="arrow"></span>
                                             <span style="color:#fff !important;"  class="addon" data-toggle="tooltip" title="@lang('main.add_customer')"><i class="fa fa-plus"></i></span>
                                           </span>
@@ -72,11 +72,11 @@
                                     <td colspan="2" width="30%"></td>
                                     <td width="18%"><strong class="pull-right">@lang('main.tax_pct')</strong></td>
                                     <td width="17%"><input id="tax" type="number" step="0.01" value="{{$sale->tax?:0}}" class="sale-invoice pull-right form-control"></td>
-                                    <td width="20%"><strong>@lang('main.grand_total'): Ksh. <span id="grand-total"></span> </strong></td>
+                                    <td width="20%"><strong>@lang('main.grand_total'): Ksh. <span id="grand-total"></span> {{$sale ? number_format($sale->total, 2) : 0}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" width="80%"></td>
-                                    <td width="20%"><button class="btn btn-primary btn-block">@lang('main.dispense_drugs')</button></td>
+                                    <td width="20%"><button id="dispense-drugs" class="btn btn-primary btn-block">@lang('main.dispense_drugs')</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -96,19 +96,20 @@
             serviceUrl:'{{ route('sales.search') }}',
             onSelect: function (result) {
                 @isset($sale)
-                    var url = '{{ route('sales.item.add').'/'.$sale->id }}';
+                    var url = '{{ route('sales.item.add',$sale->id) }}';
                 @else
                     var url = '{{ route('sales.item.add') }}';
                 @endisset
-                axios.post(url, {product: result.data.id}).then(function(response) {                
+                var data = {product: result.data.id};
+                console.log(data);
+                axios.post(url, data).then(function(response) {                
                     window.location.href = '{{ route('sales.index') }}/'+response.data.id;
                     console.log(response);
                 }).catch(error => {
                     console.log(error);
                 });
             }
-        })
-
+        });
        $('.item-qty').on('change keyup', function(e) {
           var total = $(e.target).closest('tr').find('.total');
           var cost = $(e.target).closest('tr').find('.unit-cost');
@@ -122,8 +123,15 @@
           total.text(tot);
         });
        $('.item-qty').on('change', function(e) {
+        var $el = $(this), $val = $el.val();
+          if($el.data('max') < $val) {
+             $el.parent('td').addClass('form-group has-error');
+             notify('The selected quantity is is above the available stock of '+$el.data('max'), 'Opps', 'error' );
+             return false;
+          }
+          $el.parent('td').removeClass('form-group has-error');
           var $form = $(e.target).closest('tr').find('form');
-          axios.post($form.attr('action'), {qty:  $(e.target).val()}).then(function(response) {
+          axios.post($form.attr('action'), {qty:  $val}).then(function(response) {
             update();
           });
         });
@@ -151,11 +159,24 @@
           calculateTaxAndDiscount($(this), 'Discount');
        })
        @isset($sale)
+       var salesUrl = '{{ route('sales.update', $sale->id) }}';
         $('.sale-invoice').on('change', function(e) {
-            axios.post('{{ route('sales.update', $sale->id) }}', {discount:$('#discount').val(), tax: $('#tax').val(), customer_name:$('#customer-name').val()}).catch(function(response) {
+            axios.post(salesUrl, {discount:$('#discount').val(), tax: $('#tax').val(), customer_name:$('#customer-name').val()}).catch(function(response) {
                 notify('An error was encountered while syncronizing the sale', 'Whoops! Something is broken', 'error');
             });
-       })
+       });
+        $('#customer-name').autocomplete({
+            serviceUrl:'{{ route('customers.search') }}',
+            onSelect: function (result) {
+                $(this).val(result.data.name);
+                axios.post(salesUrl, {customer_name:result.data.name, customer_id:result.data.id});
+            }
+        });
+        $('#dispense-drugs').on('click', function(e) {
+            axios.post(salesUrl, {type:'invoice'}).then(function(response) {
+                window.location.href= '{{ route('sales.invoice', $sale->id) }}'
+            })
+        });
         @endisset
         $('#tax').on('change keyup', function(e) {
           calculateTaxAndDiscount($(this), 'Tax');
@@ -174,7 +195,8 @@
           new PNotify({
                 title: title,
                 text: message,
-                type: type
+                type: type,
+                styling: 'fontawesome'
             });
         }
         function calculateTaxAndDiscount($el, type) {
