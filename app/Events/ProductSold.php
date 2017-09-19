@@ -2,28 +2,30 @@
 
 namespace App\Events;
 
-use App\Entities\Stock;
-use Illuminate\Broadcasting\Channel;
+use App\Entities\Product;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class ProductSold
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $stock;
+    public $product;
+
+    /**
+     * Sale Item .
+     *
+     * @var int
+     */
+    public $saleItem;
 
     /**
      * Create a new event instance.
-     *
-     * @return void
      */
-    public function __construct(Stock $stock)
+    public function __construct(Product $product, SaleItem $item)
     {
-        $this->stock = $stock;
+        $this->product = $product;
+        $this->saleItem = $item;
     }
 }

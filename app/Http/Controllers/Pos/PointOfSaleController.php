@@ -140,9 +140,9 @@ class PointOfSaleController extends Controller
             if ($request->get('cash') >= $sale->due && $sale->due > 0) {
                 $sale->items->each(function ($item) {
                     $item->product->sell($item->qty);
+                    event(new ProductSold($item->product, $item));
                 });
                 $sale->payments()->create(['amount' => $sale->due, 'person_name' => $sale->customer_name, 'mode' => 'Cash']);
-                event(new ProductSold($sale));
 
                 return redirect_with_info(route('sales.invoice', $sale->id));
             }
