@@ -26,9 +26,7 @@ class CreateProductsTable extends Migration
             $table->timestamp('expire_at')->nullable();
             $table->string('batch_no')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer('invoice_id')->unsigned()->nullable();
             $table->timestamps();
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('SET NULL');
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('SET NULL');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
         });

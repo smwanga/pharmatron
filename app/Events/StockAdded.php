@@ -16,7 +16,7 @@ class StockAdded
      *
      * @var Stock
      **/
-    protected $stock;
+    public $stock;
 
     /**
      * Create a new event instance.

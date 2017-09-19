@@ -27,7 +27,7 @@ class Stock extends Model
      *
      * @var array
      **/
-    protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'invoice_id', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id', 'stock_available'];
+    protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id', 'stock_available'];
 
     protected $dates = ['expire_at'];
 

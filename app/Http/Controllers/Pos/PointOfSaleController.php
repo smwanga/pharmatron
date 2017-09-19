@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pos;
 use DB;
 use App\Entities\Sale;
 use App\Entities\SaleItem;
+use App\Events\ProductSold;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Repositories\ProductRepository as Repository;
@@ -141,6 +142,7 @@ class PointOfSaleController extends Controller
                     $item->product->sell($item->qty);
                 });
                 $sale->payments()->create(['amount' => $sale->due, 'person_name' => $sale->customer_name, 'mode' => 'Cash']);
+                event(new ProductSold($sale));
 
                 return redirect_with_info(route('sales.invoice', $sale->id));
             }
