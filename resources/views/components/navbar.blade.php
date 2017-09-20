@@ -89,7 +89,7 @@
           <div class="pull-right">
             <div class="chat-toggler sm">
               <div class="profile-pic">
-                <img src="{{asset('assets/img/profiles/avatar_small.jpg')}}" alt="" data-src="{{asset('assets/img/profiles/avatar_small.jpg')}}" data-src-retina="{{asset('assets/img/profiles/avatar_small2x.jpg')}}" width="35" height="35" />
+                <img src="{{asset('img/avatar.png')}}" alt="" data-src="{{asset('img/avatar.png')}}" data-src-retina="{{asset('img/avatar.png')}}" width="35" height="35" />
                 <div class="availability-bubble online"></div>
               </div>
             </div>
