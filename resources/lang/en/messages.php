@@ -14,4 +14,6 @@ return [
             'url' => 'The url provided is not valid',
         ],
     ],
+    'stock_updated' => 'The stock with reference :ref has been updated successfully',
+    'config_add_ok' => 'Configuration setting was successfully created',
 ];

@@ -16,8 +16,7 @@ class Stock extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::saving(function ($model) {
+        static::creating(function ($model) {
             $model->attributes['stock_available'] = $model->attributes['pack_size'] * $model->attributes['qty'];
         });
     }
@@ -71,5 +70,31 @@ class Stock extends Model
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected function getStatusAttribute()
+    {
+        if ($this->expire_at->isPast() and $this->active) {
+            return ['class' => 'danger', 'text' => trans('main.expired')];
+        } elseif ($this->available()->count() > 0) {
+            return ['class' => 'success', 'text' => trans('main.available')];
+        }
+
+        return ['class' => 'info', 'text' => trans('main.uknown')];
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected function getExpiryAttribute()
+    {
+        return $this->expire_at->format('Y-m-d');
     }
 }

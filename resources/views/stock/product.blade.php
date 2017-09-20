@@ -115,7 +115,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach($product->stock()->available()->get() as $stock)
+                            @foreach($product->stock()->available()->take(10)->get() as $stock)
                             <tr>
                               <th class="visible-xs">@lang('main.ref_number')</th>
                               <td class="v-align-middle bold text-success">{{$stock->ref_number}}</td>
@@ -137,7 +137,6 @@
 </div>
     @endsection
     @push('scripts')
-    <script type="text/javascript" src="{{asset('assets/js/JsBarcode.all.min.js')}}"></script>
     <script type="text/javascript">
         JsBarcode(".barcode", "{{$product->barcode}}")
         $('.barcode').css('height', 70).css('width', 180);

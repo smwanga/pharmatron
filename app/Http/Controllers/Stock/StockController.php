@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Stock;
 
+use App\Entities\Stock;
 use App\Entities\Product;
+use Illuminate\Http\Request;
 use App\Http\Requests\StockRequest;
 use App\Http\Controllers\Controller;
 use App\Contracts\Repositories\StockRepository;
@@ -45,8 +47,9 @@ class StockController extends Controller
     {
         $stock = $this->repository->paginate();
         $stock_value = $this->repository->getStockValue();
+        $forms = true;
 
-        return view('stock.stock-listing', compact('stock', 'stock_value'));
+        return view('stock.stock-listing', compact('stock', 'stock_value', 'forms'));
     }
 
     /**
@@ -92,5 +95,69 @@ class StockController extends Controller
         $this->repository->create($product, $request->input());
 
         return with_info();
+    }
+
+    /**
+     * Show view for displaying an individual stock.
+     *
+     * @param Stock $stock
+     *
+     * @return \Illuminate\Http\Response
+     **/
+    public function viewStock(Stock $stock)
+    {
+        return view('stock.modals.view-stock', compact('stock'));
+    }
+
+    /**
+     * Show form for editing stock.
+     *
+     * @param Stock $stock
+     *
+     * @return \Illuminate\Http\Response
+     **/
+    public function editStock(Stock $stock)
+    {
+        $suppliers = $this->suppliers->all();
+
+        return view('stock.modals.edit-stock', compact('stock', 'suppliers'));
+    }
+
+    /**
+     * Update Stock records.
+     *
+     * @param Stock $stock
+     *
+     * @return \Illuminate\Http\Response
+     **/
+    public function updateStock(Request $request, Stock $stock)
+    {
+        $rules = [
+            'selling_price' => 'required|numeric|min:0',
+            'batch_no' => 'nullable|max:60',
+            'expire_at' => 'required|date|after:now',
+            'lpo_number' => 'nullable|max:60',
+            'description' => 'nullable|string|max:255',
+        ];
+        $this->validate($request, $rules);
+        $stock->update($request->only(array_keys($rules)));
+        $response = [
+                'status' => 'success',
+                'title' => trans('main.stock_updated'),
+                'message' => trans('messages.stock_updated', ['ref' => $stock->ref_number]),
+            ];
+        if ($request->wantsJson()) {
+            return response()->json($response);
+        }
+
+        return redirect_with_info(route('stock.index'), $response['message'], $response['title']);
+    }
+
+    /**
+     * undocumented function.
+     **/
+    public function addStock()
+    {
+        return view('stock.add-product-stock', ['forms' => true, 'pagetitle' => 'Add Product Stock']);
     }
 }

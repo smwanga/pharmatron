@@ -25,32 +25,20 @@
                   <div class="row b-grey">
                       <div class="col-md-3 col-sm-3">
                           <div class="m-t-10">
-                              <p class="text-success">Open</p>
-                              <p class="text-black">16:203.26</p>
+                              <p class="text-danger">Expired Stock</p>
+                              <p class="text-black">2</p>
                           </div>
                       </div>
                       <div class="col-md-4 col-sm-4">
                         <div class="m-t-10">
-                            <p class="text-success">Day Range</p>
-                            <p class="text-black">01.12.13 - 01.01.14</p>
+                            <p class="text-warning">Out Of Stock</p>
+                            <p class="text-black">2</p>
                         </div>
                     </div>
                     <div class="col-md-5 col-sm-5">
                         <div class="m-t-10">
-                            <div class="pull-left">
-                                Cash
-                            </div>
-                            <div class="pull-right">
-                                <span class="text-success">$10,525</span>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="pull-left">
-                                Visa Classic
-                            </div>
-                            <div class="pull-right">
-                                <span class="text-success">$5,989</span>
-                            </div>
-                            <div class="clearfix"></div>
+                            <p class="text-info">Critical Level</p>
+                            <p class="text-black">3</p>
                         </div>
                     </div>
                 </div>
@@ -63,21 +51,30 @@
                         <th>@lang('main.stock_code')</th>
                         <th>@lang('main.unit_cost')</th>
                         <th>@lang('main.supplier')</th>
-                        <th>@lang('main.date_supplied')</th>
+                        <th>@lang('main.status')</th>
                         <th>@lang('main.expiry_date')</th>
                         <th>@lang('main.available_stock')</th>
                         
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($stock as $key => $in_stock)
+                      @foreach($stock as $in_stock)
                       <tr>
-                        <td>{{++$key}}</td>
+                        <td class="dropdown">
+                          <a data-toggle="dropdown" href="#" class="btn btn-mini btn-white">
+                            <i class="fa fa-ellipsis-v"></i>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a data-url="{{ route('stock.show', $in_stock->id) }}" class="ajaxModal"><i class="fa fa-eye"></i> &nbsp; @lang('main.view') </a></li>
+                            <li><a class="ajaxModal"  data-url="{{ route('stock.edit', $in_stock->id) }}"><i class="fa fa-pencil"></i> &nbsp; @lang('main.edit') </a></li>
+                            <li><a href="#"><i class="fa fa-times"></i> &nbsp; @lang('main.remove_from_stock') </a></li>
+                          </ul>
+                        </td>
                         <td>{{$in_stock->product->generic_name}}</td>
                         <td>{{$in_stock->product->stock_code}}</td>
                         <td>{{number_format($in_stock->selling_price, 2)}}</td>
                         <td>{{$in_stock->supplier->supplier_name}}</td>
-                        <td>{{$in_stock->created_at->format('d-m-Y')}}</td>
+                        <td><label class="label label-success text-white">{{$in_stock->status['text']}}</label></td>
                         <td>{{$in_stock->expire_at->format('d-m-Y')}}</td>
                         <td title="{{number_format($in_stock->stock_available)}} {{$in_stock->product->dispensing_unit}}" data-toggle="tooltip">
                           <?php
@@ -94,6 +91,6 @@
                   </table>
                 </div>
             </div>
-        </div>                 <!-- END SALES WIDGET WITH FLOT CHART -->
+        </div><!-- END SALES WIDGET WITH FLOT CHART -->
     </div>
 @endsection

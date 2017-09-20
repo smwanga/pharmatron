@@ -944,5 +944,13 @@ input[type="number"] {
     top: 0 !important;
     margin-top: 0 !important;
   }
+
+  .header {
+    display: none;
+  }
+}
+
+.ajaxModal {
+  cursor: pointer;
 }
 

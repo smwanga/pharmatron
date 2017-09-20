@@ -97,7 +97,7 @@
             md = $('#modal');
             md.load(url ,function( response, status, xhr ) {
                 if ( status == "error" ) {
-                   alert('error loading resource')
+                   $.fn.notify('An internal server error has occured', 'Error loading resource', 'error')
                 }
               });
               md.modal('show');

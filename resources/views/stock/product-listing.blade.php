@@ -26,7 +26,7 @@
                                 <a href="#"> <span class="fa fa-bar-chart m-r-xs"></span> &nbsp; @lang('main.view_stock_movement')</a> 
                                 </li>
                               <li> 
-                                <a href="#"> <span class="fa fa-barcode m-r-xs"></span> &nbsp; @lang('main.print_barcodes')</a>
+                                <a href="{{ route('products.barcodes.show', $product->id) }}"> <span class="fa fa-barcode m-r-xs"></span> &nbsp; @lang('main.print_barcodes')</a>
                                 </li>
                               <li> 
                                 <a href="{{ route('stock.create', $product->id) }}"> <span class="fa fa-plus m-r-xs"></span> &nbsp; @lang('main.add_stock')</a>

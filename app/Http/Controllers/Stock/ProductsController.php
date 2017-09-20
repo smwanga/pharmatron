@@ -153,6 +153,19 @@ class ProductsController extends Controller
     }
 
     /**
+     * Show view for displaying product information.
+     *
+     * @return \Illuminate\View\Factory
+     **/
+    public function showBarcodes(Product $product)
+    {
+        $this->data['pagetitle'] = 'Barcodes '.$product->generic_name;
+        $this->data['product'] = $product;
+
+        return view('stock.barcodes', $this->data);
+    }
+
+    /**
      * Get json data for datatables API.
      *
      * @return array Table rows

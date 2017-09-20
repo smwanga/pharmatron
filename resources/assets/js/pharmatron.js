@@ -18,7 +18,7 @@ $.fn.barcode = function(s) {
 }
 $.fn.alpha_num = function (length) {
    var result = '';
-   var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+   var chars = '01234567890123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     for (var i = length; i > 0; --i) {
    		result += chars[Math.floor(Math.random() * chars.length)];
     }
@@ -48,7 +48,7 @@ $('input[type=number]').on('focus', function(e) {
 $.fn.notify = function(message = 'The operation was successful', title = 'Success', type = 'success') {
   new PNotify({
         title: title,
-        text: '<p class="lead">'+message+'</p>',
+        text: '<p>'+message+'</p>',
         type: type,
         styling: 'fontawesome'
      });

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Entities\Product;
+use App\Entities\SaleItem;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;

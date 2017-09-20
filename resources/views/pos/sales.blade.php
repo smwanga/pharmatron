@@ -37,10 +37,7 @@
                     <thead>
                       <tr class="">
                         <th style="width:1%">
-                          <div class="checkbox check-default">
-                            <input id="checkbox10" type="checkbox" value="1" class="checkall">
-                            <label for="checkbox10"></label>
-                          </div>
+                          #
                         </th>
                         <th>Customer Name</th>
                         <th>Ref Number</th>
@@ -51,13 +48,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($sales as $sale)
+                      @foreach($sales as $key => $sale)
                       <tr class="">
                         <td class="v-align-middle">
-                          <div class="checkbox check-default">
-                            <input id="checkbox11" type="checkbox" value="1">
-                            <label for="checkbox11"></label>
-                          </div>
+                          {{++$key}}
                         </td>
                         <td class="v-align-middle">{{$sale->customer_name}}</td>
                         <td class="v-align-middle"><span class="muted">{{$sale->ref_number}}</span>
@@ -75,10 +69,12 @@
                               <button data-toggle="dropdown" class="btn btn-small dropdown btn-white btn-demo-space"><i class="fa fa-cog"></i> @lang('main.options')</button>
                               <ul class="dropdown-menu pull-right">
                                 <li><a href="{{ route('sales.invoice', $sale->id) }}">@lang('main.view')</a></li>
+                                @if($sale->type == 'draft')
                                 <li><a href="{{ route('sales.index', $sale->id) }}">@lang('main.edit')</a></li>
+                                @endif
                                 <li><a href="#">@lang('main.delete')</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">@lang('main.view_labels')</a></li>
                               </ul>
                             </div> 
                           </div>

@@ -16,11 +16,6 @@
           <!-- END LOGO -->
           <ul class="nav pull-right notifcation-center">
             <li class="dropdown hidden-xs hidden-sm">
-              <a href="index.html" class="dropdown-toggle active" data-toggle="">
-                <i class="material-icons">home</i>
-              </a>
-            </li>
-            <li class="dropdown hidden-xs hidden-sm">
               <a href="email.html" class="dropdown-toggle">
                 <i class="material-icons">email</i><span class="badge bubble-only"></span>
               </a>
@@ -32,9 +27,6 @@
                 <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
                   <li>
                     <a href="user-profile.html"> My Account</a>
-                  </li>
-                  <li>
-                    <a href="calender.html">My Calendar</a>
                   </li>
                   <li>
                     <a href="email.html"> My Inbox&nbsp;&nbsp;
@@ -65,23 +57,6 @@
               </li>
             </ul>
             <ul class="nav quick-section">
-              <li class="quicklinks  m-r-10">
-                <a href="#" class="">
-                  <i class="material-icons">refresh</i>
-                </a>
-              </li>
-              <li class="quicklinks">
-                <a href="#" class="">
-                  <i class="material-icons">apps</i>
-                </a>
-              </li>
-              <li class="quicklinks"> <span class="h-seperate"></span></li>
-              <li class="quicklinks">
-                <a href="#" class="" id="my-task-list" data-placement="bottom" data-content='' data-toggle="dropdown" data-original-title="Notifications">
-                  <i class="material-icons">notifications_none</i>
-                  <span class="badge badge-important bubble-only"></span>
-                </a>
-              </li>
               <li class="m-r-10 input-prepend inside search-form no-boarder">
                 <span class="add-on"> <i class="material-icons">search</i></span>
                 <input name="" type="text" class="no-boarder " placeholder="Search Dashboard" style="width:250px;">

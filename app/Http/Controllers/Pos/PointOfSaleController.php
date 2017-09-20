@@ -48,6 +48,9 @@ class PointOfSaleController extends Controller
             'items' => [],
         ];
         if ($sale !== null) {
+            if ($sale->type !== 'draft') {
+                return with_info('Editing of this prescription is not permited', 'error', 'Sorry!!');
+            }
             $data['sale'] = $sale;
             $data['items'] = $sale->items;
         }

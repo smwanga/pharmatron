@@ -113,4 +113,10 @@ return [
         'config_key' => 'Config Key',
         'value' => 'Value',
         'create_config_item' => 'Create Configuration Item',
+        'remove_from_stock' => 'Remove From Stock',
+        'save_prescription' => 'Save Prescription',
+        'status' => 'Status',
+        'stock_description' => 'Stock Description',
+        'stock_updated' => 'Stock Upadted',
+        'view_labels' => 'View Labels',
 ];

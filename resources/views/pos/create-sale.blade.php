@@ -76,7 +76,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4" width="80%"></td>
-                                    <td width="20%"><button id="dispense-drugs" class="btn btn-primary btn-block">@lang('main.dispense_drugs')</button></td>
+                                    <td width="20%"><button id="dispense-drugs" class="btn btn-primary btn-block">@lang('main.save_prescription')</button></td>
                                 </tr>
                             </tbody>
                         </table>

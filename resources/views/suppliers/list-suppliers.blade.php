@@ -5,7 +5,7 @@
             <div class="grid-title"><h4>{{$pagetitle}}</h4></div>
                 <div class="grid-body">
                     @foreach($suppliers as $supplier)
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                          <div class="card hovercard">
                             <div class="cardheader">
                             <a href="{{ route('suppliers.show', $supplier->id) }}" class="card-link pull-right btn btn-primary"><i class="fa fa-arrow-right"></i></a>

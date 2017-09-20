@@ -25,11 +25,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/save-product', 'Stock\ProductsController@save')->name('products.save');
         Route::get('get-products', 'Stock\ProductsController@getData')->name('products.get_data');
         Route::get('edit-product/{product}', 'Stock\ProductsController@edit')->name('products.edit');
+        Route::get('product-barcodes/{product}', 'Stock\ProductsController@showBarcodes')->name('products.barcodes.show');
         Route::patch('update-product/{product}', 'Stock\ProductsController@update')->name('products.update');
 
         Route::group(['prefix' => 'stock'], function () {
             Route::get('/', 'Stock\StockController@index')->name('stock.index');
             Route::get('add', 'Stock\StockController@addStock')->name('stock.add');
+            Route::get('show-stock/{stock}', 'Stock\StockController@viewStock')->name('stock.show');
+            Route::get('edit-stock/{stock}', 'Stock\StockController@editStock')->name('stock.edit');
+            Route::patch('update-stock/{stock}', 'Stock\StockController@updateStock')->name('stock.update');
             Route::get('{product}/add', 'Stock\StockController@create')->name('stock.create');
             Route::post('{product}/save-stock', 'Stock\StockController@store')->name('stock.save');
         });
@@ -49,9 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('get-categories', 'CategoriesController@getData')->name('categories.get_data');
     });
     Route::group(['prefix' => 'settings'], function () {
-        Route::get('/', function () {
-            return view('settings.app-settings');
-        })->name('settings.index');
+        Route::get('/', 'Settings\SettingsController@index')->name('settings.index');
+        Route::get('email-settings', 'Settings\SettingsController@emailSettings')->name('settings.email');
         Route::get('create-config-item', 'Settings\SettingsController@createConfigItem')->name('settings.config.create');
         Route::post('save-config-item', 'Settings\SettingsController@saveConfigItem')->name('settings.config.save');
     });

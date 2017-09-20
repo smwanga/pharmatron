@@ -14,7 +14,7 @@ if (!function_exists('flash_message')) {
     {
         $message = $message ?: trans('messages.success');
         $title = $title ?: trans('messages.success_title');
-        $type = $type ?: 'successss';
+        $type = $type ?: 'success';
         switch ($type) {
             case 'success':
                 $icon = 'fa fa-check fa-lg';
@@ -66,7 +66,7 @@ if (!function_exists('is_active')) {
             return null;
         }
 
-        return $check($route, $path);
+        return $check($route, $class);
     }
 }
 
