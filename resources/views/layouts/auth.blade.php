@@ -18,6 +18,8 @@
     <!-- BEGIN CORE CSS FRAMEWORK -->
     <link href="{{asset('webarch/css/webarch.css')}}" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
+     <link href="{{asset('assets/plugins/pnotify/pnotify.custom.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css" />
   </head>
   <!-- END HEAD -->
   <!-- BEGIN BODY -->
@@ -39,10 +41,12 @@
     <script src="{{asset('assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/bootstrap-select2/select2.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('assets/plugins/pnotify/pnotify.custom.min.js')}}" type="text/javascript"></script>
     <!-- END CORE JS DEPENDECENCIES-->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="{{asset('webarch/js/webarch.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/js/chat.js')}}" type="text/javascript"></script>
+    <script src="{{mix('js/app.js')}}" type="text/javascript"></script>
+    @include('partials.notifications')
     <!-- END CORE TEMPLATE JS -->
   </body>
 </html>

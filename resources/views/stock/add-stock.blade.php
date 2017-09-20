@@ -83,10 +83,6 @@
                                                     <input value="{{old('lpo_number')}}" type="text" class="form-control col-md-6" name="lpo_number" id="stockCode" placeholder="LPO Number">
                                                     {!! error_msg('lpo_number') !!}
                                                 </div>
-                                                <div class="form-group col-md-12 {{error('supplier_id')}}">
-                                                    <strong for="">@lang('main.ref_to_invoice')</strong>
-                                                      <input value="{{old('invoice_ref')}}" type="text" class="form-control col-md-6" name="invoice_ref" id="invoice_ref" placeholder="Invoice Refference">
-                                                </div>
                                                 <input type="hidden" id="invoice" name="invoice_id" value="">
                                         </div>
                                             <div class="col-md-6">

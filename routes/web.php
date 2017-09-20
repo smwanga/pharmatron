@@ -67,6 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'invoices'], function () {
         Route::get('search', 'Inventory\InvoicesController@search')->name('invoices.search');
     });
+    Route::group(['prefix' => 'purchase-orders'], function () {
+        Route::get('create', 'Inventory\InvoicesController@createPurchaseOrder')->name('purchase_order.create');
+    });
 
     Route::group(['prefix' => 'sales'], function () {
         Route::get('/', 'Pos\PointOfSaleController@index')->name('sales');

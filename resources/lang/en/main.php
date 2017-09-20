@@ -119,4 +119,10 @@ return [
         'stock_description' => 'Stock Description',
         'stock_updated' => 'Stock Upadted',
         'view_labels' => 'View Labels',
+        'address_line1' => 'Address Line 1',
+        'address_line2' => 'Address Line 2',
+        'company_name' => 'Company Name',
+        'zip_code' => 'Zip Code',
+        'street' => 'Street',
+        'delivery_date' => 'Delivery Date',
 ];

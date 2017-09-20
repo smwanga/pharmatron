@@ -1,5 +1,9 @@
 <?php
 
+use Carbon\Carbon;
+use App\Support\Config;
+use App\Support\Optional;
+use App\Entities\AppConfig;
 use Illuminate\Support\ViewErrorBag;
 
 if (!function_exists('flash_message')) {
@@ -127,7 +131,7 @@ if (!function_exists('optinal')) {
      **/
     function optional($value)
     {
-        return new App\Support\Optional($value);
+        return new Optional($value);
     }
 }
 
@@ -176,5 +180,24 @@ if (!function_exists('progress_bar')) {
         }
 
         return ['value' => number_format($value, 2), 'class' => $class];
+    }
+}
+if (!function_exists('app_config')) {
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    function app_config(string $key)
+    {
+        $config = cache()->get('app_config', function () {
+            $config = AppConfig::all();
+            $expiresAt = Carbon::now()->addMinutes(60);
+            cache()->put('app_config', $config, $expiresAt);
+
+            return $config;
+        });
+
+        return optional(new Config($config))->$key;
     }
 }

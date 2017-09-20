@@ -40,20 +40,20 @@ class PointOfSaleController extends Controller
      *
      * @author
      **/
-    public function create(Sale $sale = null)
+    public function create(Sale $sale)
     {
         $data = [
             'forms' => true,
             'pagetitle' => trans('main.create_sale'),
             'items' => [],
         ];
-        if ($sale !== null) {
+        if ($sale->type !== null) {
             if ($sale->type !== 'draft') {
                 return with_info('Editing of this prescription is not permited', 'error', 'Sorry!!');
             }
-            $data['sale'] = $sale;
             $data['items'] = $sale->items;
         }
+        $data['sale'] = $sale;
 
         return view('pos.create-sale', $data);
     }
@@ -80,7 +80,7 @@ class PointOfSaleController extends Controller
     }
 
     /**
-     * undocumented function.
+     * Add an item to the prescription.
      *
      * @param Illuminate\Http\Request $request
      **/

@@ -33,7 +33,7 @@
               <ul class="sub-menu">
                   <li><a href="{{ route('products.index') }}">@lang('main.products')</a></li>
                   <li><a href="#">@lang('main.expenses')</a></li>
-                  <li><a href="#">@lang('main.purchase_orders')</a></li>
+                  <li><a href="{{ route('purchase_order.create') }}">@lang('main.purchase_orders')</a></li>
               </ul>
             </li>
             <li class="">
