@@ -29,6 +29,7 @@
     <link href="{{asset('webarch/css/webarch.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
+    @routes
   </head>
   <body >
       <!-- BEGIN HEADER -->

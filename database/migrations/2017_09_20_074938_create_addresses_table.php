@@ -26,6 +26,7 @@ class CreateAddressesTable extends Migration
         });
         Schema::table('invoices', function (Blueprint $table) {
             $table->integer('address_id')->unsigned()->nullable();
+            $table->timestamp('delivery_date')->nullable();
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
         });
     }
@@ -37,7 +38,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::table('invoices', function ($table) {
             $table->dropForeign('invoices_address_id_foreign');
-            $table->dropColumn('address_id');
+            $table->dropColumn('address_id', 'delivery_date');
         });
         Schema::dropIfExists('addresses');
     }

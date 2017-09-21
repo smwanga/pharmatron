@@ -53,3 +53,13 @@ $.fn.notify = function(message = 'The operation was successful', title = 'Succes
         styling: 'fontawesome'
      });
 }
+$.fn.getFormData = function(){
+    var unindexed_array = this.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}

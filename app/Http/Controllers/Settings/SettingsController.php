@@ -87,6 +87,7 @@ class SettingsController extends Controller
     {
         $this->validate($request, ['key' => 'required|alpha_dash|max:64|string|unique:app_configs', 'value' => 'required|string|max:1000']);
         $this->config->create($request->input());
+        cache()->forget('app_config');
         if ($request->wantsJson()) {
             return response(['status' => 'Success', 'message' => trans('messages.config_add_ok')]);
         }

@@ -125,4 +125,11 @@ return [
         'zip_code' => 'Zip Code',
         'street' => 'Street',
         'delivery_date' => 'Delivery Date',
+        'create_lpo' => 'Create Purchase Order',
+        'edit_lpo_item' => 'Edit Purchase Order Item',
+        'edit_item' => 'Edit Item',
+        'purchase_order' => 'Purchase Order',
+        'delivery_address' => 'Delivery Address',
+        'prepared_for' => 'Prepared For',
+        'ref_no' => 'REF No',
 ];

@@ -16,4 +16,6 @@ return [
     ],
     'stock_updated' => 'The stock with reference :ref has been updated successfully',
     'config_add_ok' => 'Configuration setting was successfully created',
+    'lpo_notes' => 'Any additional information or notes to the Supplier',
+    'lpo_created' => 'A new Purchase order has been created',
 ];

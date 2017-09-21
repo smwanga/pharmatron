@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Support\Config;
 use App\Support\Optional;
+use App\Entities\Currency;
 use App\Entities\AppConfig;
 use Illuminate\Support\ViewErrorBag;
 
@@ -199,5 +200,40 @@ if (!function_exists('app_config')) {
         });
 
         return optional(new Config($config))->$key;
+    }
+}
+
+if (!function_exists('currency')) {
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    function currency($key = null)
+    {
+        return $key ? Currency::where('code', $key)->orWhere('id', $key)->first() : Currency::all();
+    }
+}
+if (!function_exists('tr_code')) {
+    /**
+     * Generate a unique transaction number.
+     *
+     * @param string $prefix
+     * @param bool   $entropy
+     *
+     * @return string
+     */
+    function tr_code(string $prefix = null, $entropy = false)
+    {
+        $s = uniqid('', $entropy);
+        if (!$entropy) {
+            $uuid = mb_strtoupper(base_convert($s, 16, 36));
+        } else {
+            $hex = substr($s, 0, 13);
+            $dec = $s[13].substr($s, 15); // skip the dot
+            $uuid = mb_strtoupper(base_convert($hex, 16, 36).base_convert($dec, 10, 36));
+        }
+
+        return $prefix ? $prefix.'-'.$uuid : $uuid;
     }
 }

@@ -69,6 +69,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::group(['prefix' => 'purchase-orders'], function () {
         Route::get('create', 'Inventory\InvoicesController@createPurchaseOrder')->name('purchase_order.create');
+        Route::get('{lpo}/add-items', 'Inventory\InvoicesController@addItems')->name('purchase_order.add_items');
+        Route::post('{lpo}/add-items', 'Inventory\InvoicesController@addLPOItem')->name('purchase_order.add_item');
+        Route::get('lpo-items.{item}/edit-item', 'Inventory\InvoicesController@editLPOItem')->name('purchase_order.edit_item');
+        Route::get('show-purchase-order/{lpo}', 'Inventory\InvoicesController@showLPO')->name('purchase_order.show');
+        Route::post('lpo-items.{item}/update-item', 'Inventory\InvoicesController@updateLPOItem')->name('purchase_order.update_item');
+        Route::delete('lpo-items.{item}/delete-item', 'Inventory\InvoicesController@deleteLPOItem')->name('purchase_order.delete_item');
+        Route::post('save', 'Inventory\InvoicesController@savePurchaseOrder')->name('purchase_order.save');
     });
 
     Route::group(['prefix' => 'sales'], function () {
