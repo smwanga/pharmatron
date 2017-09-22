@@ -13,22 +13,24 @@
                 </div>
                 <div class="grid-body no-border">
                   <div class="col-sm-12 form-group">
+                    <form id="sales-search">
                     <div class="col-sm-3 form-group">
-                      <input type="text" name="query" class="input-sm form-control" placeholder="Customer name or Ref Number">
+                      <input value="{{request()->get('query')}}" type="text" name="query" class="input-sm form-control" placeholder="Customer name or Ref Number">
                     </div>
                     <div class="col-sm-3 form-group">
-                      <input type="text" name="from" class="input-sm form-control date-picker" placeholder="date from">
+                      <input value="{{request()->get('from')}}" type="text" name="from" class="input-sm form-control date-picker" placeholder="date from">
                     </div>
                     <div class="col-sm-4 form-group">
                      <div class="input-group">
-                      <input type="text" class="input-sm form-control date-picker" name="to" placeholder="date to">
-                      <span class="input-group-addon primary">    
+                      <input value="{{request()->get('to')}}" type="text" class="input-sm form-control date-picker" name="to" placeholder="date to">
+                      <span class="input-group-addon primary" style="cursor: pointer;" onclick="$('#sales-search').submit()">    
            <span class="arrow"></span>
                       <i class="fa fa-filter"></i>
                        Filter
                       </span>
                     </div>
                     </div>
+                  </form>
                     <div class="col-sm-2">
                         <a href="{{ route('sales.index') }}" class="btn btn-primary btn-small pull-right"><i class="fa fa-plus"></i> &nbsp; @lang('main.add_new')</a>
                     </div>
@@ -77,12 +79,14 @@
                                 <li><a href="#">@lang('main.view_labels')</a></li>
                               </ul>
                             </div> 
-                          </div>
                         </td>
                       </tr>
                       @endforeach
                     </tbody>
                   </table>
+                  <div class="text-center">
+                      {!! $sales->render() !!}
+                  </div>
                 </div>
               </div>
             </div>

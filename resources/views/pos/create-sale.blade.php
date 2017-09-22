@@ -72,7 +72,7 @@
                                     <td colspan="2" width="30%"></td>
                                     <td width="18%"><strong class="pull-right">@lang('main.tax_pct')</strong></td>
                                     <td width="17%"><input id="tax" type="number" step="0.01" value="{{$sale->tax?:0}}" class="sale-invoice pull-right form-control"></td>
-                                    <td width="20%"><strong>@lang('main.grand_total'): Ksh. <span id="grand-total"></span> {{$sale ? number_format($sale->total, 2) : 0}}</strong></td>
+                                    <td width="20%"><strong>@lang('main.grand_total'): Ksh. <span id="grand-total"> {{$sale ? number_format($sale->total, 2) : 0}}</span></strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" width="80%"></td>

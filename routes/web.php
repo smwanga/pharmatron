@@ -95,4 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('create', 'CustomersController@store')->name('customers.save');
         Route::get('search', 'CustomersController@searchCustomer')->name('customers.search');
     });
+    Route::get('pdf-test', function () {
+        return app('dompdf.wrapper')->loadView('welcome')->stream();
+    });
 });

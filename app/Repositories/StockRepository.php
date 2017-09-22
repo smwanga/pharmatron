@@ -57,4 +57,14 @@ class StockRepository extends BaseRepository implements Repository
     {
         return $this->runCallback($callback)->paginate(30);
     }
+
+    public function deepSearch($query)
+    {
+        return $this->model->select('stocks.*', 'suppliers.supplier_name', 'products.*', 'products.id as p_id')->join('suppliers', 'stocks.supplier_id', '=', 'suppliers.id')->join('products', 'products.id', '=', 'stocks.product_id')->orWhere('stocks.ref_number', 'like', "%{$query}%")->orWhere('suppliers.supplier_name', 'like', "%{$query}%")->orWhere('products.item_name', 'like', "%{$query}%")->orWhere('products.stock_code', 'like', "%{$query}%")->orWhere('products.barcode', 'like', "%{$query}%")->orWhere('stocks.lpo_number', 'like', "%{$query}%")->orderBy('stocks.created_at', 'DESC')->paginate(30);
+    }
+
+    public function expired()
+    {
+        return $this->model->expired()->get();
+    }
 }

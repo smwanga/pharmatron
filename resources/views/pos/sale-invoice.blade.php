@@ -3,7 +3,7 @@
             <div class="col-md-11">
               <div class="grid simple">
                 <div class="grid-body no-border invoice-body">
-                  <div class="col-xs-3 pull-right hidden-print m-r-0">
+                  <div class="col-xs-3 pull-right hidden-print m-r-0 hidden-sm hidden-xs">
                       <div class="ribbon-content">
                           <div class="ribbon {{$ribbon['class']}}"><span><i class="fa fa-money"></i> &nbsp; {{$ribbon['message']}}</span></div>
                       </div>
@@ -12,23 +12,17 @@
                   <div class="pull-left"> <img src="/assets/img/invoicelogo.png" data-src="/assets/img/invoicelogo.png" data-src-retina="/assets/img/invoicelogo2x.png" width="222" height="31" class="invoice-logo" alt="">
                   </div>
                   <div class="pull-right">
-                    <h2>Invoice</h2>
+                    <h3>@lang('main.invoice')</h3>
                   </div>
                   <div class="clearfix"></div>
-                  <br>
-                  <br>
-                  <br>
                   <div class="row">
                     <div class="col-sm-9 col-xs-12">
-                      <address class="col-sm-6">
-                        <strong>Pharmatron Chemists</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890
-                      </address>
+                      <div class="col-sm-6"> 
+                        @include('partials.company-address')
+                      </div>
                       @if($sale->customer_name)
-                      <address class="col-sm-6">
-                        Customer: <br>
+                      <address class="col-sm-6 hidden-print">
+                        <h4>@lang('main.customer')</h4>
                         {{$sale->customer_name}}
                       </address>
                       @endif

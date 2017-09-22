@@ -168,13 +168,10 @@ return [
          */
         Milon\Barcode\BarcodeServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        Yajra\DataTables\FractalServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
 
         /*
@@ -236,7 +233,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,

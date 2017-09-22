@@ -27,9 +27,19 @@ class PointOfSaleController extends Controller
      *
      * @author
      **/
-    public function index()
+    public function index(Request $request)
     {
-        $sales = Sale::orderBy('created_at', 'DESC')->paginate(30);
+        if ($request->has('query') || $request->has('to') || $request->has('from')) {
+            $q = $request->get('query');
+            $sales = Sale::when($q, function ($query) use ($q) {
+                return $query->where('customer_name', 'like', "%{$q}%")->orWhere('customer_name', 'like', "%{$q}%");
+            })
+            ->when($request->get('from') || $request->get('to'), function ($query) use ($request) {
+                return $query->whereBetween('created_at', [$request->get('from'), $request->get('to')]);
+            })->paginate(30);
+        } else {
+            $sales = Sale::orderBy('created_at', 'DESC')->paginate(30);
+        }
         $forms = true;
 
         return view('pos.sales', compact('sales', 'forms'));

@@ -97,4 +97,19 @@ class Stock extends Model
     {
         return $this->expire_at->format('Y-m-d');
     }
+
+    public function scopeExpired($query)
+    {
+        return $query->active()->where('expire_at', '<', Carbon::now());
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
+    public function scopeOutOfStock($query)
+    {
+        return $query->active()->where('stock_available', 0);
+    }
 }

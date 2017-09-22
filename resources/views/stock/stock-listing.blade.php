@@ -8,17 +8,22 @@
                   <div class="row b-grey b-b xs-p-b-20">
                       <div class="col-md-4 col-sm-4">
                           <h4 class="text-black semi-bold">Total Stock Value</h4>
-                          <h3 class="text-success semi-bold">{{number_format($stock_value, 2) }}</h3>
+                          <h3 class="text-success semi-bold">{{currency(app_config('currency_id'))->symbol_left}} {{number_format($stock_value, 2) }}</h3>
                       </div>
-                      <div class="col-md-3 col-sm-3">
-                          <div class="m-t-20">
-                              <h5 class="text-black semi-bold">Total due</h5>
-                              <h4 class="text-success semi-bold">$4,653</h4>
-                          </div>
+                      <div class="col-md-2 col-sm-2">
                       </div>
-                      <div class="col-md-5 col-sm-5">
+                      <div class="col-md-6 col-sm-6">
                           <div class="m-t-20">
-                              <input type="text" class="dark form-control" id="txtinput3" placeholder="Search">
+                              <form id="search-form">
+                                  <div class="input-group">
+                                      <input placeholder="supplier or barcode or stock code or product name" name="query" value="{{request()->get('query')}}" type="text" class="form-control">
+                                          <span class="input-group-addon primary" onclick="$('#search-form').submit()" style="cursor: pointer;">    
+                                              <span class="arrow"></span>
+                                              <i class="fa fa-search"></i>
+                                              <strong>@lang('main.search')</strong>
+                                          </span>
+                                      </div>
+                              </form>
                           </div>
                       </div>
                   </div>
@@ -26,20 +31,16 @@
                       <div class="col-md-3 col-sm-3">
                           <div class="m-t-10">
                               <p class="text-danger">Expired Stock</p>
-                              <p class="text-black">2</p>
+                              <p class="text-black">{{$model->expired()->count()}}</p>
                           </div>
                       </div>
                       <div class="col-md-4 col-sm-4">
                         <div class="m-t-10">
                             <p class="text-warning">Out Of Stock</p>
-                            <p class="text-black">2</p>
+                            <p class="text-black">{{$model->outOfStock()->count()}}</p>
                         </div>
                     </div>
                     <div class="col-md-5 col-sm-5">
-                        <div class="m-t-10">
-                            <p class="text-info">Critical Level</p>
-                            <p class="text-black">3</p>
-                        </div>
                     </div>
                 </div>
                 <div class="row">

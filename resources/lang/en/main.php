@@ -132,4 +132,5 @@ return [
         'delivery_address' => 'Delivery Address',
         'prepared_for' => 'Prepared For',
         'ref_no' => 'REF No',
+        'search' => 'Search',
 ];

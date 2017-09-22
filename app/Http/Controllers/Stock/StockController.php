@@ -43,13 +43,18 @@ class StockController extends Controller
      *
      * @return Illuminate\Http\Response
      **/
-    public function index()
+    public function index(Request $request)
     {
-        $stock = $this->repository->paginate();
+        if ($request->has('query')) {
+            $stock = $this->repository->deepSearch($request->get('query'));
+        } else {
+            $stock = $this->repository->paginate();
+        }
+        $model = new Stock();
         $stock_value = $this->repository->getStockValue();
         $forms = true;
 
-        return view('stock.stock-listing', compact('stock', 'stock_value', 'forms'));
+        return view('stock.stock-listing', compact('stock', 'stock_value', 'forms', 'model'));
     }
 
     /**

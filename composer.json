@@ -6,10 +6,11 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "barryvdh/laravel-dompdf": "^0.8.0",
+        "barryvdh/laravel-snappy": "^0.4.0",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.3",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "league/fractal": "^0.17.0",
@@ -19,9 +20,7 @@
         "rachidlaasri/laravel-installer": "^3.0",
         "silber/bouncer": "v1.0.0-beta.3",
         "spatie/laravel-backup": "^3.8",
-        "tightenco/ziggy": "^0.4.1",
-        "yajra/laravel-datatables-fractal": "^1.0",
-        "yajra/laravel-datatables-oracle": "~8.0"
+        "tightenco/ziggy": "^0.4.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
