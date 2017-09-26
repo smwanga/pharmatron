@@ -81,8 +81,10 @@ class Stock extends Model
     {
         if ($this->expire_at->isPast() and $this->active) {
             return ['class' => 'danger', 'text' => trans('main.expired')];
-        } elseif ($this->available()->count() > 0) {
+        } elseif ($this->available()->count() > 0 and $this->active) {
             return ['class' => 'success', 'text' => trans('main.available')];
+        } elseif (!$this->active) {
+            return ['class' => 'warning', 'text' => trans('main.inactive')];
         }
 
         return ['class' => 'info', 'text' => trans('main.uknown')];
@@ -111,5 +113,43 @@ class Stock extends Model
     public function scopeOutOfStock($query)
     {
         return $query->active()->where('stock_available', 0);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected function getIsAvailableAttribute()
+    {
+        return $this->active && $this->stock_available > 0 && !$this->is_expired;
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected function getIsInactiveAttribute()
+    {
+        return !$this->active && $this->stock_available > 0 && !$this->is_expired;
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected function getIsExpiredAttribute()
+    {
+        return Carbon::parse($this->expire_at)->isPast();
+    }
+
+    /**
+     * @author
+     **/
+    public function getStockValueAttribute()
+    {
+        return $this->attributes['selling_price'] * $this->attributes['stock_available'];
     }
 }

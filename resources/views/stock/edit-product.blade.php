@@ -9,14 +9,17 @@
                                         <div class="form-group col-md-6">
                                             <label for="genericName">@lang('main.generic_name')</label>
                                             <input value="{{old('generic_name', $product->generic_name)}}" type="text" class="form-control" name="generic_name" id="genericName" placeholder="Product name">
+                                            <span class="help-block"></span>
                                         </div>
                                         <div class="form-group  col-md-6">
                                             <label for="stockCode">@lang('main.product_code')</label>
                                             <input type="text" class="form-control col-md-6" name="stock_code" value="{{old('stock_code', $product->stock_code)}}" id="stockCode" placeholder="Stock Code">
+                                            <span class="help-block"></span>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="barcode">@lang('main.barcode')</label>
                                             <input value="{{$product->barcode}}" type="number" class="form-control" disabled="">
+                                            <span class="help-block"></span>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="exampleInputPassword1">@lang('main.category')</label>
@@ -27,6 +30,7 @@
                                                     @endforeach
                                                 </optgroup>
                                             </select>
+                                            <span class="help-block"></span>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="unit">@lang('main.dispense_unit')</label>
@@ -37,10 +41,12 @@
                                                     @endforeach
                                                 </optgroup>
                                             </select>
+                                            <span class="help-block"></span>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="alert">@lang('main.alert_level')</label>
                                             <input value="{{old('alert_level', $product->alert_level)}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
+                                            <span class="help-block"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -49,6 +55,7 @@
                                         <div class="form-group col-md-12">
                                             <label for="description">@lang('main.description')</label>
                                             <textarea class="form-control" rows="4" name="description" id="description" placeholder="Product description">{{old('description', $product->description)}}</textarea>
+                                            <span class="help-block"></span>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="notes">@lang('main.notes')</label>
@@ -57,8 +64,9 @@
                                         <div class="form-group col-md-12">
                                             <label for="instructions">@lang('main.instructions')</label>
                                             <textarea class="form-control" rows="4" name="instructions" id="instructions" placeholder="Usage instructions">{{old('instructions', $product->instructions)}}</textarea>
+                                            <span class="help-block"></span>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group col-sm-12">
                                         <button class="btn btn-success pull-right" type="submit">
                                             <i class="fa fa-pencil"></i> 
                                             &nbsp; @lang('main.update')

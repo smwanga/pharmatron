@@ -24,7 +24,8 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'generic_name' => 'required',
+            'item_name' => 'required',
+            'generic_name' => 'required_if:item_name,',
             'stock_code' => 'required|unique:products',
             'barcode' => 'nullable|numeric|unique:products',
             'category_id' => 'required',
@@ -32,5 +33,15 @@ class ProductRequest extends FormRequest
             'alert_level' => 'nullable|numeric|min:0',
             'description' => 'required|string',
         ];
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function messages()
+    {
+        return ['generic_name.required_if' => 'This field is required when the item name is not specified'];
     }
 }

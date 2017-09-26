@@ -40,9 +40,9 @@ if($.fn.select2) {
     });
 }
 $('input[type=number]').on('focus', function(e) {
-	$(this).bind("wheel mousewheel", function(e) {
-	     e.preventDefault();
-	 });
+	  $(this).bind("wheel mousewheel", function(e) {
+	      e.preventDefault();
+	  });
 });
 
 $.fn.notify = function(message = 'The operation was successful', title = 'Success', type = 'success') {
@@ -62,4 +62,14 @@ $.fn.getFormData = function(){
     });
 
     return indexed_array;
+}
+$.fn.enterKey = function (fnc) {
+    return this.each(function () {
+        $(this).keypress(function (ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        })
+    })
 }

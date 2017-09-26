@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository
 {
@@ -40,6 +41,16 @@ abstract class BaseRepository
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * set the eloquent database model.
+     *
+     * @return Illuminate\Database\Eloquent\Model
+     **/
+    public function setModel($model)
+    {
+        $this->model = $model;
     }
 
     /**

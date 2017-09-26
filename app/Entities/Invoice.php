@@ -99,4 +99,14 @@ class Invoice extends Model
     {
         return $this->lpoItems()->total();
     }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function scopeOfType($query, string $type)
+    {
+        return $query->where('type', $type);
+    }
 }

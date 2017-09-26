@@ -15,5 +15,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 .js('resources/assets/js/pharmatron.js', 'public/js')
 .sass('resources/assets/sass/app.scss', 'public/css')
 .copy('node_modules/cropper/dist/cropper.min.js', 'public/js')
-.copy('node_modules/cropper/dist/cropper.min.css', 'public/css').version().browserSync('pharmatron.dev');
+.copy('node_modules/cropper/dist/cropper.min.css', 'public/css')
+.version()
+.extract(['jsbarcode', 'axios', 'lodash', 'sweetalert'])
+.browserSync('pharmatron.dev');
 

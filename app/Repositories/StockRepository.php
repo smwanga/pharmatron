@@ -58,13 +58,43 @@ class StockRepository extends BaseRepository implements Repository
         return $this->runCallback($callback)->paginate(30);
     }
 
-    public function deepSearch($query)
+    public function deepSearch($q, $range, $column = 'stocks.created_at')
     {
-        return $this->model->select('stocks.*', 'suppliers.supplier_name', 'products.*', 'products.id as p_id')->join('suppliers', 'stocks.supplier_id', '=', 'suppliers.id')->join('products', 'products.id', '=', 'stocks.product_id')->orWhere('stocks.ref_number', 'like', "%{$query}%")->orWhere('suppliers.supplier_name', 'like', "%{$query}%")->orWhere('products.item_name', 'like', "%{$query}%")->orWhere('products.stock_code', 'like', "%{$query}%")->orWhere('products.barcode', 'like', "%{$query}%")->orWhere('stocks.lpo_number', 'like', "%{$query}%")->orderBy('stocks.created_at', 'DESC')->paginate(30);
+        return $this->model->select(
+            'stocks.*',
+            'suppliers.supplier_name',
+            'products.*',
+            'products.id as p_id'
+        )->join(
+            'suppliers',
+            'stocks.supplier_id',
+            '=',
+            'suppliers.id'
+        )
+        ->join(
+            'products',
+            'products.id',
+            '=',
+            'stocks.product_id'
+        )
+        ->when($q, function ($query) use ($q) {
+            return $query->where(function ($query) use ($q) {
+                return $query->orWhere('stocks.ref_number', 'like', "%{$q}%")
+                    ->orWhere('suppliers.supplier_name', 'like', "%{$q}%")
+                    ->orWhere('products.item_name', 'like', "%{$q}%")
+                    ->orWhere('products.stock_code', 'like', "%{$q}%")
+                    ->orWhere('products.barcode', 'like', "%{$q}%")
+                    ->orWhere('stocks.lpo_number', 'like', "%{$q}%");
+            });
+        })->when($range, function ($query) use ($column) {
+            extract(date_range(request()));
+
+            return $query->whereBetween($column, [$from, $to]);
+        })->orderBy($column, 'DESC');
     }
 
     public function expired()
     {
-        return $this->model->expired()->get();
+        return $this->model->expired();
     }
 }

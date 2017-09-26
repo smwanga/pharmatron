@@ -2,13 +2,6 @@
 
 // Variables
 @import "variables";
-
-// Layouts
-@import "layouts";
-@import "cards";
-@import "profile";
-@import "ribbons";
-
 @font-face {
     font-family: 'Roboto';
     src: url('/fonts/Roboto-Condensed-webfont.woff') format('woff');
@@ -16,6 +9,15 @@
     font-style: normal;
 
 }
+// Layouts
+@import "layouts";
+@import "cards";
+@import "profile";
+@import "ribbons";
+@import "css-switch";
+@import 'daterange-picker';
+@import '~easy-autocomplete/src/sass/easy-autocomplete';
+@import '~easy-autocomplete/src/sass/easy-autocomplete.themes';
 
 .autocomplete-suggestions {
     font-family: 'Roboto' sans-serif;
@@ -80,15 +82,42 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 @media print {
-  
-  #main-wrapper, .invoice-body, .content, .page-container {
-    top: 0 !important;
-    margin-top: 0 !important;
+  .invoice-body {
+    position:relative;
   }
-  .header {
-    display: none;
+  .page-content .content{
+    padding-top:0;
+    display: inline;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  .page-break {
+    page-break-before:always;
+  }
+  *{ 
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar { width: 0 !important}
+  }
+  .content-data {
+    font-size: 105% !important;
+  }
+    
+  .page-print{
+    display: inline;
   }
 }
 .ajaxModal {
   cursor: pointer;
 }
+.big-items {
+  li a {
+      width: 100%;
+      display: inline-block;
+      font-size: 14px !important;
+      color:#e4e4e4 !important;
+  }
+}
+table { page-break-inside:auto }
+tr    { page-break-inside:avoid; page-break-after:auto }
+thead { display:table-header-group }
+tfoot { display:table-footer-group }

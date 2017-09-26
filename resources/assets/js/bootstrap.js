@@ -6,10 +6,7 @@ window._ = require('lodash');
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-
-try {
-    require('jsbarcode');
-} catch (e) {}
+require('jsbarcode');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

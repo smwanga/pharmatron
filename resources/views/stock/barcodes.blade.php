@@ -9,7 +9,7 @@
             @for($i = 1; $i <=40; $i++)
             <div class="col-sm-3 text-center m-b-20" > 
                 <center style="border:1px solid #d6d6d6">
-                    <small class="no-margin">{{$product->generic_name}}</small>
+                    <small class="no-margin">{{$product->item_name}}</small>
                         <img class="barcode img-responsive" src="data:image/png;base64,{{DNS1D::getBarcodePNG($product->barcode, "c128")}}" alt="barcode"   />
                         <p class="no-margin">{{$product->barcode}}</p>
                 </center>

@@ -6,7 +6,7 @@
                         <div class="grid-title"><h4><strong class="text-uppercase">{{$pagetitle}}</strong></h4></div>
                         <div class="grid-body">
                             <div id="rootwizard">
-                                <ul class="nav nav-tabs" role="tablist">
+                                <ul class="nav nav-tabs nav-justified nav-tabs-alt" role="tablist">
                                     @foreach($titles as $title)
                                     <li role="presentation" class="active">
                                         <a href="#tab1" data-toggle="tab"><i class="{{$title->icon}} m-r-xs"></i>{{$title->title}}</a>

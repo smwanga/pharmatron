@@ -130,7 +130,7 @@
         $('.search').autocomplete({
             serviceUrl:route('sales.search'),
             onSelect: function (result) {
-                $(this).val(result.data.item_name)
+                $(this).val(result.value)
             }
         });
        $('.item-qty').on('change keyup', function(e) {

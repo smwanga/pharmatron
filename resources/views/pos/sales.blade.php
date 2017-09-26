@@ -11,28 +11,37 @@
                     <a href="javascript:;" class="remove"></a>
                   </div>
                 </div>
+                @php
+                  extract(date_range(request()));
+
+                  $btns = [
+                      [
+                          'icon' => 'fa fa-plus',
+                          'text' => trans('main.add_new'),
+                          'class' => 'btn-lg btn-primary',
+                          'url' => route('sales.index')
+                      ]
+                  ]; 
+                @endphp
                 <div class="grid-body no-border">
-                  <div class="col-sm-12 form-group">
+                  <div class="col-sm-12 m-t20 m-b-20">
                     <form id="sales-search">
-                    <div class="col-sm-3 form-group">
-                      <input value="{{request()->get('query')}}" type="text" name="query" class="input-sm form-control" placeholder="Customer name or Ref Number">
-                    </div>
-                    <div class="col-sm-3 form-group">
-                      <input value="{{request()->get('from')}}" type="text" name="from" class="input-sm form-control date-picker" placeholder="date from">
-                    </div>
                     <div class="col-sm-4 form-group">
+                          <input value="{{request()->get('range', "$from to $to")}}" type="text" name="range" class="form-control range input-sm">
+                    </div>
+                    <div class="col-sm-5 form-group">
                      <div class="input-group">
-                      <input value="{{request()->get('to')}}" type="text" class="input-sm form-control date-picker" name="to" placeholder="date to">
+                      <input value="{{request()->get('query')}}" type="text" class="input-sm form-control" data-toggle="tooltip" name="query" placeholder="Search Query" title="Customer name or Invoice Number">
                       <span class="input-group-addon primary" style="cursor: pointer;" onclick="$('#sales-search').submit()">    
-           <span class="arrow"></span>
+                        <span class="arrow"></span>
                       <i class="fa fa-filter"></i>
                        Filter
                       </span>
                     </div>
                     </div>
                   </form>
-                    <div class="col-sm-2">
-                        <a href="{{ route('sales.index') }}" class="btn btn-primary btn-small pull-right"><i class="fa fa-plus"></i> &nbsp; @lang('main.add_new')</a>
+                    <div class="col-sm-3">
+                        @include('partials.print-btns', ['size' => 'btn-lg', 'btns' => $btns]) 
                     </div>
                   </div>
                   <table class="table no-more-tables">
@@ -44,6 +53,7 @@
                         <th>Customer Name</th>
                         <th>Ref Number</th>
                         <th>Total</th>
+                        <th></th>
                         <th>Status</th>
                         <th>Type</th>
                         <th></th>
@@ -70,13 +80,15 @@
                           <div class="btn-group">
                               <button data-toggle="dropdown" class="btn btn-small dropdown btn-white btn-demo-space"><i class="fa fa-cog"></i> @lang('main.options')</button>
                               <ul class="dropdown-menu pull-right">
+                                @if($sale->type == 'invoice')
                                 <li><a href="{{ route('sales.invoice', $sale->id) }}">@lang('main.view')</a></li>
+                                @endif
                                 @if($sale->type == 'draft')
-                                <li><a href="{{ route('sales.index', $sale->id) }}">@lang('main.edit')</a></li>
+                                <li><a href="{{ route('sales.index', $sale->id) }}">@lang('main.view')</a></li>
                                 @endif
                                 <li><a href="#">@lang('main.delete')</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">@lang('main.view_labels')</a></li>
+                                <li><a href="{{ route('sales.invoice.labels', $sale->id) }}">@lang('main.view_labels')</a></li>
                               </ul>
                             </div> 
                         </td>
@@ -91,3 +103,4 @@
               </div>
             </div>
       @endsection
+      @include('partials.date-range', compact('to', 'from'));

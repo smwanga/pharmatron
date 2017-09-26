@@ -14,9 +14,15 @@
                                 <h4 id="itemm-count" class="text-info semi-bold">{{count($items)}}</h4>
                             </div>
                         </div>
-                        <div class="col-md-5 col-sm-5 xs-m-b-20">
-                            <div class="m-t-20">
-                                <input id="search" type="text" class="dark form-control" id="txtinput34" placeholder="Start searching for items or scan barcode">
+                        <div class="col-md-5 col-sm-5">
+                            <div class="m-t-20 form-group">
+                                 <div class="input-group">
+                                        <input id="item-search" type="text" class="pull-right form-control">
+                                          <span  style="cursor: pointer; color:#fff !important;" class="input-group-addon primary">
+                                            <span class="arrow"></span>
+                                            <span style="color:#fff !important;"  class="addon" data-toggle="tooltip" title="@lang('main.search')"><i class="fa fa-search"></i></span>
+                                          </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +98,7 @@
     @endsection
     @push('scripts')
     <script type="text/javascript">
-        $('#search').autocomplete({
+        $('#item-search').autocomplete({
             serviceUrl:'{{ route('sales.search') }}',
             onSelect: function (result) {
                 @isset($sale)
@@ -100,16 +106,24 @@
                 @else
                     var url = '{{ route('sales.item.add') }}';
                 @endisset
-                var data = {product: result.data.id};
-                console.log(data);
+                var data = {product: result.data};
                 axios.post(url, data).then(function(response) {                
-                    window.location.href = '{{ route('sales.index') }}/'+response.data.id;
-                    console.log(response);
+                    window.location.href = route('sales.index', response.data.id);
                 }).catch(error => {
-                    console.log(error);
+                    console.log(error.response);
                 });
             }
         });
+        $(document).ready(function() {
+            $('#search').easyAutocomplete({
+                url: function(param) {
+                  return route('sales.search')+'?query='+param;
+                },
+                listLocation: "suggestions",
+                getValue: "value"
+            });
+        });
+        
        $('.item-qty').on('change keyup', function(e) {
           var total = $(e.target).closest('tr').find('.total');
           var cost = $(e.target).closest('tr').find('.unit-cost');

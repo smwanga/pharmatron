@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pos;
 
 use DB;
+use Event;
 use App\Entities\Sale;
 use App\Entities\SaleItem;
 use App\Events\ProductSold;
@@ -29,13 +30,15 @@ class PointOfSaleController extends Controller
      **/
     public function index(Request $request)
     {
-        if ($request->has('query') || $request->has('to') || $request->has('from')) {
+        if ($request->has('query') || $request->has('range')) {
             $q = $request->get('query');
             $sales = Sale::when($q, function ($query) use ($q) {
                 return $query->where('customer_name', 'like', "%{$q}%")->orWhere('customer_name', 'like', "%{$q}%");
             })
-            ->when($request->get('from') || $request->get('to'), function ($query) use ($request) {
-                return $query->whereBetween('created_at', [$request->get('from'), $request->get('to')]);
+            ->when($request->get('range'), function ($query) use ($request) {
+                extract(date_range($request));
+
+                return $query->whereBetween('created_at', [$from, $to]);
             })->paginate(30);
         } else {
             $sales = Sale::orderBy('created_at', 'DESC')->paginate(30);
@@ -75,18 +78,25 @@ class PointOfSaleController extends Controller
      **/
     public function searchItem(Request $request)
     {
-        return $this->products->all(function ($query) use ($request) {
-            return $query->where('barcode', 'like', '%'.$request->get('query').'%')->orWhere('generic_name', 'like', '%'.$request->get('query').'%');
+        $result = $this->products->all(function ($query) use ($request) {
+            return $query->where('barcode', 'like', '%'.$request->get('query').'%')->orWhere('item_name', 'like', '%'.$request->get('query').'%');
         })->map(function ($product) {
             if ($product->available_stock > 0) {
-                return ['value' => $product->generic_name.'[ '.$product->barcode.']', 'data' => $product];
+                return ['value' => $product->item_name.'[ '.$product->barcode.']', 'data' => $product->id];
             }
-        })->pipe(function ($result) use ($request) {
-            return [
-                'query' => $request->get('query'),
-                'suggestions' => $result,
-            ];
         });
+
+        $q = [
+            'suggestions' => [],
+            'query' => $request->get('query'),
+        ];
+        foreach ($result->all() as $key => $value) {
+            if ($value !== null) {
+                $q['suggestions'][] = $value;
+            }
+        }
+
+        return $q;
     }
 
     /**
@@ -153,7 +163,7 @@ class PointOfSaleController extends Controller
             if ($request->get('cash') >= $sale->due && $sale->due > 0) {
                 $sale->items->each(function ($item) {
                     $item->product->sell($item->qty);
-                    event(new ProductSold($item->product, $item));
+                    Event::fire(new ProductSold($item->product, $item));
                 });
                 $sale->payments()->create(['amount' => $sale->due, 'person_name' => $sale->customer_name, 'mode' => 'Cash']);
 
@@ -206,7 +216,27 @@ class PointOfSaleController extends Controller
     {
         $ribbon = sale_ribbon($sale->due, $sale->total);
         $data = ['pagetitle' => 'Sales invoice '.$sale->ref_number, 'forms' => true, 'sale' => $sale, 'ribbon' => $ribbon];
+        if (request()->has('print')) {
+            return app('snappy.pdf.wrapper')->loadView('pos.pdf-invoice', $data)->inline($sale->ref_number.'-sale-invoice.pdf');
+        }
 
         return view('pos.sale-invoice', $data);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function showInvoiceLabels(Sale $sale)
+    {
+        $data = ['pagetitle' => 'Labels ', 'forms' => true, 'sale' => $sale];
+        if ($print = request()->get('print')) {
+            $pdf = \PDF::loadView('pos.pdf-labels', $data);
+
+            return $print == 'download' ? $pdf->download() : $pdf->inline();
+        }
+
+        return view('pos.labels', $data);
     }
 }

@@ -15,8 +15,9 @@
     <link href="{{asset('assets/plugins/animate.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.css')}}" rel="stylesheet" type="text/css" />
      <link href="{{asset('assets/plugins/pnotify/pnotify.custom.min.css')}}" rel="stylesheet" type="text/css" />
+     <link href="{{ asset('css/switchery.min.css')}}" rel="stylesheet" type="text/css" />
     @isset($forms)
-     <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/bootstrap-select2/select2.css')}}" rel="stylesheet" type="text/css" media="screen" />
     @endisset
     @isset($datatables)
@@ -67,25 +68,22 @@
     <script src="{{asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/pnotify/pnotify.custom.min.js')}}" type="text/javascript"></script>
-    
+    <script src="{{asset('assets/plugins/daterange/moment.min.js')}}" type="text/javascript"></script>    
     @isset($forms)
     <script src="{{asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+    <script src="{{asset('assets/plugins/daterange/daterangepicker.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/bootstrap-select2/select2.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/jquery.autocomplete.min.js')}}" type="text/javascript"></script>
-    @endisset
-    @isset($datatables)
-    <script src="{{asset('assets/plugins/jquery-datatable/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/plugins/datatables-responsive/js/datatables.responsive.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/js/datatables.js')}}" type="text/javascript"></script>
     @endisset
     <!-- END CORE JS DEPENDECENCIES-->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="{{asset('webarch/js/webarch.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/js/chat.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/pharmatron.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/manifest.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/vendor.js')}}" type="text/javascript"></script>
+    <script src="{{mix('js/app.js')}}" type="text/javascript"></script>
+    <script src="{{mix('js/pharmatron.js')}}" type="text/javascript"></script>
     <!-- END CORE TEMPLATE JS -->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true"></div>
      <script type="text/javascript">
@@ -104,6 +102,30 @@
               md.modal('show');
               e.preventDefault();
           });
+        $('.delete-btn').on('click', function(e) {
+            e.preventDefault();
+            swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover "+$(this).data('name')+"!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then(willDelete => {
+                    if (willDelete) {
+                        axios.delete($(this).data('url')).then( response => {
+                            swal("Poof! The item has been deleted!", {
+                                icon: "success", 
+                            });
+                            setTimeout(function() {
+                                 window.location.reload(true);
+                            }, 2000);
+                       });
+                  } else {
+                        swal("Delete Operation was cancelled"); 
+                  }
+                });
+       })
     </script>
     @include('partials.notifications')
     @stack('scripts')

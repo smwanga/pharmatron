@@ -1,0 +1,80 @@
+
+$switch-small-w : 48px;
+$switch-small-h : 25px;
+$switch-mini-w : 30px;
+$switch-mini-h : 16px;
+$switch-w : 64px;
+$switch-h : 34px;
+$switch-mini-size: 14px;
+$switch-small-size: 21px;
+$switch-size : 28px;
+
+@mixin switch-variant($dim, $h, $l:3px, $b:3px) {
+    input:checked + .slider:before {
+        -webkit-transform: translateX($dim);
+        -ms-transform: translateX($dim);
+        transform: translateX($dim);
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: $dim;
+        width: $dim;
+        left: $l;
+        bottom: $b;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+  .slider.round {
+      /* Rounded sliders */
+        border-radius: $h;
+  }
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: $switch-w;
+  height: $switch-h;
+  @include switch-variant($switch-size, $switch-h)
+  padding: 0;
+}
+.switch.sm{
+  width: $switch-small-w;
+  height: $switch-small-h;
+
+  @include switch-variant($switch-small-size, $switch-small-h, 2px, 2px)
+}
+.switch.mini{
+  width: $switch-mini-w;
+  height: $switch-mini-h;
+
+  @include switch-variant($switch-mini-size, $switch-mini-h, 1px, 1px)
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #37b75f;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

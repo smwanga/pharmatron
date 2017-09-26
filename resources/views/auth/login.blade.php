@@ -22,12 +22,15 @@
                     <input class="form-control" id="login_pass" name="password" placeholder="Password" type="password" required>
                   </div>
                 </div>
-                <div class="row p-t-10 m-l-20 m-r-20 xs-m-l-10 xs-m-r-10">
+                <div class="row ">
                   <div class="control-group col-md-10">
-                    <div class="checkbox checkbox check-success">
-                      <a href="{{ route('password.request') }}">Trouble login in?</a>&nbsp;&nbsp;
-                      <input id="remember" name="remember" type="checkbox" {{old('remember') ? 'checked' : ''}} >
-                      <label for="remember" name="remember">Keep me reminded</label>
+                    <div class="m-l-40">
+                      <label class="switch sm p-t-20">
+                        <input name="remember" type="checkbox" {{old('remember') ? 'checked' : ''}} >
+                        <span class="slider"></span>
+                      </label>
+                       <span class="h5" for="remember">Keep me reminded</span> &nbsp;&nbsp;
+                       <a href="{{ route('password.request') }}">Trouble login in?</a>     
                     </div>
                      <button class="btn btn-primary btn-cons pull-right" type="submit"><i class="fa fa-sign-in"></i> &nbsp; Login</a>
                   </div>

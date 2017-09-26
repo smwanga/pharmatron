@@ -11,15 +11,10 @@
           </ul>
           <!-- BEGIN LOGO -->
           <a href="index.html">
-            <img src="assets/img/logo.png" class="logo" alt="" data-src="assets/img/logo.png" data-src-retina="assets/img/logo2x.png" width="106" height="21" />
+            <img src="{{asset('img/pharma-tron.png')}}" class="logo" alt="" data-src="{{asset('img/pharma-tron.png')}}" data-src-retina="{{asset('img/pharma-tron.png')}}" width="156" height="41" />
           </a>
           <!-- END LOGO -->
           <ul class="nav pull-right notifcation-center">
-            <li class="dropdown hidden-xs hidden-sm">
-              <a href="email.html" class="dropdown-toggle">
-                <i class="material-icons">email</i><span class="badge bubble-only"></span>
-              </a>
-            </li>
             <li class="dropdown visible-xs visible-sm">
                 <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
                   <i class="material-icons">tune</i>

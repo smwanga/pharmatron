@@ -5,6 +5,7 @@ use App\Support\Config;
 use App\Support\Optional;
 use App\Entities\Currency;
 use App\Entities\AppConfig;
+use Illuminate\Http\Request;
 use Illuminate\Support\ViewErrorBag;
 
 if (!function_exists('flash_message')) {
@@ -214,6 +215,18 @@ if (!function_exists('currency')) {
         return $key ? Currency::where('code', $key)->orWhere('id', $key)->first() : Currency::all();
     }
 }
+
+if (!function_exists('app_cry')) {
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    function app_cry()
+    {
+        return currency(app_config('currency_id'));
+    }
+}
 if (!function_exists('tr_code')) {
     /**
      * Generate a unique transaction number.
@@ -236,4 +249,25 @@ if (!function_exists('tr_code')) {
 
         return $prefix ? $prefix.'-'.$uuid : $uuid;
     }
+}
+
+if (!function_exists('date_range')) {
+    /**
+     * Extract a date range fro the request.
+     *
+     * @param Request $request
+     **/
+    function date_range(Request $request)
+    {
+        $from = Carbon::now()->subDays(29)->format('Y-m-d');
+        $to = Carbon::now()->format('Y-m-d');
+        $date = explode(' to ', $request->get('range'));
+        if (count($date) === 2) {
+            $from = Carbon::parse(trim($date[0]))->format('Y-m-d');
+            $to = Carbon::parse(trim($date[1]))->format('Y-m-d');
+        }
+
+        return compact('to', 'from');
+    }
+    // code...
 }

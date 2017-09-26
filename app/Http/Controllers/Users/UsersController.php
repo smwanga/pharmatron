@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
 use DB;
 use App\User;
@@ -8,6 +8,7 @@ use Silber\Bouncer\Database\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\UsersRequest;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
@@ -23,11 +24,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
 
-        $users = User::all();
+        $users = User::paginate(16);
 
         return view('users.users', compact('users'));
     }
@@ -39,7 +40,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
@@ -73,7 +74,7 @@ class UsersController extends Controller
      */
     public function store(UsersRequest $request)
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
         DB::transaction(function () use ($request) {
@@ -86,22 +87,46 @@ class UsersController extends Controller
     }
 
     /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function show(User $user)
+    {
+        $forms = true;
+
+        return view('users.user-sales', compact('user', 'forms'));
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function showTimeline(User $user)
+    {
+        $forms = true;
+        $timeline = $user->activity()->orderBy('created_at', 'DESC')->paginate();
+
+        return view('users.timeline', compact('user', 'forms', 'timeline'));
+    }
+
+    /**
      * Show the form for editing User.
      *
      * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
+        $pagetitle = trans('main.edit_user');
 
-        $user = User::findOrFail($id);
-
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('users.modals.edit-user-details', compact('user', 'roles', 'pagetitle'));
     }
 
     /**
@@ -114,7 +139,7 @@ class UsersController extends Controller
      */
     public function update(UpdateUsersRequest $request, $id)
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
         $user = User::findOrFail($id);
@@ -138,7 +163,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
         $user = User::findOrFail($id);
@@ -154,7 +179,7 @@ class UsersController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (!Gate::allows('users_manage')) {
+        if (!Gate::allows('users.manage')) {
             return abort(401);
         }
         if ($request->input('ids')) {

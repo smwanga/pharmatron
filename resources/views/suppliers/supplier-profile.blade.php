@@ -24,124 +24,43 @@
         <div class="user-profile-pic text-left"> <img width="69" height="69" data-src-retina="/img/avatar.png" data-src="/img/avatar.png" src="/img/avatar.png" alt="">
           <div class="pull-right m-r-20 m-t-35">
             <div class="btn-group">
-                        <button data-toggle="dropdown" class="btn btn-small dropdown btn-white btn-demo-space">Action</button>
+                        <button data-toggle="dropdown" class="btn btn-small dropdown btn-white btn-demo-space">@lang('main.options')</button>
                         <button class="btn btn-small btn-white dropdown-toggle btn-demo-space" data-toggle="dropdown" aria-expanded="false"> <span class="caret"></span> </button>
                         <ul class="dropdown-menu pull-right">
-                          <li><a href="#">Action</a></li>
-                          <li><a href="#">Another action</a></li>
-                          <li><a href="#">Something else here</a></li>
+                          <li><a href="{{ route('suppliers.edit', $supplier->id) }}">@lang('main.edit')</a></li>
+                          <li><a class="ajaxModal" data-url="{{ route('suppliers.contacts.add', $supplier->id) }}">@lang('main.add_contact')</a></li>
+                          <li><a href="#">@lang('main.add_payment')</a></li>
                           <li class="divider"></li>
-                          <li><a href="#">Separated link</a></li>
+                          <li><a href="{{ route('suppliers.profile.orders', $supplier->id) }}">@lang('main.purchase_orders')</a></li>
                         </ul>
                       </div> 
             </div>
         </div>
         <div class="col-md-12 no-padding">
           <div class="tiles white">
-                            <div class="row">
+              <div class="row">
                   <div class="sales-graph-heading">
                     <div class="col-md-6 col-lg-3 col-sm-6">
-                      <h5 class="no-margin">You have earned</h5>
-                      <h4><span class="item-count animate-number semi-bold" data-value="21451" data-animation-duration="700">21,451</span> USD</h4>
+                      <p class="bold">Contact Email</p>
+                      <h5><span>{{$supplier->supplier_email}}</span></h5>
                     </div>
                     <div class="col-md-6 col-lg-3 col-sm-6">
-                      <p class="semi-bold">TODAY</p>
-                      <h4><span class="item-count animate-number semi-bold" data-value="451" data-animation-duration="700">451</span> USD</h4>
+                      <p class="bold">Contact Phone</p>
+                      <h5><span>{{$supplier->supplier_phone}}</span></h5>
                     </div>
                     <div class="col-md-6 col-lg-3 col-sm-6">
-                      <p class="semi-bold">THIS MONTH</p>
-                      <h4><span class="item-count animate-number semi-bold" data-value="8514" data-animation-duration="700">8,514</span> USD</h4>
+                      <p class="bold">Website</p>
+                      <h5><span><a target="_blank" href="{{$supplier->supplier_website}}">{{$supplier->supplier_website}}</a></span> </h5>
                     </div>
                     <div class="col-md-6 col-lg-3 col-sm-6">
-                      <p class="semi-bold">THIS MONTH</p>
-                      <h4><span class="item-count animate-number semi-bold" data-value="8514" data-animation-duration="700">8,514</span> USD</h4>
+                      <p class="bold">@lang('main.address')</p>
+                      <h5>{{$supplier->supplier_address}}</h5>
                     </div>
                     <div class="clearfix"></div>
                   </div>
                 </div>
                 <hr>
-            <div class="row">
-            <div class="col-md-6 col-vlg-3 col-sm-6">
-              <div class="tiles green m-b-10">
-                <div class="tiles-body">
-                  <div class="tiles-title text-white">OVERALL PAYMENTS </div>
-                  <div class="widget-stats">
-                    <div class="wrapper transparent">
-                      <span class="item-title">Total</span> <span class="item-count animate-number semi-bold" data-value="2415" data-animation-duration="700">2,415</span>
-                    </div>
-                  </div>
-                  <div class="widget-stats">
-                    <div class="wrapper transparent">
-                      <span class="item-title">Paid Amount</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
-                    </div>
-                  </div>
-                  <div class="widget-stats ">
-                    <div class="wrapper last">
-                      <span class="item-title">Due Amount</span> <span class="item-count animate-number semi-bold" data-value="1547" data-animation-duration="700">1,547</span>
-                    </div>
-                  </div>
-                  <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
-                  </div>
-                  <div class="description"> <span class="text-white mini-description ">4% Paid out</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-vlg-3 col-sm-6">
-              <div class="tiles blue m-b-10">
-                <div class="tiles-body">
-                  <div class="tiles-title text-white">OVERALL ORDERS </div>
-                  <div class="widget-stats">
-                    <div class="wrapper transparent">
-                      <span class="item-title">Overall Visits</span> <span class="item-count animate-number semi-bold" data-value="15489" data-="" animation-duration="700">15,489</span>
-                    </div>
-                  </div>
-                  <div class="widget-stats">
-                    <div class="wrapper transparent">
-                      <span class="item-title">Today's</span> <span class="item-count animate-number semi-bold" data-value="551" data-animation-duration="700">551</span>
-                    </div>
-                  </div>
-                  <div class="widget-stats ">
-                    <div class="wrapper last">
-                      <span class="item-title">Monthly</span> <span class="item-count animate-number semi-bold" data-value="1450" data-animation-duration="700">1,450</span>
-                    </div>
-                  </div>
-                  <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="54%" style="width: 54%;"></div>
-                  </div>
-                  <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-                <h5 class="semi-bold m-t-30 m-l-30">LASTEST INVOICES</h5>
-                <table class="table no-more-tables m-t-20 m-l-20 m-b-30">
-                  <thead>
-                    <tr>
-                      <th>@lang('main.ref_number')</th>
-                      <th>@lang('main.date')</th>
-                      <th>@lang('main.amount')</th>
-                      <th>@lang('main.status') </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="v-align-middle bold text-success">25601</td>
-                      <td class="v-align-middle"><span class="muted">Redesign project template</span> </td>
-                      <td><span class="muted bold text-success">$4,500</span> </td>
-                      <td class="v-align-middle"></td>
-                    </tr>
-                    <tr>
-                      <td class="v-align-middle bold text-success">25601</td>
-                      <td class="v-align-middle"><span class="muted">Redesign project template</span> </td>
-                      <td><span class="muted bold text-success">$4,500</span> </td>
-                      <td class="v-align-middle"></td>
-                    </tr>
-                  </tbody>
-                </table>
+                @yield('profile-content')
               </div>
                             </div>
                           </div>

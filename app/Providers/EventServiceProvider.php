@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\UserEventsListener;
 use Illuminate\Support\Facades\Event;
+use App\Listeners\InventoryEventsSubscriber;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -18,15 +20,16 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    protected $subscribe = [
+        InventoryEventsSubscriber::class,
+        UserEventsListener::class,
+    ];
+
     /**
      * Register any events for your application.
-     *
-     * @return void
      */
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }

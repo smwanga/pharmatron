@@ -42,4 +42,14 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    /**
+     * User activity log.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Hasmany
+     **/
+    public function activity()
+    {
+        return $this->hasMany(Entities\Activity::class);
+    }
 }

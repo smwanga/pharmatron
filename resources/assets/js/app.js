@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 window.swal = require('sweetalert');
-window.Vue = require('vue');
+require('easy-autocomplete'); 
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

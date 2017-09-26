@@ -22,7 +22,7 @@
 @push('scripts')
 <script type="text/javascript">
    $('.search').autocomplete({
-            serviceUrl:'{{ route('sales.search') }}',
+            serviceUrl:'{{ route('products.search') }}',
             onSelect: function (result) {
                 window.location.href = '{{ request()->root() }}/products/stock/'+result.data.id+'/add';
             }

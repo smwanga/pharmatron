@@ -3,8 +3,8 @@
                     @section('form-body')
                         <div class="tab-pane active fade in" id="tab1">
                             <div class="row m-b-lg">
-                                <div class="col-md-8 col-md-offset-2">
-                                    <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-sm-10 col-sm-offset-1">
                                         @include('components.errors')
                                         <div class="row">
                                         <div class="form-group col-sm-6">
@@ -35,7 +35,7 @@
                                             <label for="address">@lang('main.user_role')</label>
                                             <select class="select2" name="role">
                                                 <optgroup label="Roles">
-                                                    <option value="" selected disabled="">Please Attach a role to a user </option>
+                                                    <option value="" selected disabled=""> @lang('messages.attach_role') </option>
                                                     @foreach($roles as $role)
                                                     <option value="{{$role}}">{{$role}}</option>
                                                     @endforeach

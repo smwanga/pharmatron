@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Stock;
 
-use DataTables;
+use Event;
 use App\Entities\Product;
 use App\Entities\Category;
 use Illuminate\Http\Request;
+use App\Events\ProductUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Transformers\ProductsTransformer;
@@ -81,6 +82,25 @@ class ProductsController extends Controller
     }
 
     /**
+     * Search for an item on the point of sale.
+     *
+     * @param Request $request
+     **/
+    public function searchProduct(Request $request)
+    {
+        return $this->repository->all(function ($query) use ($request) {
+            return $query->where('barcode', 'like', '%'.$request->get('query').'%')->orWhere('item_name', 'like', '%'.$request->get('query').'%');
+        })->map(function ($product) {
+            return ['value' => $product->item_name.'[ '.optional($product->category)->category.']', 'data' => $product];
+        })->pipe(function ($result) use ($request) {
+            return [
+                'query' => $request->get('query'),
+                'suggestions' => $result,
+            ];
+        });
+    }
+
+    /**
      * Display form for creating a new product.
      *
      * @return Illuminate\View\Factory
@@ -135,6 +155,9 @@ class ProductsController extends Controller
     public function save(ProductRequest $request)
     {
         $product = $this->repository->create($request->all());
+        if ($request->wantsJson()) {
+            return ['status' => 'success', 'message' => 'A new product '.$product->item_name.' has been created', 'product' => $product];
+        }
 
         return redirect_with_info(route('stock.create', $product->id));
     }
@@ -193,8 +216,11 @@ class ProductsController extends Controller
             'alert_level' => 'nullable|numeric|min:0',
             'description' => 'required|string',
         ];
+        $dirty = clone $product;
         $this->validate($request, $rules);
         $product->update($request->input());
+
+        Event::fire(new ProductUpdated($dirty, $product));
 
         return redirect_with_info(route('products.index'));
     }

@@ -12,13 +12,16 @@
                 <a style="width: 100%; display: inline-block;" href="{{ route('settings.index') }}">General Settings</a>
               </li>
               <li class="{{is_active('settings/email-*')}}">
-                <a style="width: 100%; display: inline-block;" href="{{ route('settings.email') }}">Email Settings</a>
+                <a href="{{ route('settings.email') }}">Email Settings</a>
               </li>
               <li>
-                <a style="width: 100%; display: inline-block;" href="draft.html">Invoice Settings</a>
+                <a href="">Invoice Settings</a>
               </li>
               <li>
-                <a style="width: 100%; display: inline-block;" href="trash.html">Product Settings</a>
+                <a href="">Product Settings</a>
+              </li>
+              <li class="{{ is_active('settings/access-control*') }}">
+                <a href="{{ route('settings.acl.index') }}">@lang('main.access_control')</a>
               </li>
             </ul>
           </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Suppliers;
 
+use App\Entities\Person;
 use App\Entities\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -121,9 +122,10 @@ class SuppliersController extends Controller
         $data = [
             'title' => $supplier->supplier_name,
             'supplier' => $supplier,
+            'contacts' => $supplier->contacts()->paginate(5),
         ];
 
-        return view('suppliers.supplier-profile', $data);
+        return view('suppliers.supplier-home', $data);
     }
 
     /**
@@ -158,6 +160,110 @@ class SuppliersController extends Controller
         $this->validate($request, $rules, SupplierRequest::getMessages());
         $supplier->update($request->input());
 
-        return redirect_with_info(route('suppliers.index'));
+        return redirect_with_info(route('suppliers.show', $supplier->id));
+    }
+
+    /**
+     * Show view for adding a contact.
+     *
+     * @param Supplier $supplier
+     **/
+    public function addContact(Supplier $supplier)
+    {
+        return view('suppliers.modals.add-contact', compact('supplier'));
+    }
+
+    /**
+     * Show view for adding a contact.
+     *
+     * @param Supplier $supplier
+     **/
+    public function editContact(Person $contact)
+    {
+        return view('suppliers.modals.edit-contact', compact('contact'));
+    }
+
+    /**
+     * Save a new contact  to the datastore.
+     *
+     * @param Supplier $supplier
+     **/
+    public function saveContact(Supplier $supplier, Request $request)
+    {
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:64|unique:people',
+            'phone_number' => 'required|string|max:25|unique:people',
+            'address' => 'nullable|string|max:35',
+        ];
+        $this->validate($request, $rules);
+        $contact = collect($request->input())
+            ->merge(['role' => 'Supplier'])
+            ->pipe(function ($input) use ($supplier) {
+                return $supplier->contacts()->create($input->all());
+            });
+        $response = [
+                'status' => 'success',
+                'message' => trans('messages.contact_created', [
+                    'supplier' => $supplier->supplier_name,
+                ]),
+                'contact' => $contact,
+            ];
+        if ($request->wantsJson()) {
+            return $response;
+        }
+
+        return redirect_with_info(route('suppliers.show', $supplier->id), $response['message']);
+    }
+
+    /**
+     * Update contact details in the datastore.
+     *
+     * @param Supplier $supplier
+     **/
+    public function updateContact(Person $contact, Request $request)
+    {
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:64|unique:people,email,'.$contact->id,
+            'phone_number' => 'required|string|max:25|unique:people,phone_number,'.$contact->id,
+            'address' => 'nullable|string|max:35',
+        ];
+        $this->validate($request, $rules);
+        $contact->update($request->only(array_keys($rules)));
+        $response = [
+                'status' => 'success',
+                'message' => trans('messages.contact_updated'),
+                'contact' => $contact,
+            ];
+        if ($request->wantsJson()) {
+            return $response;
+        }
+
+        return redirect_with_info(route('suppliers.show', $supplier->id), $response['message']);
+    }
+
+    /**
+     * Delete a contact from the datastore.
+     *
+     * @param Supplier $supplier
+     **/
+    public function deleteContact(Person $contact)
+    {
+        if ($contact->delete()) {
+            return ['status' => 'success', 'message' => trans('messages.contact_delete')];
+        }
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function purchaseOrders(Supplier $supplier)
+    {
+        $orders = $supplier->invoices()->ofType('LPO')->paginate();
+
+        return view('suppliers.supplier-orders', compact('supplier', 'orders'));
     }
 }

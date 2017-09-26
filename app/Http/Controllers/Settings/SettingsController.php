@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Settings;
 
+use Bouncer;
+use App\Entities\Role;
 use App\Support\Config;
+use App\Entities\Ability;
 use App\Entities\AppConfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -56,6 +59,45 @@ class SettingsController extends Controller
         $config = $this->repository;
 
         return view('settings.email-settings', compact('config'));
+    }
+
+    /**
+     * Show the Access Control List settings tab.
+     *
+     * @return Illuminate\Http\Response
+     **/
+    public function aclSettings($role = null)
+    {
+        $data = [
+            'abilities' => Ability::all(),
+            'roles' => Role::all(),
+            'group' => $role ? Role::where('name', $role)->first() : Role::first(),
+        ];
+        if (null == $data['group']) {
+            abort(404);
+        }
+
+        return view('settings.acl-settings', $data);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function updateAclSettings(Role $role, Request $request)
+    {
+        if ($request->has('abilities')) {
+            Ability::all()->each(function ($ability) use ($role) {
+                Bouncer::disallow($role)->to($ability->name);
+            });
+            $abilities = $request->get('abilities');
+            foreach ($abilities as $ability) {
+                Bouncer::allow($role)->to($ability);
+            }
+
+            return with_info(trans('messages.acl_updated'));
+        }
     }
 
     /**

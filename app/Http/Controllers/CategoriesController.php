@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entities\Category;
-use DataTables;
 
 class CategoriesController extends Controller
 {
@@ -19,7 +18,7 @@ class CategoriesController extends Controller
         $data = [
             'forms' => true,
             'pagetitle' => trans('main.'.$page).' '.trans('main.category'),
-            'datatables' => true,
+            'categories' => $this->getData($page),
         ];
 
         return view('categories.listing', $data);
@@ -40,15 +39,9 @@ class CategoriesController extends Controller
      *
      * @author
      **/
-    public function getData()
+    protected function getData($group)
     {
-        $category = Category::where('group', request()->get('group', 'dispense_unit'));
-
-        return DataTables::eloquent($category)->addColumn('action', function ($stock) {
-            return '<a href="#" class="btn btn-small btn-primary"> <i class="fa fa-pencil"></i> Edit </a>';
-        })->addColumn('group', function ($category) {
-            return trans('main.'.$category->group);
-        })->make();
+        return Category::where('group', $group)->paginate();
     }
 
     /**
@@ -60,21 +53,10 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['category' => 'required|max:255', 'category' => 'required|max:355']);
+        $this->validate($request, ['category' => 'required|max:255', 'category' => 'required|max:35', 'description' => 'required|string']);
         Category::create($request->all());
 
         return back();
-    }
-
-    /**
-     * Display the specified category.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
     }
 
     /**
@@ -86,6 +68,7 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
+        return view('categories.edit-category', compact('category'));
     }
 
     /**
@@ -98,6 +81,10 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $this->validate($request, ['category' => 'required|max:255', 'category' => 'required|max:35', 'description' => 'required|string']);
+        $category->update($request->all());
+
+        return with_info();
     }
 
     /**

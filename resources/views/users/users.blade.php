@@ -2,11 +2,20 @@
 
 @section('content')
     <div class="row-fluid">
-		<h2>Users</h2>
         <div class="grid simple">
+        <div class="grid-title">
+            <h5 class="bold">Users</h5>
+        </div>
         <div class="searchable-container grid-body">
-            <div class="col-lg-12 form-group">
-                <input type="search" class="form-control" id="input-search" placeholder="Search Users..." >
+            <div class="row form-group">
+                <div class="col-xs-8">
+                    <input type="search" class="form-control" id="input-search" placeholder="Search Users..." >
+                </div>
+                <div class="col-xs-4">
+                    @can('users.manage')
+                    <a href="{{ route('users.create') }}" class="btn btn-small btn-primary pull-right"> <i class="fa fa-plus"></i> &nbsp; @lang('main.add_user')</a>
+                    @endcan
+                </div>
             </div>
             @foreach($users as $user)
             <div class="items col-xs-12 col-sm-12 col-md-6 col-lg-6 clearfix">
@@ -22,7 +31,7 @@
                                 <button class="btn btn-small btn-white dropdown-toggle btn-demo-space btn-rounded" data-toggle="dropdown" aria-expanded="false" style="border-radius: 50%;"> <span class="fa fa-ellipsis-v"></span> </button>
                                 <ul class="dropdown-menu pull-right">
                                     <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="{{ route('users.show', $user->id) }}">Show Profile</a></li>
                                     <li><a href="#">Something else here</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#">Separated link</a></li>

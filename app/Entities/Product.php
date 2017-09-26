@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['generic_name', 'stock_code', 'alert_level', 'barcode', 'category_id', 'unit', 'instructions', 'description', 'notes'];
+    protected $fillable = ['generic_name', 'item_name', 'stock_code', 'alert_level', 'barcode', 'category_id', 'unit', 'instructions', 'description'];
 
     /**
      * Return the product category relation.
@@ -26,6 +26,16 @@ class Product extends Model
     public function stock()
     {
         return $this->hasMany(Stock::class);
+    }
+
+    /**
+     * Sales Relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function sales()
+    {
+        return $this->hasMany(SaleItem::class);
     }
 
     /**
@@ -116,5 +126,25 @@ class Product extends Model
 
             return $new_level;
         }
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected function getGenericNameAttribute()
+    {
+        return $this->attributes['generic_name'] ?: $this->attributes['item_name'];
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function scopeMonthlySales($query, $month)
+    {
+        return $this->sales()->whereMonth('created_at', $month);
     }
 }

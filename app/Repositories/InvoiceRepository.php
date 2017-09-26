@@ -53,4 +53,46 @@ class InvoiceRepository extends BaseRepository implements Repository
     {
         return $this->model->where('type', 'invoice')->get();
     }
+
+    /**
+     * Get invoices.
+     *
+     * @return \Illuminate\Database\Collection
+     **/
+    public function orders()
+    {
+        return $this->model->select(
+            'invoices.*'
+        )->where('invoices.type', 'LPO')
+        ->join(
+            'suppliers',
+            'invoices.supplier_id',
+            '=',
+            'suppliers.id'
+        )
+        ->join(
+            'addresses',
+            'addresses.id',
+            '=',
+            'invoices.address_id'
+        );
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function deepSearch($range, $param)
+    {
+        return $this->orders()->when($param, function ($query) use ($param) {
+            return $query->where('invoices.reference_no', 'like', "%{$param}%")
+                        ->orWhere('suppliers.supplier_name', 'like', "%{$param}%")
+                        ->orWhere('invoices.status', 'like', "%{$param}%");
+        })->when($range, function ($query) {
+            extract(date_range(request()));
+
+            return $query->whereBetween('invoices.delivery_date', [$from, $to]);
+        });
+    }
 }

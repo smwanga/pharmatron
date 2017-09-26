@@ -12,7 +12,7 @@
                     <label for="">@lang('main.supplier')</label>
                     <select class="select2" name="supplier_id">
                         <optgroup label="@lang('main.suppliers')">
-                             @foreach($suppliers as $supplier)
+                            @foreach($suppliers as $supplier)
                             <option value="{{$supplier->id}}">{{$supplier->supplier_name}}</option>
                             @endforeach
                         </optgroup>
@@ -36,7 +36,7 @@
                     <span style="display: none;" class="help-block"></span>
                 </div>
 
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="alert">@lang('main.notes')</label>
                     <textarea class="form-control" name="notes" rows="4"  placeholder="@lang('messages.lpo_notes')">{{old('notes')}}</textarea>
                     <span style="display: none;" class="help-block"></span>
