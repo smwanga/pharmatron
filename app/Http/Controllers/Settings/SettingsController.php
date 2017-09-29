@@ -62,6 +62,18 @@ class SettingsController extends Controller
     }
 
     /**
+     * Show the email settings tab.
+     *
+     * @return Illuminate\Http\Response
+     **/
+    public function productSettings()
+    {
+        $config = $this->repository;
+
+        return view('settings.product_settings', compact('config'));
+    }
+
+    /**
      * Show the Access Control List settings tab.
      *
      * @return Illuminate\Http\Response
@@ -117,7 +129,12 @@ class SettingsController extends Controller
      **/
     public function saveConfigSettings(Request $request)
     {
-        $this->validate($request, []);
+        foreach ($request->input() as $key => $value) {
+            $this->config->where('key', $key)->update(['value' => $value]);
+        }
+        cache()->forget('app_config');
+
+        return with_info('Settings updated');
     }
 
     /**

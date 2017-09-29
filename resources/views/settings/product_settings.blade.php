@@ -3,47 +3,42 @@
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 <div class="grid simple horizontal green">
     <div class="grid-title">
-        General Settings
+        Product and Invoice Settings
     </div>
     <div class="grid-body">
         <form action="{{ route('settings.config.update') }}" class="form-horizontal" style="width: 100%;" method="post">
             {{csrf_field()}}
             <div class="form-group">
-                <strong class="col-sm-3 control-label">Site Name</strong>
+                <strong class="col-sm-3 control-label">Invoice Prefix</strong>
                 <div class="col-sm-9">
-                    <input type="text" name="site_name" class="form-control" value="{{$config->site_name}}">
+                    <input type="text" name="inv_prefix" class="form-control" value="{{$config->inv_prefix}}">
                 </div>           
             </div>
              <div class="form-group">
-                <strong class="col-sm-3 control-label">Company Address</strong>
+                <strong class="col-sm-3 control-label">Purchase Order Prefix</strong>
                 <div class="col-sm-9">
-                    <input type="text" name="address" class="form-control" value="{{$config->address}}">
+                    <input type="text" name="lpo_prefix" class="form-control" value="{{$config->lpo_prefix}}">
                 </div>           
             </div>
             <div class="form-group">
-                <strong class="col-sm-3 control-label">Contact Phone</strong>
+                <strong class="col-sm-3 control-label">Payment Notes</strong>
                 <div class="col-sm-9">
-                    <input type="text" name="contact_phone" class="form-control" value="{{$config->contact_phone}}">
+                    <input type="text" name="payment_notes" class="form-control" value="{{$config->payment_notes}}">
                 </div>           
             </div>
             <div class="form-group">
-                <strong class="col-sm-3 control-label">Company E-Mail</strong>
+                <strong class="col-sm-3 control-label">Barcode Prefix</strong>
                 <div class="col-sm-9">
-                    <input type="text" name="contact_email" class="form-control" value="{{$config->contact_email}}">
+                    <input type="text" name="barcode_prefix" class="form-control" value="{{$config->barcode_prefix}}">
                 </div>           
             </div>
             <div class="form-group">
-                <strong class="col-sm-3 control-label">City</strong>
+                <strong class="col-sm-3 control-label">Selleng Price Markup Rate (%)</strong>
                 <div class="col-sm-9">
-                    <input type="text" name="city" class="form-control" value="{{$config->city}}">
+                    <input type="text" name="mark_up_rate" class="form-control" value="{{$config->mark_up_rate}}">
                 </div>           
             </div>
-           {{--  <div class="form-group">
-                <strong class="col-sm-3 control-label">Logo</strong>
-                <div class="col-sm-9">
-                    <img src="{{asset('img/'.$config->app_logo)}}" width="100">
-                </div>           
-            </div> --}}
+
             <div class="col-sm-12">
                 <button class="btn btn-success pull-right" type="submit"><i class="fa fa-save"></i> &nbsp; @lang('main.save')</button>
             </div>

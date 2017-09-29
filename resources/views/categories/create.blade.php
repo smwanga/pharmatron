@@ -21,7 +21,7 @@
                                 <optgroup label="@lang('main.categories')">
                                     <option></option>
                                     <option value="dispense_unit">@lang('main.dispense_unit')</option>
-                                    <option value="product">@lang('main.product')</option>
+                                    <option value="product">@lang('main.product_formulation')</option>
                                 </optgroup>
                             </select>
                         </div>

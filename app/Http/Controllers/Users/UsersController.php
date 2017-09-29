@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\UsersRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUsersRequest;
 
 class UsersController extends Controller
 {
@@ -93,9 +94,24 @@ class UsersController extends Controller
      **/
     public function show(User $user)
     {
-        $forms = true;
+        $data = [
+            'user' => $user,
+            'forms' => true,
+            'sales' => [
+                'this_year' => $user->userSalesThisYear()->map(function ($sale) {
+                    return $sale->total;
+                })->sum(),
+                'this_month' => $user->userSalesThisMonth()->map(function ($sale) {
+                    return $sale->total;
+                })->sum(),
 
-        return view('users.user-sales', compact('user', 'forms'));
+                'today' => $user->userSalesToday()->map(function ($sale) {
+                    return $sale->total;
+                })->sum(),
+            ],
+        ];
+
+        return view('users.user-sales', $data);
     }
 
     /**
@@ -105,10 +121,14 @@ class UsersController extends Controller
      **/
     public function showTimeline(User $user)
     {
-        $forms = true;
-        $timeline = $user->activity()->orderBy('created_at', 'DESC')->paginate();
+        if (Gate::allows('users.manage') || $user->is_logged_in) {
+            $forms = true;
+            $timeline = $user->activity()->orderBy('created_at', 'DESC')->paginate();
 
-        return view('users.timeline', compact('user', 'forms', 'timeline'));
+            return view('users.timeline', compact('user', 'forms', 'timeline'));
+        }
+
+        return abort(401);
     }
 
     /**
@@ -120,13 +140,52 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        if (!Gate::allows('users.manage')) {
+        if (!Gate::allows('users.manage') || !$user->is_logged_in) {
             return abort(401);
         }
         $roles = Role::get()->pluck('name', 'name');
         $pagetitle = trans('main.edit_user');
 
         return view('users.modals.edit-user-details', compact('user', 'roles', 'pagetitle'));
+    }
+
+    /**
+     * Show the form for editing User password.
+     *
+     * @param User $user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function changePassword(User $user)
+    {
+        if (!$user->is_logged_in) {
+            return abort(401);
+        }
+        $pagetitle = 'Change Auth Password';
+
+        return view('users.modals.change-pass', compact('user', 'pagetitle'));
+    }
+
+    /**
+     * Show the form for editing User password.
+     *
+     * @param User $user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request, User $user)
+    {
+        if (!auth()->user()->id === $user->id) {
+            return abort(401);
+        }
+        $this->validate($request, ['new_password' => 'required|confirmed|min:6']);
+        if (password_verify($request->get('current_pass'), $user->password)) {
+            $user->update(['password' => $request->get('new_password')]);
+
+            return ['stutus' => 'success', 'message' => 'Password updated'];
+        }
+
+        return response(['current_pass' => ['The password provided does not match any record']], 422);
     }
 
     /**
@@ -143,15 +202,17 @@ class UsersController extends Controller
             return abort(401);
         }
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $user->person()->updateOrCreate(['id' => $user->id], $request->input());
+        $user->update($request->input());
         foreach ($user->roles as $role) {
             $user->retract($role);
         }
-        foreach ($request->input('roles') as $role) {
-            $user->assign($role);
+        $user->assign($request->input('role'));
+        if ($request->wantsJson()) {
+            return ['status' => 'success', 'message' => 'User details Updated', 'data' => [$user, $request->input()]];
         }
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -161,15 +222,17 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         if (!Gate::allows('users.manage')) {
             return abort(401);
         }
-        $user = User::findOrFail($id);
+        if (auth()->user()->id == $user->id) {
+            return ['staus' => 'error', 'message' => 'Cant delete your own account'];
+        }
         $user->delete();
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('users.index');
     }
 
     /**

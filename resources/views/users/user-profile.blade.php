@@ -20,6 +20,7 @@
                 <div class="user-profile-pic text-left">
                     <img width="69" height="69" data-src-retina="/img/avatar.png" data-src="/img/avatar.png" src="/img/avatar.png" alt="">
                     <div class="pull-right m-r-20 m-t-35">
+                         @if(Bouncer::allows('users.manage') || $user->id === auth()->user()->id)
                         <div class="btn-group">
                             <button data-toggle="dropdown" class="btn btn-small btn-white">
                                 @lang('main.options')
@@ -28,32 +29,38 @@
                                 <span class="caret"></span> 
                             </button>
                                 <ul class="dropdown-menu pull-right">
+                                    @can('users.manage')
                                     <li>
                                         <a class="ajaxModal" data-url="{{ route('users.edit', $user->id) }}">
                                             <i class="fa fa-pencil"></i>
                                             &nbsp; @lang('main.update_profile')
                                         </a>
                                     </li>
+                                   @endcan
                                     <li>
-                                        <a class="ajaxModal" data-url="">
+                                        <a class="ajaxModal" data-url="{{ route('users.pass_change', $user->id) }}">
                                             <i class="fa fa-lock"></i>
                                             &nbsp; @lang('main.reset_password')
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('users.timeline', $user->id) }}">
-                                            <i class="fa fa-messages"></i>
-                                            @lang('main.timeline')
+                                            <i class="fa fa-comments"></i>
+                                             &nbsp; @lang('main.timeline')
                                         </a>
                                     </li>
+                                     @can('users.manage')
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="">
-                                            @lang('main.')
+                                        <a class="btn-delete"  data-url="{{ route('users.delete', $user->id) }}">
+                                            <i class="fa fa-trash"></i>
+                                             &nbsp; @lang('main.delete')
                                         </a>
                                     </li>
+                                    @endcan
                                 </ul>
                             </div> 
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-12 no-padding">

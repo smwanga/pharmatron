@@ -35,8 +35,39 @@
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu pull-right">
-                                <li><a href="{{ route('purchase_order.show', $order->id) }}"> <i class="fa fa-eye"></i> View </a></li>
-                                <li><a href="{{ route('purchase_order.edit', $order->id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
+                                <li>
+                                    <a href="{{ route('purchase_order.show', $order->id) }}">
+                                        <i class="fa fa-eye"></i> View 
+                                    </a>
+                                </li>
+                                @if(! $order->invoiced)
+                                @can('create_purchase_orders')
+                                <li>
+                                    <a href="{{ route('purchase_order.add_items', $order->id) }}"> 
+                                        <i class="fa fa-plus"></i> Add Items
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('create_purchase_orders')
+                                <li>
+                                    <a href="{{ route('purchase_order.edit', $order->id) }}">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                </li>
+                                                
+                                <li>
+                                    <a href="{{ route('purchase_order.create_invoice', $order->id) }}">
+                                        <i class="fa fa-credit-card"></i> Invoice Order
+                                    </a>
+                                </li>
+                                @endcan
+                                @else
+                                <li>
+                                    <a href="{{ route('purchase_order.invoice', $order->id) }}"> 
+                                        <i class="fa fa-ticket"></i> View Invoice
+                                    </a>
+                                </li>
+                                @endif
                             </ul>
                         </td>
                      </tr>     

@@ -7,6 +7,7 @@ use Event;
 use App\Entities\Sale;
 use App\Entities\SaleItem;
 use App\Events\ProductSold;
+use App\Events\SaleDeleted;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Repositories\ProductRepository as Repository;
@@ -33,7 +34,7 @@ class PointOfSaleController extends Controller
         if ($request->has('query') || $request->has('range')) {
             $q = $request->get('query');
             $sales = Sale::when($q, function ($query) use ($q) {
-                return $query->where('customer_name', 'like', "%{$q}%")->orWhere('customer_name', 'like', "%{$q}%");
+                return $query->where('customer_name', 'like', "%{$q}%")->orWhere('ref_number', 'like', "%{$q}%");
             })
             ->when($request->get('range'), function ($query) use ($request) {
                 extract(date_range($request));
@@ -146,6 +147,23 @@ class PointOfSaleController extends Controller
     public function deleteItem(Request $request, SaleItem $item)
     {
         if ($item->delete()) {
+            return response(['status' => 'success', 'message' => 'Item was deleted']);
+        }
+
+        return response(['status' => 'error', 'message' => 'Failed Bad Request'], 405);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function delete(Sale $sale)
+    {
+        $clone = clone $sale;
+        if ($sale->delete()) {
+            Event::fire(new SaleDeleted($clone));
+
             return response(['status' => 'success', 'message' => 'Item was deleted']);
         }
 

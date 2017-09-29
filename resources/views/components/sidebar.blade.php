@@ -26,11 +26,6 @@
                   <li><a href="{{ route('stock.add') }}">@lang('main.add_stock')</a></li>
                   <li><a href="{{ route('products.create') }}">@lang('main.create_stock')</a></li>
                   <li><a href="{{ route('stock.index') }}">@lang('main.stock_listing')</a></li>
-              </ul>
-            </li>
-              <li class="">
-              <a href="javascript:;"> <i class="fa fa-credit-card"></i> <span class="title">@lang('main.inventory')</span> <span class=" arrow"></span> </a>
-              <ul class="sub-menu">
                   <li><a href="{{ route('products.index') }}">@lang('main.products')</a></li>
                   {{-- <li><a href="#">@lang('main.expenses')</a></li> --}}
                   <li><a href="{{ route('purchase_order.index') }}">@lang('main.purchase_orders')</a></li>
@@ -59,11 +54,3 @@
         @yield('side-menu-nav')
       </div>
       <a href="#" class="scrollup">Scroll</a>
-      <div class="footer-widget">
-        <div class="progress transparent progress-small no-radius no-margin">
-          <div class="progress-bar progress-bar-success animate-progress-bar" data-percentage="79%" style="width: 79%;"></div>
-        </div>
-        <div class="pull-right">
-          <div class="details-status"> <span class="animate-number" data-value="86" data-animation-duration="560">86</span>% </div>
-          <a href="lockscreen.html"><i class="material-icons">power_settings_new</i></a></div>
-      </div>

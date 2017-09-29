@@ -81,30 +81,33 @@
                           </div>
                         </div>
                         <hr>
-                        <h5 class="semi-bold m-t-30 m-l-30">@lang('main.available_stock')</h5>
+                        <h5 class="semi-bold m-t-30 m-l-30">@lang('main.stock_movement')</h5>
                         <table class="table no-more-tables m-t-20 m-l-20 m-b-30">
                           <thead>
                             <tr>
-                              <th>@lang('main.ref_number')</th>
-                              <th>@lang('main.unit_price')</th>
+                              <th>@lang('main.date')</th>
+                              <th>@lang('main.qty')</th>
                               <th>@lang('main.stock_value')</th>
-                              <th>@lang('main.expiry_date')</th>
-                              <th>@lang('main.available_stock') </th>
+                              <th>@lang('main.user')</th>
+                              <th>@lang('main.comment') </th>
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach($product->stock()->available()->take(5)->get() as $stock)
+                            @foreach($movement as $stock)
                             <tr>
-                              <th class="visible-xs">@lang('main.ref_number')</th>
-                              <td class="v-align-middle bold text-success">{{$stock->ref_number}}</td>
-                              <th class="visible-xs">@lang('main.unit_price')</th>
-                              <td class="v-align-middle bold text-success">{{app_cry()->symbol_left}} : {{number_format($stock->selling_price, 2)}}</td>
-                              <th class="visible-xs">@lang('main.stock_value')</th>
-                              <td class="v-align-middle"><span class="muted">{{app_cry()->symbol_left}} {{number_format($stock->available()->stockValue())}}</span> </td>
-                              <th class="visible-xs">@lang('main.expiry_date')</th>
-                              <td><span class="muted bold text-success">{{$stock->expire_at->format('d-m-Y')}}</span> </td>
-                              <th class="visible-xs">@lang('main.available_stock')</th>
-                              <td class="v-align-middle">{{$stock->stock_available}}</td>
+                              <td>
+                                {{$stock->created_at->format('d-m-Y')}}
+                              </td>
+                              <td>
+                                {{$stock->qty}}
+                              </td>
+                              <td>
+                                {{$stock->on_stock}}
+                              </td>
+                              <td>
+                                {{$stock->user->name}}
+                              </td>
+                              <td>@lang('main.'.$stock->tr_type)</td>
                             </tr>
                             @endforeach
                           </tbody>

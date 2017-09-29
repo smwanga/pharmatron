@@ -16,7 +16,12 @@ class Stock extends Model
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($model) {
+        static::saving(function ($model) {
+            $bp = $model->attributes['marked_price'];
+            if ($model->attributes['discount'] > 0) {
+                $bp = $model->attributes['marked_price'] - ($model->attributes['marked_price'] * 100 / $model->attributes['discount']);
+            }
+            $model->attributes['buying_price'] = $bp;
             $model->attributes['stock_available'] = $model->attributes['pack_size'] * $model->attributes['qty'];
         });
     }
@@ -26,7 +31,7 @@ class Stock extends Model
      *
      * @var array
      **/
-    protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id', 'stock_available'];
+    protected $fillable = ['ref_number', 'lpo_number', 'description', 'pack_size', 'qty', 'marked_price', 'selling_price', 'batch_no', 'expire_at', 'supplier_id', 'product_id', 'stock_available', 'buying_price', 'discount'];
 
     protected $dates = ['expire_at'];
 

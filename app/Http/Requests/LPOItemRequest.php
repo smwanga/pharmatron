@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Bouncer;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LPOItemRequest extends FormRequest
@@ -13,7 +14,7 @@ class LPOItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Bouncer::allows('create_purchase_orders');
     }
 
     /**

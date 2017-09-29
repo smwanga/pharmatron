@@ -2,11 +2,12 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['amount', 'tr_code', 'authorized_by', 'sale_id', 'invoice_id', 'notes', 'status'];
 
     /**
      * Hook into the model bootstraper and atach event listeners.
@@ -36,5 +37,35 @@ class Payment extends Model
         $hex = substr($s, 0, 13);
         $dec = $s[13].substr($s, 15); // skip the dot
         return mb_strtoupper(base_convert($hex, 16, 36).base_convert($dec, 10, 36));
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public static function getTodaySales()
+    {
+        return static::whereDate('created_at', Carbon::now()->format('Y-m-d'))->where('status', 'Payment')->sum('amount');
+    }
+
+    public static function getSalesThisMonth()
+    {
+        return static::where('created_at', 'like', Carbon::now()->format('Y-m').'%')->where('status', 'Payment')->sum('amount');
+    }
+
+    public static function getExpensesThisMonth()
+    {
+        return static::where('created_at', 'like', Carbon::now()->format('Y-m').'%')->where('status', 'Expense')->sum('amount');
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'authorized_by');
     }
 }

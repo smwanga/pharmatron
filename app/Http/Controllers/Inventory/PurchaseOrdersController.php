@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Inventory;
 
+use App\Entities\Stock;
 use App\Entities\Invoice;
 use Illuminate\Http\Request;
 use App\Http\Requests\LPORequest;
@@ -55,6 +56,28 @@ class PurchaseOrdersController extends Controller
         ];
 
         return $this->getResponse($data, $request);
+    }
+
+    /**
+     * Search a purchase order by refernce number.
+     *
+     * @param Request $request
+     *
+     * @return Illuminate\Database\Collection
+     **/
+    public function search(Request $request)
+    {
+        return $this->repository->orders()->where(function ($query) use ($request) {
+            return $query->where('reference_no', 'like', '%'.$request->get('query').'%');
+        })->get()
+        ->map(function ($lpo) {
+            return ['value' => $lpo->reference_no."[ {$lpo->supplier->supplier_name}]", 'data' => $lpo->reference_no];
+        })->pipe(function ($result) use ($request) {
+            return [
+                    'query' => $request->get('query'),
+                    'suggestions' => $result->all(),
+            ];
+        });
     }
 
     /**
@@ -246,5 +269,80 @@ class PurchaseOrdersController extends Controller
         }
 
         return redirect_with_info(route('purchase_order.show', $order->id), $response['message']);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function invoicePurchaseOrder(Invoice $order)
+    {
+        if (\Bouncer::allows('manage_purchase_orders')) {
+            $items = Stock::where('lpo_number', $order->reference_no)->get();
+            $invoice = Invoice::where('lpo_number', $order->reference_no)->first();
+            if (count($items) > 0 && null == $invoice) {
+                $data = [
+                    'lpo_number' => $order->reference_no,
+                    'supplier_id' => $order->supplier_id,
+                    'type' => 'Invoice',
+                    'currency_id' => $order->currency_id,
+                    'status' => 'inv',
+                    'invoiced' => true,
+                ];
+
+                $invoice = Invoice::create($data);
+                foreach ($items as $key => $item) {
+                    $invoice->items()->create([
+                        'product_id' => $item->product_id,
+                        'qty' => $item->qty,
+                        'unit_cost' => $item->buying_price,
+                    ]);
+                }
+
+                $order->invoiced = true;
+                $order->save();
+            }
+
+            return redirect()->route('purchase_order.invoice', $order->id);
+        }
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function showInvoice(Invoice $order)
+    {
+        $invoice = Invoice::where('lpo_number', $order->reference_no)->first();
+
+        return view('inventory.edit-invoice', ['invoice' => $invoice, 'pagetitle' => 'Supplier Invoice']);
+    }
+
+    /**
+     * Show view for adding an invoice payment.
+     *
+     * @param Invoice $invoice
+     **/
+    public function addPayment(Invoice $invoice)
+    {
+        return view('inventory.modals.pay-invoice', ['invoice' => $invoice]);
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function payInvoice(Request $request, Invoice $invoice)
+    {
+        $this->validate($request, ['amount' => 'required|numeric|between:0,'.$invoice->due]);
+
+        $payment = $invoice->payments()->create($request->only('amount', 'notes'));
+        $payment->type = 'Expense';
+        $payment->save();
+
+        return with_info('Invoice payment has been added');
     }
 }

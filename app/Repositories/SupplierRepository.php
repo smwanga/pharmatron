@@ -33,4 +33,17 @@ class SupplierRepository extends BaseRepository implements Repository
 
         return $supplier;
     }
+
+    /**
+     * Supplier invoices.
+     *
+     *
+     * @author
+     **/
+    public function invoiceData($supplier)
+    {
+        return $supplier->invoices()->where('type', 'Invoice')->get()->map(function ($invoice) {
+            return ['total' => $invoice->total, 'paid' => $invoice->paid, 'due' => $invoice->due];
+        });
+    }
 }

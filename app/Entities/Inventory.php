@@ -19,4 +19,9 @@ class Inventory extends Model
      * @var array
      **/
     protected $fillable = ['created_by', 'comment', 'on_stock', 'qty', 'product_id', 'tr_type'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
 }

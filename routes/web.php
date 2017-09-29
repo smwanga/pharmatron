@@ -49,6 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('update-product/{product}', 'ProductsController@update')
         ->name('products.update');
 
+        Route::delete('delete-product/{product}', 'ProductsController@delete')
+        ->name('products.delete');
+
         Route::group(['prefix' => 'stock'], function () {
             Route::get('/', 'StockController@index')
             ->name('stock.index');
@@ -80,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('deactivate/{stock}', 'StockController@deactivateStock')
             ->name('stock.deactivate');
 
-            Route::post('{stock}/save-stock', 'StockController@store')
+            Route::post('{product}/save-stock', 'StockController@store')
             ->name('stock.save');
 
             Route::get('{stock}/activate-stock', 'StockController@activateStock')
@@ -153,6 +156,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('email-settings', 'SettingsController@emailSettings')
         ->name('settings.email');
 
+        Route::get('product-settings', 'SettingsController@productSettings')
+        ->name('settings.products');
+
         Route::get('create-config-item', 'SettingsController@createConfigItem')
         ->name('settings.config.create');
 
@@ -167,6 +173,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('save-config-item', 'SettingsController@saveConfigItem')
         ->name('settings.config.save');
+
+        Route::post('save-config-item', 'SettingsController@saveConfigSettings')
+        ->name('settings.config.update');
     });
 
     Route::group(['prefix' => 'users', 'namespace' => 'Users'], function () {
@@ -179,14 +188,26 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('show-profile/{user}', 'UsersController@show')
         ->name('users.show');
 
+        Route::get('change-password/{user}', 'UsersController@changePassword')
+        ->name('users.pass_change');
+
+        Route::patch('change-password/{user}', 'UsersController@updatePassword')
+        ->name('users.pass_update');
+
         Route::get('show-profile/{user}/timeline', 'UsersController@showTimeline')
         ->name('users.timeline');
 
         Route::get('edit-profile/{user}', 'UsersController@edit')
         ->name('users.edit');
 
+        Route::delete('delete-user/{user}', 'UsersController@destroy')
+        ->name('users.delete');
+
         Route::post('save-user', 'UsersController@store')
         ->name('users.save')->middleware('can:users.manage');
+
+        Route::patch('update-user/{user}', 'UsersController@update')
+        ->name('users.update')->middleware('can:users.manage');
     });
 
     Route::group(['prefix' => 'invoices'], function () {
@@ -200,6 +221,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('create', 'PurchaseOrdersController@createPurchaseOrder')
         ->name('purchase_order.create');
+
+        Route::get('/search-orders', 'PurchaseOrdersController@search')
+        ->name('purchase_order.search');
 
         Route::get('{lpo}/add-items', 'PurchaseOrdersController@addItems')
         ->name('purchase_order.add_items');
@@ -227,6 +251,19 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::patch('update-order/{order}', 'PurchaseOrdersController@updatePurchaseOrder')
         ->name('purchase_order.update');
+
+        //Invoice
+        Route::get('invoice-order/{order}', 'PurchaseOrdersController@invoicePurchaseOrder')
+        ->name('purchase_order.create_invoice');
+
+        Route::get('show-invoice/{order}', 'PurchaseOrdersController@showInvoice')
+        ->name('purchase_order.invoice');
+
+        Route::get('add-payment-invoice/{invoice}', 'PurchaseOrdersController@addPayment')
+        ->name('purchase_order.invoice.add_payment');
+
+        Route::post('payment-invoice/{invoice}', 'PurchaseOrdersController@payInvoice')
+        ->name('purchase_order.invoice.pay');
     });
 
     Route::group(['prefix' => 'sales', 'namespace' => 'Pos'], function () {
@@ -238,6 +275,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('search', 'PointOfSaleController@searchItem')
         ->name('sales.search');
+
+        Route::delete('delete/{sale}', 'PointOfSaleController@delete')
+        ->name('sales.delete')->middleware('can:delete_sales_records');
 
         Route::post('add-item/{sale?}', 'PointOfSaleController@addItem')
         ->name('sales.item.add')->middleware('can:dispense.medicine');

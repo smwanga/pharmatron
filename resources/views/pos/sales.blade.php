@@ -27,7 +27,7 @@
                   <div class="col-sm-12 m-t20 m-b-20">
                     <form id="sales-search">
                     <div class="col-sm-4 form-group">
-                          <input value="{{request()->get('range', "$from to $to")}}" type="text" name="range" class="form-control range input-sm">
+                          <input value="{{request()->get('range')}}" type="text" name="range" class="form-control range input-sm">
                     </div>
                     <div class="col-sm-5 form-group">
                      <div class="input-group">
@@ -86,7 +86,9 @@
                                 @if($sale->type == 'draft')
                                 <li><a href="{{ route('sales.index', $sale->id) }}">@lang('main.view')</a></li>
                                 @endif
-                                <li><a href="#">@lang('main.delete')</a></li>
+                                @can('delete_sales_records')
+                                <li><a data-url="{{ route('sales.delete', $sale->id) }}" href="#" class="delete-btn" data-name="Sales Record">@lang('main.delete')</a></li>
+                                @endcan
                                 <li class="divider"></li>
                                 <li><a href="{{ route('sales.invoice.labels', $sale->id) }}">@lang('main.view_labels')</a></li>
                               </ul>

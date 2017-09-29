@@ -119,7 +119,9 @@ class SuppliersController extends Controller
      **/
     public function show(Supplier $supplier)
     {
+        $payments = $this->repository->invoiceData($supplier);
         $data = [
+            'payments' => $payments,
             'title' => $supplier->supplier_name,
             'supplier' => $supplier,
             'contacts' => $supplier->contacts()->paginate(5),

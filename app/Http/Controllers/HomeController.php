@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Payment;
+
 class HomeController extends Controller
 {
     /**
@@ -19,6 +21,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['hide_title' => true, 'pagetitle' => trans('titles.dashboard')]);
+        $tiles = [
+                'sales_today' => Payment::getTodaySales(),
+                'expenses' => Payment::getExpensesThisMonth(),
+                'sales_month' => Payment::getSalesThisMonth(),
+                'stock_value' => resolve('App\Contracts\Repositories\StockRepository')->getStockValue(),
+        ];
+
+        return view('home', ['tiles' => $tiles, 'pagetitle' => trans('titles.dashboard')]);
     }
 }

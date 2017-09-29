@@ -21,12 +21,7 @@
                 </a>
                 <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
                   <li>
-                    <a href="user-profile.html"> My Account</a>
-                  </li>
-                  <li>
-                    <a href="email.html"> My Inbox&nbsp;&nbsp;
-                      <span class="badge badge-important animated bounceIn">2</span>
-                    </a>
+                    <a href="{{ route('users.show', auth()->user()->id) }}"> My Account</a>
                   </li>
                   <li class="divider"></li>
                   <li>
@@ -51,33 +46,6 @@
                 </a>
               </li>
             </ul>
-            <ul class="nav quick-section">
-              <li class="m-r-10 input-prepend inside search-form no-boarder">
-                <span class="add-on"> <i class="material-icons">search</i></span>
-                <input name="" type="text" class="no-boarder " placeholder="Search Dashboard" style="width:250px;">
-              </li>
-            </ul>
-          </div>
-          <div id="notification-list" style="display:none">
-            <div style="width:300px">
-              <div class="notification-messages info">
-                <div class="user-profile">
-                  <img src="assets/img/profiles/d.jpg" alt="" data-src="assets/img/profiles/d.jpg" data-src-retina="assets/img/profiles/d2x.jpg" width="35" height="35">
-                </div>
-                <div class="message-wrapper">
-                  <div class="heading">
-                    David Nester - Commented on your wall
-                  </div>
-                  <div class="description">
-                    Meeting postponed to tomorrow
-                  </div>
-                  <div class="date pull-left">
-                    A min ago
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-              </div>
-            </div>
           </div>
           <!-- END TOP NAVIGATION MENU -->
           <!-- BEGIN CHAT TOGGLER -->
@@ -95,7 +63,7 @@
                 </a>
                 <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
                   <li>
-                    <a href="user-profile.html"> My Account</a>
+                    <a href="{{ route('users.show', auth()->user()->id) }}"> My Account</a>
                   </li>
                   </li>
                   <li class="divider"></li>

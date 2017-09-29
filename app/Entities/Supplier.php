@@ -29,4 +29,14 @@ class Supplier extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function orders()
+    {
+        $this->invoices()->where('type', 'LPO')->get();
+    }
 }

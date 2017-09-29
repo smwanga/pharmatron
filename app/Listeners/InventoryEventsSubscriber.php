@@ -25,6 +25,7 @@ class InventoryEventsSubscriber
         $events->listen(ProductSold::class, [$this, 'productSold']);
         $events->listen(ProductCreated::class, [$this, 'productCreated']);
         $events->listen(ProductUpdated::class, [$this, 'productUpdated']);
+        $events->listen(SaleDeleted::class, [$this, 'saleDeleted']);
     }
 
     /**
@@ -116,6 +117,23 @@ class InventoryEventsSubscriber
             'action' => 'info',
             'icon' => 'fa fa-medkit',
             'details' => trans('messages.loging.edit_product', $params),
+        ];
+        $this->logActivity(auth()->user(), $log);
+    }
+
+    /**
+     * Handle for product updated event.
+     *
+     * @param ProductUpdated $event
+     **/
+    public function saleDeleted(SaleDeleted $event)
+    {
+        $sale = $event->sale;
+        $log = [
+            'type' => 'delete_sale',
+            'action' => 'danger',
+            'icon' => 'fa fa-credit-card',
+            'details' => "Daleted a sale record worth Ksh {$sale->total}",
         ];
         $this->logActivity(auth()->user(), $log);
     }

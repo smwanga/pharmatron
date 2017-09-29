@@ -1,4 +1,4 @@
-<div class="col-md-11">
+<div class="col-md-10">
               <div class="grid simple">
                 <div class="grid-body no-border invoice-body">
                   <div class="col-xs-3 pull-right hidden-print m-r-0 hidden-sm hidden-xs">

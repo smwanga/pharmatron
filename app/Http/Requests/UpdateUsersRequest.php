@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Bouncer;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsersRequest extends FormRequest
+class UpdateUsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class UsersRequest extends FormRequest
      */
     public function authorize()
     {
-        return Bouncer::allows('users.manage');
+        return \Bouncer::allows('users.manage');
     }
 
     /**
@@ -26,8 +25,7 @@ class UsersRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
+            'email' => 'required|email|unique:users,email,'.request()->get('user_id'),
             'role' => 'required',
             'phone_number' => 'required|min:8|max:13',
             'address' => 'nullable|string|max:255',

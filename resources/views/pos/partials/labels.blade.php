@@ -20,6 +20,7 @@
             </div>
         </div>
     </div>
-    <div class="page-break"></div>
+    <hr class="show-print">
+    <div class="page-break" style="margin-bottom: 40px !important;"></div>
     @endforeach
 </div>

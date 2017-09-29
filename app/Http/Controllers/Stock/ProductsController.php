@@ -171,6 +171,7 @@ class ProductsController extends Controller
     {
         $this->data['pagetitle'] = $product->generic_name;
         $this->data['product'] = $product;
+        $this->data['movement'] = $product->stockMovement()->orderBy('created_at', 'DESC')->paginate(10);
 
         return view('stock.product', $this->data);
     }
@@ -223,5 +224,14 @@ class ProductsController extends Controller
         Event::fire(new ProductUpdated($dirty, $product));
 
         return redirect_with_info(route('products.index'));
+    }
+
+    public function delete(Product $product)
+    {
+        if ($product->delete()) {
+            return ['status' => 'success', 'message' => 'Product was successfully deleted'];
+        }
+
+        return ['status' => 'error', 'message' => 'an error was encountered whie deleting product'];
     }
 }

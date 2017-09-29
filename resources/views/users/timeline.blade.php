@@ -20,5 +20,10 @@
         </li>
         @endforeach
     </ul>
+     <div class="row m-t-20">
+        <center>
+            {!! $timeline->render() !!}
+        </center>
+    </div>
 </div>
 @endsection

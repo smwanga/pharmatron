@@ -8,6 +8,7 @@ return [
     'empty_instructions' => 'There were no usage instructions provided for this product',
     'empty_notes' => 'There is no additional information provided',
     'validation' => [
+        'buying_price' => 'The buying price price is required',
         'suppliers' => [
             'required' => 'Please choose a supplier from the dropdown',
             'after' => 'The drug seems to have already expired',

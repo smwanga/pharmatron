@@ -1,6 +1,8 @@
 @extends('partials.ajax-modal')
     @section('modal-body')
         <div class="grid-body">
+            <form id="update-user" method="post">
+                <input type="hidden" value="{{$user->id}}" name="user_id">
                     <div class="row">
                         <div class="form-group col-sm-6">
                             <label for="name">@lang('main.name')</label>
@@ -18,7 +20,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="city">@lang('main.city')</label>
-                            <input value="{{optional($user->person)->city}}" type="text" class="form-control" name="city" id="city" placeholder="Nairobi">
+                            <input value="{{optional($user->person)->city}}" type="text" class="form-control" name="city" id="city" placeholder="Residence">
                         </div>
                     </div>
                     <div class="row">
@@ -46,9 +48,20 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <script type="text/javascript">
-                    $('.select2').select2({width:'100%'})
-                </script>
+            </form>
+        </div>
+    <script type="text/javascript">
+         $('.select2').select2({width:'100%'});
+
+         $('#update-user').on('submit', function(event) {
+            event.preventDefault();
+            let $data = $(this).getFormData();
+            let $user = {!! json_encode($user) !!}
+            axios.patch(route('users.update', $user.id), $data).then(function(response) {
+                $.fn.notify('User details has been updated');
+                location.reload(true);
+            })
+         });
+    </script>
 @endsection
                        

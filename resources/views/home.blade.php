@@ -9,16 +9,10 @@
               <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                 <div class="tiles blue added-margin">
                   <div class="tiles-body">
-                    <div class="controller">
-                      <a href="javascript:;" class="reload"></a>
-                      <a href="javascript:;" class="remove"></a>
-                    </div>
                     <div class="tiles-title"> TODAY’S SALES </div>
-                    <div class="heading"> <span class="animate-number" data-value="26.8" data-animation-duration="1200">26.8</span>% </div>
+                    <div class="heading">{{app_cry()->symbol_left}} <span class="animate-number" data-value="{{$tiles['sales_today']}}" data-animation-duration="1200">{{number_format($tiles['sales_today'], 1)}}</span></div>
                     <div class="progress transparent progress-small no-radius">
-                      <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="26.8%" style="width: 26.8%;"></div>
-                    </div>
-                    <div class="description"><i class="icon-custom-up"></i><span class="text-white mini-description ">&nbsp; 4% higher <span class="blend">than last month</span></span>
+                      <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="100%" style="width: 100%;"></div>
                     </div>
                   </div>
                 </div>
@@ -26,16 +20,10 @@
               <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
                 <div class="tiles green added-margin">
                   <div class="tiles-body">
-                    <div class="controller">
-                      <a href="javascript:;" class="reload"></a>
-                      <a href="javascript:;" class="remove"></a>
-                    </div>
                     <div class="tiles-title">CURENT STOCK VALUE </div>
-                    <div class="heading"> <span class="animate-number" data-value="2545665" data-animation-duration="1000">2,545,665</span> </div>
+                    <div class="heading">{{app_cry()->symbol_left}} <span class="animate-number" data-value="{{$tiles['stock_value']}}" data-animation-duration="1000">{{ number_format($tiles['stock_value']) }}</span> </div>
                     <div class="progress transparent progress-small no-radius">
                       <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="79%" style="width: 79%;"></div>
-                    </div>
-                    <div class="description"><i class="icon-custom-up"></i><span class="text-white mini-description ">&nbsp; 2% higher <span class="blend">than last month</span></span>
                     </div>
                   </div>
                 </div>
@@ -43,16 +31,10 @@
               <div class="col-md-3 col-sm-6 spacing-bottom">
                 <div class="tiles red added-margin">
                   <div class="tiles-body">
-                    <div class="controller">
-                      <a href="javascript:;" class="reload"></a>
-                      <a href="javascript:;" class="remove"></a>
-                    </div>
-                    <div class="tiles-title"> PENDING ORDERS </div>
-                    <div class="heading"> $ <span class="animate-number" data-value="14500" data-animation-duration="1200">14,500</span> </div>
+                    <div class="tiles-title"> EXPENSES THIS MONTH </div>
+                    <div class="heading">{{app_cry()->symbol_left}} <span class="animate-number" data-value="{{$tiles['expenses']}}" data-animation-duration="1200">{{number_format($tiles['expenses'])}}</span> </div>
                     <div class="progress transparent progress-white progress-small no-radius">
                       <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="45%" style="width: 45%;"></div>
-                    </div>
-                    <div class="description"><i class="icon-custom-up"></i><span class="text-white mini-description ">&nbsp; 5% higher <span class="blend">than last month</span></span>
                     </div>
                   </div>
                 </div>
@@ -60,18 +42,12 @@
               <div class="col-md-3 col-sm-6">
                 <div class="tiles purple added-margin">
                   <div class="tiles-body">
-                    <div class="controller">
-                      <a href="javascript:;" class="reload"></a>
-                      <a href="javascript:;" class="remove"></a>
-                    </div>
-                    <div class="tiles-title"> EXPIRED STOCK VALUE </div>
+                    <div class="tiles-title"> SALES THIS MONTH </div>
                     <div class="row-fluid">
-                      <div class="heading"> <span class="animate-number" data-value="1600" data-animation-duration="700">1,600</span> </div>
+                      <div class="heading">{{app_cry()->symbol_left}} <span class="animate-number" data-value="{{$tiles['sales_month']}}" data-animation-duration="700">{{number_format($tiles['sales_month'])}}</span> </div>
                       <div class="progress transparent progress-white progress-small no-radius">
                         <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="12%" style="width: 12%;"></div>
                       </div>
-                    </div>
-                    <div class="description"><i class="icon-custom-up"></i><span class="text-white mini-description ">&nbsp; 3% higher <span class="blend">than last month</span></span>
                     </div>
                   </div>
                 </div>

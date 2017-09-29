@@ -5,14 +5,14 @@
                             <div class="row-fluid m-b-lg">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="genericName">@lang('main.generic_name')</label>
-                                            <input value="{{old('generic_name')}}" type="text" class="form-control" name="generic_name" id="genericName" placeholder="Product name">
-                                            <span class="help-block"></span>
-                                        </div>
                                         <div class="form-group  col-md-6">
                                             <label for="item-name">@lang('main.item_name')</label>
                                             <input type="text" class="form-control col-md-6" name="item_name" value="{{old('item_name')}}" id="item-name" placeholder="Item Name">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="genericName">@lang('main.generic_name')</label>
+                                            <input value="{{old('generic_name')}}" type="text" class="form-control" name="generic_name" id="genericName" placeholder="Product name">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>

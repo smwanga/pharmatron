@@ -11,7 +11,6 @@
     <div class="overlayer bottom-right fullwidth">
       <div class="overlayer-wrapper">
         <div class="tiles gradient-black p-l-20 p-r-20 p-b-20 p-t-20">
-          <div class="pull-right"> <a href="#" class="hashtags transparent"> <i class="fa fa-chevron-down fa-lg"></i> </a> </div>
           <p class="h2 text-white">{{$supplier->supplier_name}}</p>
           <div class="clearfix"></div>
         </div>
@@ -29,7 +28,7 @@
                         <ul class="dropdown-menu pull-right">
                           <li><a href="{{ route('suppliers.edit', $supplier->id) }}">@lang('main.edit')</a></li>
                           <li><a class="ajaxModal" data-url="{{ route('suppliers.contacts.add', $supplier->id) }}">@lang('main.add_contact')</a></li>
-                          <li><a href="#">@lang('main.add_payment')</a></li>
+                          {{-- <li><a href="#">@lang('main.invoices')</a></li> --}}
                           <li class="divider"></li>
                           <li><a href="{{ route('suppliers.profile.orders', $supplier->id) }}">@lang('main.purchase_orders')</a></li>
                         </ul>

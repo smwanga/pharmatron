@@ -6,7 +6,8 @@
         Email Settings
     </div>
     <div class="grid-body">
-        <form action="" class="form-horizontal" style="width: 100%;" method="post">
+        <form action="{{ route('settings.config.update') }}" class="form-horizontal" style="width: 100%;" method="post">
+            {{csrf_field()}}
             <div class="form-group">
                 <strong class="col-sm-3 control-label">SMTP HOST</strong>
                 <div class="col-sm-9">
@@ -34,7 +35,7 @@
             <div class="form-group">
                 <strong class="col-sm-3 control-label">Sparkpost</strong>
                 <div class="col-sm-9">
-                    <input type="text" name="city" class="form-control" value="{{$config->sparpost_domain}}">
+                    <input type="text" name="sparkpost_domain" class="form-control" value="{{$config->sparkpost_domain}}">
                 </div>           
             </div>
 

@@ -1,40 +1,40 @@
 @extends('suppliers.supplier-profile')
 @section('profile-content')
 <div class="row">
-            <div class="col-md-6 col-vlg-3 col-sm-6">
+            <div class="col-md-12 col-vlg-12 col-sm-12">
               <div class="tiles green m-b-10">
                 <div class="tiles-body">
                   <div class="tiles-title text-white">OVERALL PAYMENTS </div>
                   <div class="widget-stats">
                     <div class="wrapper transparent">
-                      <span class="item-title">Total</span> <span class="item-count animate-number semi-bold" data-value="2415" data-animation-duration="700">2,415</span>
+                      <span class="item-title">Total</span> <span class="item-count animate-number semi-bold" data-value="{{$payments->sum('total')}}" data-animation-duration="700">{{$payments->sum('total')}}</span>
                     </div>
                   </div>
                   <div class="widget-stats">
                     <div class="wrapper transparent">
-                      <span class="item-title">Paid Amount</span> <span class="item-count animate-number semi-bold" data-value="751" data-animation-duration="700">751</span>
+                      <span class="item-title">Paid Amount</span> <span class="item-count animate-number semi-bold" data-value="{{$payments->sum('paid')}}" data-animation-duration="700">{{$payments->sum('paid')}}</span>
                     </div>
                   </div>
                   <div class="widget-stats ">
                     <div class="wrapper last">
-                      <span class="item-title">Due Amount</span> <span class="item-count animate-number semi-bold" data-value="1547" data-animation-duration="700">1,547</span>
+                      <span class="item-title">Due Amount</span> <span class="item-count animate-number semi-bold" data-value="{{$payments->sum('due')}}" data-animation-duration="700">{{$payments->sum('due')}}</span>
                     </div>
                   </div>
                   <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" style="width: 64.8%;"></div>
+                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="{{number_format(($payments->sum('paid')/$payments->sum('total') * 100),2)}}%" style="width: 64.8%;"></div>
                   </div>
-                  <div class="description"> <span class="text-white mini-description ">4% Paid out</span>
+                  <div class="description"> <span class="text-white mini-description ">{{number_format(($payments->sum('paid')/$payments->sum('total') * 100),2)}}% Paid out</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-vlg-3 col-sm-6">
+{{--             <div class="col-md-6 col-vlg-3 col-sm-6">
               <div class="tiles blue m-b-10">
                 <div class="tiles-body">
                   <div class="tiles-title text-white">OVERALL ORDERS </div>
                   <div class="widget-stats">
                     <div class="wrapper transparent">
-                      <span class="item-title">Overall Visits</span> <span class="item-count animate-number semi-bold" data-value="15489" data-="" animation-duration="700">15,489</span>
+                      <span class="item-title">Orders</span> <span class="item-count animate-number semi-bold" data-value="15489" data-="" animation-duration="700">15,489</span>
                     </div>
                   </div>
                   <div class="widget-stats">
@@ -54,7 +54,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
 
                 <h5 class="semi-bold m-t-30 m-l-30">@lang('main.contacts')</h5>

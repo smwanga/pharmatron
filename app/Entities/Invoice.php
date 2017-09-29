@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
+    protected $casts = [
+        'invoiced' => 'boolean',
+    ];
     /**
      * Whitelisted fields for mass assignment.
      *
      * @var array
      **/
-    protected $fillable = ['supplier_id', 'due_after', 'notes', 'address_id', 'currency_id', 'delivery_date'];
+    protected $fillable = ['supplier_id', 'due_after', 'notes', 'address_id', 'currency_id', 'delivery_date', 'invoiced', 'lpo_number', 'type'];
 
     /**
      * Date motators.
@@ -29,7 +32,7 @@ class Invoice extends Model
     {
         parent::boot();
         static::creating(function ($model) {
-            switch ($model->type) {
+            switch ($model->attributes['type']) {
                 case 'LPO':
                     $ref = tr_code(app_config('lpo_prefix'));
                     break;
@@ -46,7 +49,8 @@ class Invoice extends Model
                     $ref = tr_code();
                     break;
             }
-            $model->ref_number = $ref;
+            $model->reference_no = $ref;
+            $model->created_by = auth()->user()->id;
         });
     }
 
@@ -108,5 +112,57 @@ class Invoice extends Model
     public function scopeOfType($query, string $type)
     {
         return $query->where('type', $type);
+    }
+
+    /**
+     * Product relation.
+     *
+     * @return Product
+     **/
+    public function invoice()
+    {
+        return $this->belongsTo(self::class);
+    }
+
+    /**
+     * Get the sub total amount before taxes and discounts are applied.
+     *
+     * @return float
+     **/
+    protected function getTotalAttribute()
+    {
+        return $this->items->map(function ($item) {
+            return $item->qty * $item->unit_cost;
+        })->sum();
+    }
+
+    /**
+     * Get the total due Amount for a sale.
+     *
+     * @return float
+     **/
+    protected function getDueAttribute()
+    {
+        return $this->total - $this->paid;
+    }
+
+    /**
+     * Get the total amount paid for a sold item.
+     *
+     * @return float
+     **/
+    protected function getPaidAttribute()
+    {
+        return $this->payments()->sum('amount');
+    }
+
+    /**
+     * Get payments relation to a sale.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

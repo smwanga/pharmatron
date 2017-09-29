@@ -30,11 +30,10 @@
                             <div class="btn-group">
                                 <button class="btn btn-small btn-white dropdown-toggle btn-demo-space btn-rounded" data-toggle="dropdown" aria-expanded="false" style="border-radius: 50%;"> <span class="fa fa-ellipsis-v"></span> </button>
                                 <ul class="dropdown-menu pull-right">
-                                    <li><a href="#">Action</a></li>
+                                    <li><a href="{{ route('users.timeline', $user->id) }}">Recent Activities</a></li>
                                     <li><a href="{{ route('users.show', $user->id) }}">Show Profile</a></li>
-                                    <li><a href="#">Something else here</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a class="delete-btn" data-name="{{$user->name}}'s Account" data-url="{{ route('users.delete', $user->id) }}">Delete</a></li>
                                 </ul>
                             </div> 
                         </div>
@@ -55,6 +54,11 @@
 
             </div>
             @endforeach
+            <div class="row m-t-20">
+                <center>
+                    {!! $users->render() !!}
+                </center>
+            </div>
         </div>
 	</div>
 </div>
