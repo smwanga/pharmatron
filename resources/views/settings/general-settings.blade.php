@@ -38,6 +38,12 @@
                     <input type="text" name="city" class="form-control" value="{{$config->city}}">
                 </div>           
             </div>
+            <div class="form-group">
+                <strong class="col-sm-3 control-label">Postal Code</strong>
+                <div class="col-sm-9">
+                    <input type="text" name="zip_code" class="form-control" value="{{$config->zip_code}}">
+                </div>           
+            </div>
            {{--  <div class="form-group">
                 <strong class="col-sm-3 control-label">Logo</strong>
                 <div class="col-sm-9">

@@ -6,7 +6,7 @@
         @lang('main.roles_and_permissions')
     </div>
     <div class="grid-body">
-        <div class="row">
+       {{--  <div class="row">
             <div class="pull-right">
                 <button data-toggle="dropdown" class="btn btn-white btn-small"><i class="fa fa-caret-down"></i> @lang('main.options')</button>
                 <ul class="dropdown-menu">
@@ -14,7 +14,7 @@
                     <li><a href=""><i class="fa fa-users"></i> &nbsp; New Role</a></li>
                 </ul>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="">
                 <ul class="nav nav-tabs nav-tabs-alt nav-justified" role="tablist">
