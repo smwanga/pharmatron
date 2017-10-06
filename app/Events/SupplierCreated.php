@@ -2,27 +2,27 @@
 
 namespace App\Events;
 
-use App\Entities\Company;
+use App\Entities\Supplier;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
-class CompanyCreated
+class SupplierCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * Company Eloquent model instance.
+     * Supplier Eloquent model instance.
      *
-     * @var Company
+     * @var Supplier
      **/
-    public $company;
+    public $supplier;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Company $company)
+    public function __construct(Supplier $supplier)
     {
-        $this->company = $company;
+        $this->supplier = $supplier;
     }
 }

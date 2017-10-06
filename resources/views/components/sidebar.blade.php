@@ -8,7 +8,7 @@
               <div class="availability-bubble online"></div>
             </div>
             <div class="user-info sm">
-              <div class="username">{{Auth::user()->name}}</div>
+              <div class="username" style="font-size: 15px;">{{Auth::user()->name}}</div>
               <div class="status">{{Auth::user()->email}}</div>
             </div>
           </div>
@@ -23,8 +23,10 @@
             <li class="">
               <a href="javascript:;"> <i class="fa fa-folder-open"></i> <span class="title">@lang('main.stock')</span> <span class=" arrow"></span> </a>
               <ul class="sub-menu">
+                  @can('can_add_stock')
                   <li><a href="{{ route('stock.add') }}">@lang('main.add_stock')</a></li>
                   <li><a href="{{ route('products.create') }}">@lang('main.create_stock')</a></li>
+                  @endcan
                   <li><a href="{{ route('stock.index') }}">@lang('main.stock_listing')</a></li>
                   <li><a href="{{ route('products.index') }}">@lang('main.products')</a></li>
                   {{-- <li><a href="#">@lang('main.expenses')</a></li> --}}
@@ -35,18 +37,33 @@
               <a href="javascript:;"> <i class="fa fa-briefcase"></i> <span class="title">@lang('main.suppliers')</span> <span class=" arrow"></span> </a>
               <ul class="sub-menu">
                   <li><a href="{{ route('suppliers.index') }}">@lang('main.suppliers')</a></li>
+                  @can('manage.supplier_profile')
                   <li><a href="{{ route('suppliers.create') }}">@lang('main.add_supplier')</a></li>
+                  @endcan
               </ul>
             </li>
             <li class="">
+              <a href="javascript:;"> <i class="fa fa-users"></i> <span class="title">@lang('main.companies')</span> <span class=" arrow"></span> </a>
+              <ul class="sub-menu">
+                  <li><a href="{{ route('companies.index') }}">@lang('main.companies')</a></li>
+                  @can('manage.supplier_profile')
+                  <li><a href="{{ route('companies.create') }}">@lang('main.create_company')</a></li>
+                  @endcan
+              </ul>
+            </li>
+            @can('users.manage')
+            <li class="">
               <a href="{{ route('users.index') }}"> <i class="material-icons">contacts_child</i> <span class="title">@lang('main.users')</span></a>
             </li>
+            @endcan
             <li class="">
               <a href="{{ route('categories.index') }}"> <i class="fa fa-wrench"></i> <span class="title">@lang('main.categories')</span></a>
             </li>
+            @can('change_system_settings')
             <li class="">
               <a href="{{ route('settings.index') }}"> <i class="material-icons">settings</i> <span class="title">@lang('main.settings')</span></a>
             </li>
+            @endcan
           </ul>
           <div class="clearfix"></div>
           <!-- END SIDEBAR MENU -->

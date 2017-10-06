@@ -46,8 +46,15 @@ class ProductsController extends Controller
      **/
     public function index()
     {
+        $products = $this->repository->getModel()->where(function ($query) {
+            return $query->when($q = request('query'), function ($query) use ($q) {
+                return $query->where('item_name', 'like', "%{$q}%")
+                            ->orWhere('generic_name', 'like', "%{$q}%")
+                            ->orWhere('barcode', 'like', "%{$q}%");
+            });
+        })->orderBy('item_name', 'ASC')->paginate(16);
         $this->data['pagetitle'] = trans('main.products');
-        $this->data['products'] = $this->repository->all();
+        $this->data['products'] = $products;
         $this->data['datatables'] = true;
         $this->data['forms'] = true;
 
@@ -62,7 +69,7 @@ class ProductsController extends Controller
     protected function setPageData($params)
     {
         $this->data = [
-            'categories' => $this->getCategory('product'),
+            'categories' => $this->getCategory('formulation'),
             'dispense_unit' => $this->getCategory('dispense_unit'),
             'forms' => true,
             'pagetitle' => $params['title'],

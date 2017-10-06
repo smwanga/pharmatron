@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                           <div class="col-xs-3">
-                            <img src="/img/logo.jpg" width="100" height="100" class="invoice-logo" alt="">
+                            <img src="{{asset('img/150-150-logo.png')}}" width="100" height="100" class="invoice-logo" alt="">
                           </div>
                           <div class="col-xs-9">
                             <address>
@@ -56,13 +56,13 @@
                            <thead>
                                <tr>
                                    <th>#</th>
-                                   <th>@lang('main.item_name')</th>
-                                   <th>@lang('main.pack_size')</th>
-                                   <th>@lang('main.qty')</th>
-                                   <th>@lang('main.price')</th>
-                                   <th>@lang('main.total')</th>
-                                   <th>@lang('main.notes')</th>
-                                   <th>@lang('main.actions')</th>
+                                   <th style="width: 30%;">@lang('main.item_name')</th>
+                                   <th style="width: 10%;">@lang('main.pack_size')</th>
+                                   <th style="width: 10%;">@lang('main.qty')</th>
+                                   <th style="width: 10%;">@lang('main.price')</th>
+                                   <th style="width: 10%;">@lang('main.total')</th>
+                                   <th style="width: 20%;">@lang('main.notes')</th>
+                                   <th style="width: 10%;">@lang('main.actions')</th>
                                </tr>
                            </thead> 
                            <tbody id="lpo-body">
@@ -76,7 +76,7 @@
                                     <td>{{$item->unit_cost}}</td>
                                     <td class="total">{{number_format($item->qty * $item->unit_cost, 2)}}</td>
                                     <td><span class="text-muted">{{$item->notes}}</span></td>
-                                    <td >
+                                    <td>
                                         <div class="row">
                                             <a  data-toggle="tooltip" title="@lang('main.edit_item')" data-url="{{ route('purchase_order.edit_item', $item->id) }}" class="btn btn-mini btn-primary ajaxModal btn-demo-space"><i class="fa fa-pencil"></i></a> 
                                             <a data-item="{{$item->id}}" data-toggle="tooltip" title="@lang('main.remove_item')" href="javascript:void()" class="btn btn-mini btn-danger remove-item btn-demo-space"><i class="fa fa-trash"></i></a>
@@ -95,22 +95,21 @@
                                     <td class="total">0</td>
                                     <td><textarea class="instructions form-control" name="notes"></textarea></td>
                                     <td>
-                                        <a  data-toggle="tooltip" title="@lang('main.add_item')" href="#" class="btn btn-white" id="add-item"> <i class="fa fa-plus fa-lg"></i></a>
+                                        <a  data-toggle="tooltip" title="@lang('main.add_item')" href="#" class="btn btn-success btn-block btn-lg" id="add-item"> <i class="fa fa-plus fa-lg"></i> @lang('main.add_item')</a>
                                     </td>
                                   </form>
                                </tr>
-
                            </tbody>
                         </table>
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td width="70%" class="text-right"><strong>@lang('main.grand_total'): Ksh.</td>
-                                    <td width="30%"> <strong id="grand-total"> {{$lpo ? number_format($lpo->lpo_total, 2) : 0}}</strong></td>
+                                    <td width="70%" class="text-right"><strong>@lang('main.total'): Ksh.</td>
+                                    <td width="30%"> <strong id="grand-total"> {{is_numeric($lpo->lpo_total) ? number_format($lpo->lpo_total, 2) : 0}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td width="70%"></td>
-                                    <td width="30%"><button id="dispense-drugs" class="btn btn-primary btn-block">@lang('main.save')</button></td>
+                                    <td width="30%"><button id="save-lpo" class="btn btn-primary btn-block">@lang('main.save')</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -130,7 +129,7 @@
         $('.search').autocomplete({
             serviceUrl:route('sales.search'),
             onSelect: function (result) {
-                $(this).val(result.value)
+                $(this).val(result.product)
             }
         });
        $('.item-qty').on('change keyup', function(e) {

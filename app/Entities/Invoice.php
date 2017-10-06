@@ -101,7 +101,9 @@ class Invoice extends Model
      **/
     protected function getLpoTotalAttribute()
     {
-        return $this->lpoItems()->total();
+        $total = $this->lpoItems()->total();
+
+        return is_numeric($total) ? $total : 0;
     }
 
     /**

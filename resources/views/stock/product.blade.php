@@ -107,7 +107,7 @@
                               <td>
                                 {{$stock->user->name}}
                               </td>
-                              <td>@lang('main.'.$stock->tr_type)</td>
+                              <td>{{$stock->comment}}</td>
                             </tr>
                             @endforeach
                           </tbody>

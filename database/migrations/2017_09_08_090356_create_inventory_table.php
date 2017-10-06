@@ -28,12 +28,12 @@ class CreateInventoryTable extends Migration
             $table->increments('id');
             $table->string('ref_number');
             $table->string('customer_name')->nullable();
-            $table->double('amount', 6, 4)->nullable();
-            $table->double('discount', 6, 4)->nullable();
-            $table->double('tax', 6, 4)->nullable();
+            $table->double('amount')->nullable();
+            $table->double('discount')->nullable();
+            $table->double('tax')->nullable();
             $table->string('status', 16)->nullable();
             $table->string('type', 16)->nullable();
-            $table->double('amount_paid', 6, 4)->nullable();
+            $table->double('amount_paid')->nullable();
             $table->integer('customer_id')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();
@@ -46,7 +46,7 @@ class CreateInventoryTable extends Migration
             $table->double('qty')->nullable();
             $table->integer('sale_id')->unsigned();
             $table->integer('product_id')->unsigned()->nullable();
-            $table->double('unit_cost', 6, 4)->nullable();
+            $table->double('unit_cost')->nullable();
             $table->text('instructions');
             $table->timestamps();
 

@@ -16,10 +16,20 @@ class SaleItem extends Model
     /**
      * Product relation.
      *
-     * @return Product
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the sales invoice.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
     }
 }

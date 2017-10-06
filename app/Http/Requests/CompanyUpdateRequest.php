@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Bouncer;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LPOItemRequest extends FormRequest
+class CompanyUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class LPOItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return Bouncer::allows('create_purchase_orders');
+        return Bouncer::allows('can_add_companies');
     }
 
     /**
@@ -25,10 +25,10 @@ class LPOItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name' => 'required|string|max:255',
-            'qty' => 'required|numeric|min:1',
-            'unit_cost' => 'required|numeric|min:0',
-            'notes' => 'max:255',
+            'email' => 'nullable|email|unique:companies,email,'.request()->get('company_id'),
+            'company_name' => 'required|string',
+            'phone_number' => 'required|unique:companies,phone_number,'.request()->get('company_id'),
+            'website' => 'nullable|string|url',
         ];
     }
 }

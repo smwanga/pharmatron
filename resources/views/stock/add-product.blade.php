@@ -36,9 +36,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-12">
-                                            <label for="exampleInputPassword1">@lang('main.category')</label>
+                                            <label for="exampleInputPassword1">@lang('main.formulation')</label>
                                             <select class="select2" name="category_id">
-                                                <optgroup label="@lang('main.categories')">
+                                                <optgroup label="@lang('main.formulations')">
                                                     @foreach($categories as $category)
                                                     <option value="{{$category->id}}">{{$category->category}}</option>
                                                     @endforeach

@@ -29,14 +29,14 @@
                                                             <input value="{{old('ref_number')}}" type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
                                                             <span id="generate-ref" style="cursor: pointer; color:#fff !important;" class="input-group-addon primary">
                                                                 <span class="arrow"></span>
-                                                                <span style="color:#fff !important;"  class="addon" data-toggle="tooltip" title="Generate Reference Number"><i class="fa fa-coffee"></i></span>
+                                                                <span style="color:#fff !important;"  class="addon" data-toggle="tooltip" title="Generate Reference Number"><i class="fa fa-random"></i></span>
                                                                     </span>
                                                         </div>
                                                         {!! error_msg('ref_number') !!}
                                                     </div>
                                                     <div class="form-group  col-md-6 {{error('lpo_number')}}">
                                                         <strong for="lpo_number">@lang('main.lpo_number')</strong>
-                                                        <input value="{{old('lpo_number')}}" type="text" class="form-control col-md-6" name="lpo_number" id="lpo_number" placeholder="LPO Number">
+                                                        <input value="{{old('lpo_number', session('lpo_number'))}}" type="text" class="form-control col-md-6" name="lpo_number" id="lpo_number" placeholder="LPO Number">
                                                         {!! error_msg('lpo_number') !!}
                                                     </div>
                                                 </div>
@@ -98,10 +98,23 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary pull-right" type="submit">
-                                                <i class="fa fa-plus"></i> &nbsp;&nbsp;
-                                                @lang('main.add_stock')
-                                            </button>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <strong class="control-label col-xs-9">Save LPO Number for the next transaction</strong>
+                                                    <div class="col-xs-3">
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="save_lpo_number">
+                                                            <span class="slider"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary pull-right" type="submit">
+                                                    <i class="fa fa-plus"></i> &nbsp;&nbsp;
+                                                    @lang('main.add_stock')
+                                                </button>
+                                            </div>
                                         </div>
                                     </form>
                                     </div>

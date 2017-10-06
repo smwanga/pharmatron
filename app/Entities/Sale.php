@@ -138,6 +138,26 @@ class Sale extends Model
     }
 
     /**
+     * Company relation.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Customer relation.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Person::class, 'customer_id');
+    }
+
+    /**
      * undocumented function.
      *
      * @author
@@ -149,5 +169,17 @@ class Sale extends Model
         }
 
         return ['class' => 'warning', 'text' => trans('main.draft')];
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function scopeTotal($query)
+    {
+        return $query->count() ? $query->get()->map(function ($sale) {
+            return $sale->total;
+        })->sum() : 0;
     }
 }

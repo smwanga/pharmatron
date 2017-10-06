@@ -301,6 +301,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('sales-invoice/{sale}/pay', 'PointOfSaleController@payInvoice')
         ->name('sales.invoice.accept_pay');
+
+        Route::post('sales-invoice-credit/{sale}', 'PointOfSaleController@addAsCredit')
+        ->name('sales.invoice.credit');
     });
 
     Route::group(['prefix' => 'customers'], function () {
@@ -316,5 +319,43 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('pdf-test', function () {
         return app('snappy.pdf.wrapper')->loadView('welcome')->inline('test.pdf');
+    });
+
+    Route::group(['prefix' => 'companies'], function () {
+        Route::get('/', 'CompaniesController@index')
+        ->name('companies.index');
+
+        Route::get('create', 'CompaniesController@create')
+        ->name('companies.create');
+
+        Route::post('create', 'CompaniesController@store')
+        ->name('companies.save');
+
+        Route::get('{company}/show', 'CompaniesController@show')
+        ->name('companies.show');
+
+        Route::get('{company}/edit', 'CompaniesController@edit')
+        ->name('companies.edit');
+
+        Route::patch('{company}/update', 'CompaniesController@update')
+        ->name('companies.update');
+
+        Route::get('add-person/{company}', 'CompaniesController@addPerson')
+        ->name('companies.people.add');
+
+        Route::get('invoices/{company}', 'CompaniesController@showCompanyInvoices')
+        ->name('companies.invoice');
+
+        Route::get('etit-person/{person}', 'CompaniesController@editPerson')
+        ->name('companies.people.edit');
+
+        Route::post('add-person/{company}', 'CompaniesController@savePerson')
+        ->name('companies.people.save');
+
+        Route::patch('update-person/{person}', 'CompaniesController@updatePerson')
+        ->name('companies.people.update');
+
+        Route::delete('delete-person/{person}', 'CompaniesController@deletePerson')
+        ->name('companies.people.delete');
     });
 });

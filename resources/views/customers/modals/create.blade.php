@@ -1,5 +1,10 @@
 <div class="modal-dialog">
     <div class="modal-content ">
+        <style type="text/css">
+            .select2-search {
+                display: none;
+            }
+        </style>
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -42,6 +47,19 @@
                                 </div>
                         </div>
                         <div class="form-group">
+                            <strong class="control-label col-sm-3">@lang('main.company')</strong>
+                            <div class="col-sm-8">
+                                 <select class="select2" name="company_id">
+                                <optgroup label="Roles">
+                                    <option value="" selected disabled=""> @lang('main.select_company') </option>
+                                    @foreach($companies as $company)
+                                    <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-xs-11">
                             <button type="submit" id="add-row" class="btn btn-success pull-right"><i class="fa fa-check"></i> &nbsp; @lang('main.create')</button>
                         </div>
@@ -53,17 +71,12 @@
     </div>
 </div>                                     
 <script type="text/javascript">
+        $('.select2').select2({width:'100%'});
         var $customerForm = $('#create-customer');
         if(typeof $customerForm !== 'undefined'){
             $customerForm.on('submit', function(e) {
             e.preventDefault();
-            var data = {
-                            name : $('input[name=name]').val(),
-                            address : $('input[name=address]').val(),
-                            city:$('input[name=city]').val(),
-                            email:$('input[name=email]').val(),
-                            phone_number:$('input[name=phone_number]').val()
-                        };
+            var data = $customerForm.getFormData()
             axios.post($customerForm.attr('action'), data).then(function(response) {
                 new PNotify({
                     title: '<h4>Customer Created</h4>',

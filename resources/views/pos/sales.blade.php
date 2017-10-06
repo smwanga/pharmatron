@@ -27,7 +27,7 @@
                   <div class="col-sm-12 m-t20 m-b-20">
                     <form id="sales-search">
                     <div class="col-sm-4 form-group">
-                          <input value="{{request()->get('range')}}" type="text" name="range" class="form-control range input-sm">
+                          <input value="{{request()->get('range', "$from to $to")}}" type="text" name="range" class="form-control range input-sm">
                     </div>
                     <div class="col-sm-5 form-group">
                      <div class="input-group">
@@ -53,7 +53,6 @@
                         <th>Customer Name</th>
                         <th>Ref Number</th>
                         <th>Total</th>
-                        <th></th>
                         <th>Status</th>
                         <th>Type</th>
                         <th></th>

@@ -39,15 +39,15 @@ class InventoryEventsSubscriber
             'qty' => $event->stock->stock_available,
             'on_stock' => $event->stock->product->available_stock,
             'product_id' => $event->stock->product_id,
-            'comment' => trans('messages.new_stock'),
             'tr_type' => 'add_stock',
         ];
-        $this->updateInventory($data);
         $params = [
             'product' => $event->stock->product->item_name,
             'qty' => $data['on_stock'],
             'ref' => $event->stock->ref_number,
         ];
+        $data['comment'] = trans('messages.loging.add_stock', $params);
+        $this->updateInventory($data);
         $log = [
             'type' => 'add_stock',
             'action' => 'primary',
@@ -64,11 +64,13 @@ class InventoryEventsSubscriber
      **/
     public function productSold(ProductSold $event)
     {
+        $invoice = $event->saleItem->sale;
+        $total = $event->saleItem->unit_cost * $event->saleItem->qty;
         $data = [
             'qty' => $event->saleItem->qty,
             'on_stock' => $event->product->available_stock,
             'product_id' => $event->product->id,
-            'comment' => trans('messages.product_sold'),
+            'comment' => "Sold {$event->saleItem->qty} units of {$event->product->item_name} to {$invoice->customer_name}. Total cost: {$total}",
             'tr_type' => 'product_sold',
         ];
         $this->updateInventory($data);

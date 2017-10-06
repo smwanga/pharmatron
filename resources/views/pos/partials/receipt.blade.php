@@ -1,31 +1,19 @@
-<div class="col-md-10">
+<div class="col-md-12">
               <div class="grid simple">
                 <div class="grid-body no-border invoice-body">
-                  <div class="col-xs-3 pull-right hidden-print m-r-0 hidden-sm hidden-xs">
-                      <div class="ribbon-content">
-                          <div class="ribbon {{$ribbon['class']}}"><span><i class="fa fa-money"></i> &nbsp; {{$ribbon['message']}}</span></div>
-                      </div>
-                  </div> 
-                  <div class="col-xs-8">
-                          <div class="col-xs-3">
-                            <img src="{{asset('img/150-150-logo.png')}}" width="100" height="100" class="invoice-logo" alt="">
-                          </div>
-                          <div class="col-xs-9">
+                  <div class="col-xs-12">
+                          <div class="text-center">
                             @include('partials.company-address')
                           </div>
-                        </div>
-                  <div class="col-xs-4">
-                    <h3 class="pull-right">@lang('main.invoice')</h3>
                   </div>
                   <div class="clearfix"></div>
-                  <br>
                   <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-sm-8 hidden-print">
                       @if($sale->company)
                         @include('partials.company-details', ['company' => $sale->company])
                       @endif
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-sm-4">
                       <br>
                       <div>
                       @if($sale->customer_name)
@@ -58,7 +46,7 @@
                         <th class="unseen text-center">#</th>
                         <th class="text-left">Drug</th>
                         <th>@lang('main.qty')</th>
-                        <th class="text-right">UNIT PRICE</th>
+                        <th class="text-right">PRICE</th>
                         <th class="text-right">TOTAL</th>
                       </tr>
                     </thead>
@@ -69,38 +57,38 @@
                         <td>{{optional($item->product)->item_name ?: 'N/A'}}</td>
                         <td>{{$item->qty}}</td>
                         <td class="text-right">{{$item->unit_cost}}</td>
-                        <td class="text-right">Ksh. {{$item->unit_cost * $item->qty}}</td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{$item->unit_cost * $item->qty}}</td>
                       </tr>
                       @endforeach
                       <tr>
-                        <td colspan="3" rowspan="3">
+                        <td colspan="3" rowspan="4">
                        {{--  <h4 class="semi-bold">terms and conditions</h4>
                         <p>Thank you for your business. We do expect payment within 21 days, so please process this invoice within that time. There will be a 1.5% interest charge per month on late invoices.</p> --}}
-                          <h5 class="text-right semi-bold">Thank you for shopping with us</h5></td>
-                        <td class="text-right"><strong class="h5">Subtotal</strong></td>
-                        <td class="text-right">Ksh. {{number_format($sale->sub_total, 2)}}</td>
+                          <h5 class="text-center semi-bold">{{app_config('sale_footer')}}</h5></td>
+                        <td class="text-right"><strong class="h5" style="font-weight: bold;">Subtotal</strong></td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{number_format($sale->sub_total, 2)}}</td>
                       </tr>
                       <tr>
                         <td class="text-right no-border"><strong class="h5" style="font-weight: bold;">Discount</strong></td>
-                        <td class="text-right">Ksh. {{number_format($sale->discount_amount, 2)}}</td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{number_format($sale->discount_amount, 2)}}</td>
                       </tr>
                       <tr>
-                        <td class="text-right no-border"><strong class="h5" style="font-weight: bold;">VAT Included in Total</strong></td>
-                        <td class="text-right">Ksh. {{number_format($sale->tax_amount, 2)}}</td>
+                        <td class="text-right no-border"><strong class="h5" style="font-weight: bold;">VAT</strong></td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{number_format($sale->tax_amount, 2)}}</td>
                       </tr>
                       <tr>
-                        <td colspan="3">
-                          <h5 class="text-left text-black">Your Were served by:</h5>
-                  <h5 class="text-left semi-bold text-black">{{optional($sale->user)->name}}</h5>
-                        </td>
                         <td class="text-right no-border">
                           <div class=""><strong class="h5" style="font-weight: bold;">Total</strong></div>
                         </td>
-                        <td class="text-right"><strong class="h5" style="font-weight: bold;">Ksh.{{number_format($sale->total, 2)}}</strong></td>
+                        <td class="text-right"><strong class="h5">{{app_cry()->symbol_left}}.{{number_format($sale->total, 2)}}</strong></td>
                       </tr>
                     </tbody>
                   </table>
-                  
+                  <div class="col-xs-12 text-center">
+                    <h5 class="text-black">Your Were served by:</h5>
+                  <h5 class="semi-bold text-black" style="font-weight: bold;">{{optional($sale->user)->name}}</h5>
+                  <button class="btn btn-success hidden-print" onclick="print()">Print Receipt</button>
+                  </div>
                   <br>
                   <br>
                 </div>

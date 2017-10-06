@@ -6,7 +6,7 @@
           <div class="tiles white add-margin">
               <div class="p-t-20 p-l-20 p-r-20 p-b-20">
                   <div class="row b-grey b-b xs-p-b-20">
-                      <div class="col-md-4 col-sm-4">
+                      <div class="col-md-3 col-sm-3">
                           <h4 class="text-black semi-bold">Purchase Orders</h4>
                           <small>Date filtering uses the <code>Delivery Date</code></small>
                       </div>
@@ -14,12 +14,12 @@
                             extract(date_range(request()));
                           @endphp
                       <form id="search-form">
-                      <div class="col-md-4 col-sm-4">
+                      <div class="col-md-3 col-sm-3">
                         <div class="m-t-20 m-b-20">
                             <input value="{{request()->get('range', "$from to $to")}}" type="text" name="range" class="form-control range" placeholder="@lang('main.delivery_date')">
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-4">
+                      <div class="col-md-3 col-sm-3">
                           <div class="m-t-20 m-b-20">
                               
                                   <div class="input-group">
@@ -32,6 +32,11 @@
                                       </div>
                               
                           </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="m-t-20 m-b-20">
+                          <a href="{{ route('purchase_order.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                      </div>
                       </div>
                       </form>
                   </div>

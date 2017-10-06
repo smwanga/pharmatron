@@ -15,9 +15,9 @@
                          </button>
                          <ul class="dropdown-menu pull-right">
                              <li>
-                                <a href="?group=product">
+                                <a href="?group=formulation">
                                     <i class="fa fa-folder-open"></i> 
-                                    @lang('main.products')
+                                    @lang('main.formulation')
                                 </a>
                             </li>
                             <li>
@@ -48,7 +48,6 @@
                                     <th>#</th>
                                     <th>@lang('main.category')</th>
                                     <th>@lang('main.group')</th>
-                                    <th>@lang('main.notes')</th>
                                     @can('manage_stock_categories')
                                     <th class="text-right">@lang('main.actions')</th>
                                     @endcan
@@ -60,9 +59,8 @@
                                     <td>{{++$key}}</td>
                                     <td>{{$category->category}}</td>
                                     <td>{{trans('main.'.$category->group)}}</td>
-                                    <td>{{$category->description}}</td>
                                      @can('manage_stock_categories')
-                                    <td><a data-url="{{ route('categories.edit', $category->id) }}" class="ajaxModal btn btn-mini btn-success"><i class="fa fa-pencil"></i></a></td>
+                                    <td class="text-right"><a data-url="{{ route('categories.edit', $category->id) }}" class="ajaxModal btn btn-mini btn-success"><i class="fa fa-pencil"></i></a></td>
                                     @endcan
                                 </tr>
                                 @endforeach
@@ -73,7 +71,6 @@
                                     <th>#</th>
                                     <th>@lang('main.category')</th>
                                     <th>@lang('main.group')</th>
-                                    <th>@lang('main.notes')</th>
                                      @can('manage_stock_categories')
                                     <th class="text-right">@lang('main.actions')</th>
                                     @endcan

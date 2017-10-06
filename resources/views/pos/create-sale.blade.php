@@ -6,7 +6,7 @@
                     <div class="row b-grey b-b">
                         <div class="col-md-4 col-sm-4">
                             <h4 class="text-black semi-bold">@lang('main.total_amount')</h4>
-                            <h3 class="text-success semi-bold">KES <span class="gross" id="gross" >{{$sale ? number_format($sale->total, 2) : 0}}</span></h3>
+                            <h3 class="text-success semi-bold">{{app_cry()->symbol_left}} <span id="grand-total" class="grand-total" >{{$sale ? number_format($sale->total, 2) : 0}}</span></h3>
                         </div>
                         <div class="col-md-3 col-sm-3">
                             <div class="m-t-20">
@@ -44,7 +44,7 @@
                                <tr>
                                   <form action="{{ route('sales.item.update', $item->id) }}" method="post">
                                     <td>{{++$key}}</td>
-                                    <td>{{$item->product->generic_name}}</td>
+                                    <td>{{$item->product->item_name}}</td>
                                     <td><input type="number" name="qty" class="item-qty form-control" value="{{$item->qty}}" data-max="{{$item->product->available_stock}}"></td>
                                     <td><input type="number" step="0.01" name="unit_cost" class="unit-cost form-control" value="{{$item->unit_cost}}"></td>
                                     <td class="total">{{number_format($item->qty * $item->unit_cost, 2)}}</td>
@@ -72,13 +72,25 @@
                                       </td>
                                     <td width="18%"><strong class="pull-right">@lang('main.discount_pct')</strong></td>
                                     <td width="17%"><input id="discount" value="{{$sale->discount?:0}}" type="number" step="0.01" class="sale-invoice pull-right form-control"></td>
-                                    <td width="20%"><strong>@lang('main.sub_total'): Ksh. <span class="gross">{{$sale ? number_format($sale->total, 2) : 0}}</span> </strong></td>
+                                    <td width="20%"><strong>@lang('main.sub_total'): {{app_cry()->symbol_left}}. <span id="gross">{{$sale ? number_format($sale->total, 2) : 0}}</span> </strong></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" width="30%"></td>
+                                    <td colspan="2" width="30%">
+                                      <div>
+
+                                        <small>To add a sale as credit the customer must belong to an exiating company</small><br><br>
+                                        <div class="col-xs-3">
+                                        <label class="switch mini">
+                                          <input type="checkbox" name="credit_sale" value="credit" {{$sale->company_id ? 'checked' : ''}}>
+                                          <span class="slider"></span> 
+                                        </label>
+                                      </div>
+                                        <strong class="col-xs-9"> Add As Credit Sale</strong>
+                                      </div>
+                                    </td>
                                     <td width="18%"><strong class="pull-right">@lang('main.tax_pct')</strong></td>
                                     <td width="17%"><input id="tax" type="number" step="0.01" value="{{$sale->tax?:0}}" class="sale-invoice pull-right form-control"></td>
-                                    <td width="20%"><strong>@lang('main.grand_total'): Ksh. <span id="grand-total"> {{$sale ? number_format($sale->total, 2) : 0}}</span></strong></td>
+                                    <td width="20%"><strong>@lang('main.grand_total'): {{app_cry()->symbol_left}}. <span class="grand-total"> {{$sale ? number_format($sale->total, 2) : 0}}</span></strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" width="80%"></td>
@@ -107,8 +119,8 @@
                     var url = '{{ route('sales.item.add') }}';
                 @endisset
                 var data = {product: result.data};
-                axios.post(url, data).then(function(response) {                
-                    window.location.href = route('sales.index', response.data.id);
+                axios.post(url, data).then(function(response) {       
+                    window.location.href = route('sales.index', response.data.sale.id);
                 }).catch(error => {
                     console.log(error.response);
                 });
@@ -146,13 +158,14 @@
           $el.parent('td').removeClass('form-group has-error');
           var $form = $(e.target).closest('tr').find('form');
           axios.post($form.attr('action'), {qty:  $val}).then(function(response) {
-            update();
+            update($el, '');
           });
         });
        $('.unit-cost').on('change', function(e) {
+          var $el = $(this);
           var $form = $(e.target).closest('tr').find('form');
           axios.post($form.attr('action'), {unit_cost:  $(e.target).val()}).then(function(response) {
-            update();
+            update($el, '');
           });       
         });
        $('.instructions').on('change', function(e) {      
@@ -164,7 +177,9 @@
           axios.delete($(this).attr('href')).then(function(response) {
             $(e.target).closest('tr').remove();
             notify('The item was successfully removed');
-            update();
+            setTimeout(function() {
+              location.reload(true);
+            }, 2000)
           });
         }
         e.preventDefault()
@@ -173,6 +188,7 @@
           calculateTaxAndDiscount($(this), 'Discount');
        })
        @isset($sale)
+       var $sale = {!! json_encode($sale) !!}
        var salesUrl = '{{ route('sales.update', $sale->id) }}';
         $('.sale-invoice').on('change', function(e) {
             axios.post(salesUrl, {discount:$('#discount').val(), tax: $('#tax').val(), customer_name:$('#customer-name').val()}).catch(function(response) {
@@ -191,19 +207,31 @@
                 window.location.href= '{{ route('sales.invoice', $sale->id) }}'
             })
         });
+        $('input[name=credit_sale]').on('change', function(e) {
+            var value = 'invoice';
+            if($(this).is(':checked')){
+                value = 'credit';
+            }
+            axios.post(route('sales.invoice.credit', $sale.id), {credit_sale:value}).then(response => {
+                notify(response.data.message, response.data.title, response.data.status);
+            });
+        });
         @endisset
         $('#tax').on('change keyup', function(e) {
           calculateTaxAndDiscount($(this), 'Tax');
        })
 
-       function update() {
+
+       function update($el, type) {
          var total = 0;
+         var gross = $('#gross');
          $('.total').each(function(i) {
-            var gross = $('.gross');
             total += parseFloat($(this).text().replace(/,/g, ''));
             gross.animateNumbers(total);
             $('#itemm-count').animateNumbers(++i);
-         })       
+         });
+         setTimeout(function() {calculateTaxAndDiscount($el, type);}, 2000);
+               
        }
        function notify(message = 'The operation was successful', title = 'Success', type = 'success') {
           new PNotify({
@@ -234,7 +262,7 @@
             // For debuging purposes only
             console.log('Tax -> '+tax+', Discount -> '+discount+', Gross -> '+gross+', Grand Total -> '+grand_total+', Sub Total -> '+sub_total);
             // Set the grand total
-            $('#grand-total').animateNumbers(grand_total);
+            $('.grand-total').animateNumbers(grand_total);
           }
         }
 

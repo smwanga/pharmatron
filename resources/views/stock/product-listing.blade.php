@@ -6,6 +6,22 @@
             <h4><strong class="text-uppercase">{{$pagetitle}}</strong></h4>
         </div>
         <div class="grid-body row-fluid">
+            <div class="col-sm-12 row">
+                <div class="col-sm-4 pull-right">
+                    <div class="p-b-40 ">
+                        <form id="search-form">
+                            <div class="input-group">
+                                <input placeholder="Product Name or barcode " name="query" value="{{request()->get('query')}}" type="text" class="form-control">
+                                <span class="input-group-addon primary" onclick="$('#search-form').submit()" style="cursor: pointer;">    
+                                    <span class="arrow"></span>
+                                        <i class="fa fa-search"></i>
+                                    <strong>@lang('main.search')</strong>
+                                </span>
+                            </div>       
+                        </form>   
+                    </div>
+                </div>
+            </div>
             <div class="cards">
                 @foreach($products as $product)
                     <div class="col-sm-4 col-md-3">

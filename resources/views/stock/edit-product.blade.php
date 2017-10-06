@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="barcode">@lang('main.barcode')</label>
-                                            <input value="{{$product->barcode}}" type="number" class="form-control" disabled="">
+                                            <input value="{{$product->barcode}}" type="number" class="form-control">
                                             <span class="help-block"></span>
                                         </div>
                                     </div>

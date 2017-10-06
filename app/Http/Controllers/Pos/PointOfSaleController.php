@@ -40,11 +40,15 @@ class PointOfSaleController extends Controller
                 extract(date_range($request));
 
                 return $query->whereBetween('created_at', [$from, $to]);
-            })->paginate(30);
+            });
         } else {
-            $sales = Sale::orderBy('created_at', 'DESC')->paginate(30);
+            $sales = Sale::orderBy('created_at', 'DESC');
         }
         $forms = true;
+        if ($request->has('print')) {
+            return view('reports.sales-report', ['sales' => $sales->get(), 'title' => 'Sales Report']);
+        }
+        $sales = $sales->paginate(20);
 
         return view('pos.sales', compact('sales', 'forms'));
     }
@@ -63,7 +67,9 @@ class PointOfSaleController extends Controller
         ];
         if ($sale->type !== null) {
             if ($sale->type !== 'draft') {
-                return with_info('Editing of this prescription is not permited', 'error', 'Sorry!!');
+                if (!\Bouncer::allows('can_update_dispensed_sale') || $sale->paid > 0) {
+                    return with_info('Editing of this prescription is not permited', 'error', 'Sorry!!');
+                }
             }
             $data['items'] = $sale->items;
         }
@@ -83,7 +89,7 @@ class PointOfSaleController extends Controller
             return $query->where('barcode', 'like', '%'.$request->get('query').'%')->orWhere('item_name', 'like', '%'.$request->get('query').'%');
         })->map(function ($product) {
             if ($product->available_stock > 0) {
-                return ['value' => $product->item_name.'[ '.$product->barcode.']', 'data' => $product->id];
+                return ['value' => $product->item_name.'[ '.$product->barcode.']', 'data' => $product->id, 'product' => $product->item_name];
             }
         });
 
@@ -120,7 +126,7 @@ class PointOfSaleController extends Controller
             $sale = Sale::firstOrCreate(['id' => $id], $default);
             $sale->items()->updateOrCreate(['product_id' => $item->id], $data);
 
-            return $sale;
+            return response(['status' => 'success', 'sale' => $sale, 'data' => $data]);
         }
 
         return response(['status' => 'error', 'message' => 'An error was encountered while performing the request', 'data' => []], 500);
@@ -220,9 +226,22 @@ class PointOfSaleController extends Controller
      *
      * @author
      **/
-    public function getCustomer()
+    public function addAsCredit(Sale $sale)
     {
-        // Get customer details for consumption by Autocomplete
+        if ($credit = request()->get('credit_sale')) {
+            $company = optional($sale->customer)->company;
+            if (!$company) {
+                return response(['status' => 'error', 'message' => 'There is no company to credit this invoice. check if the selected customer belongs to a company', 'title' => 'No Company selected']);
+            }
+            $id = $credit === 'credit' ? $company->id : null;
+            $sale->company_id = $id;
+            $sale->save();
+            if ($id) {
+                return response(['status' => 'success', 'message' => "{$company->company_name} has been credited for this sale", 'title' => 'Sale credited']);
+            }
+
+            return response(['status' => 'info', 'message' => "The sale has been detached from {$company->company_name} credit records", 'title' => 'Credit detached']);
+        }
     }
 
     /**
@@ -236,6 +255,9 @@ class PointOfSaleController extends Controller
         $data = ['pagetitle' => 'Sales invoice '.$sale->ref_number, 'forms' => true, 'sale' => $sale, 'ribbon' => $ribbon];
         if (request()->has('print')) {
             return app('snappy.pdf.wrapper')->loadView('pos.pdf-invoice', $data)->inline($sale->ref_number.'-sale-invoice.pdf');
+        }
+        if (request()->get('receipt')) {
+            return view('pos.sale-receipt', $data);
         }
 
         return view('pos.sale-invoice', $data);

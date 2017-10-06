@@ -234,8 +234,13 @@ class StockController extends Controller
     public function store(Product $product, StockRequest $request)
     {
         $this->repository->create($product, $request->input());
+        if ($lpo = request('save_lpo_number')) {
+            session(['lpo_number' => request('lpo_number')]);
+        } else {
+            session()->has('lpo_number') ? session()->forget('lpo_number') : '';
+        }
 
-        return with_info();
+        return redirect_with_info(route('stock.add'));
     }
 
     /**
@@ -284,6 +289,22 @@ class StockController extends Controller
     public function viewStock(Stock $stock)
     {
         return view('stock.modals.view-stock', compact('stock'));
+    }
+
+    /**
+     * Remove stock from the records.
+     *
+     * @param Stock $stock
+     *
+     * @return \Illuminate\Http\Response
+     **/
+    public function destroy(Stock $stock)
+    {
+        if ($stock->delete()) {
+            return ['status' => 'success', 'message' => 'Stock deleted'];
+        }
+
+        return response(['status' => 'error', 'message' => 'Error while deleting product stock'], 500);
     }
 
     /**

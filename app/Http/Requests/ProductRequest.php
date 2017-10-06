@@ -31,7 +31,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required',
             'unit' => 'required',
             'alert_level' => 'nullable|numeric|min:0',
-            'description' => 'required|string',
+            'instructions' => 'required|string',
         ];
     }
 

@@ -68,7 +68,7 @@ class PurchaseOrdersController extends Controller
     public function search(Request $request)
     {
         return $this->repository->orders()->where(function ($query) use ($request) {
-            return $query->where('reference_no', 'like', '%'.$request->get('query').'%');
+            return $query->where('invoiced', false)->where('reference_no', 'like', '%'.$request->get('query').'%');
         })->get()
         ->map(function ($lpo) {
             return ['value' => $lpo->reference_no."[ {$lpo->supplier->supplier_name}]", 'data' => $lpo->reference_no];
@@ -132,10 +132,8 @@ class PurchaseOrdersController extends Controller
      **/
     public function savePurchaseOrder(LPORequest $request)
     {
-        $order = $this->repository->create($request->input());
-        $order->type = 'LPO';
-        $order->status = 'draft';
-        $order->save();
+        $data = array_merge(['type' => 'LPO', 'status' => 'draft'], $request->input());
+        $order = $this->repository->create($data);
         $response = [
             'status' => 'success',
             'order' => $order,
@@ -205,7 +203,7 @@ class PurchaseOrdersController extends Controller
      **/
     public function addLPOItem(Invoice $lpo, LPOItemRequest $request)
     {
-        $lpo->lpoItems()->create($request->input());
+        $lpo->lpoItems()->create(array_merge(['notes' => $request->get('notes', 'N/A')], $request->input()));
 
         return ['status' => 'success', 'message' => 'Item added successfully'];
     }
@@ -303,6 +301,13 @@ class PurchaseOrdersController extends Controller
                 $order->invoiced = true;
                 $order->save();
             }
+            if (!count($items)) {
+                return with_info(
+                    'There are no stock items to invoice. Make sure that the stock is added',
+                    'error',
+                    'Stock Items Empty'
+                );
+            }
 
             return redirect()->route('purchase_order.invoice', $order->id);
         }
@@ -340,7 +345,7 @@ class PurchaseOrdersController extends Controller
         $this->validate($request, ['amount' => 'required|numeric|between:0,'.$invoice->due]);
 
         $payment = $invoice->payments()->create($request->only('amount', 'notes'));
-        $payment->type = 'Expense';
+        $payment->status = 'Expense';
         $payment->save();
 
         return with_info('Invoice payment has been added');

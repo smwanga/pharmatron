@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Company;
 use App\Entities\Person;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,11 @@ class CustomersController extends Controller
      *
      * @return Illuminate\Http\Response
      **/
-    public function create()
+    public function create(Company $company)
     {
-        return view('customers.modals.create');
+        $companies = $company->all();
+
+        return view('customers.modals.create', compact('companies'));
     }
 
     /**

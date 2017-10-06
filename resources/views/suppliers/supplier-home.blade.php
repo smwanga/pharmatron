@@ -20,10 +20,20 @@
                       <span class="item-title">Due Amount</span> <span class="item-count animate-number semi-bold" data-value="{{$payments->sum('due')}}" data-animation-duration="700">{{$payments->sum('due')}}</span>
                     </div>
                   </div>
+                  @php
+                    try {
+                      $due = ($payments->sum('paid')/$payments->sum('total') * 100);
+                    } catch (\ErrorException $e) {
+                      $due = 0;
+                    }
+                    finally {
+                      $due = 0;
+                    }
+                  @endphp
                   <div class="progress transparent progress-small no-radius m-t-20" style="width:90%">
-                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="{{number_format(($payments->sum('paid')/$payments->sum('total') * 100),2)}}%" style="width: 64.8%;"></div>
+                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="{{number_format($due,2)}}%" style="width: 64.8%;"></div>
                   </div>
-                  <div class="description"> <span class="text-white mini-description ">{{number_format(($payments->sum('paid')/$payments->sum('total') * 100),2)}}% Paid out</span>
+                  <div class="description"> <span class="text-white mini-description ">{{number_format($due,2)}}% Paid out</span>
                   </div>
                 </div>
               </div>
