@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Event;
 use App\Entities\Supplier;
-use App\Events\CompanyCreated;
+use App\Events\SupplierCreated;
 use App\Contracts\Repositories\SupplierRepository as Repository;
 
 class SupplierRepository extends BaseRepository implements Repository
@@ -29,7 +29,7 @@ class SupplierRepository extends BaseRepository implements Repository
     public function create(array $attributes)
     {
         $supplier = $this->model->create($attributes);
-        Event::fire(new CompanyCreated($supplier));
+        Event::fire(new SupplierCreated($supplier));
 
         return $supplier;
     }
