@@ -141,7 +141,7 @@ class SuppliersController extends Controller
     {
         $supplier = $this->repository->create($request->input());
 
-        return with_info();
+        return redirect_with_info(route('suppliers.index'));
     }
 
     /**
