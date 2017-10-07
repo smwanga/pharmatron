@@ -12,7 +12,7 @@
                   @can('accept_payments')
                   @if($sale->due > 0)
                   <button data-url="{{ route('sales.invoice.pay', $sale->id) }}" data-toggle="tooltip" title="Accept Payment" class="btn btn-success ajaxModal btn-block m-t-10" type="button"><i class="fa fa-credit-card"></i>
-                    @lang('main.pay_cash')
+                    @lang('main.pay_dispense')
                   </button>
                   @endif
                   @endcan

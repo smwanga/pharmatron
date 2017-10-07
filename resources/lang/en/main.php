@@ -200,4 +200,5 @@ return [
         'add_person' => 'Add Person',
         'update_category' => 'Update Category',
         'dispense_medicine' => 'Dispense Medicine',
+        'pay_dispense' => 'Pay & Dispense',
 ];
