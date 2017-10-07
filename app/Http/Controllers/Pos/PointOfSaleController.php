@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pos;
 
 use DB;
 use Event;
+use Carbon\Carbon;
 use App\Entities\Sale;
 use App\Entities\SaleItem;
 use App\Events\ProductSold;
@@ -184,17 +185,19 @@ class PointOfSaleController extends Controller
     public function payInvoice(Sale $sale, Request $request)
     {
         return DB::transaction(function () use ($sale, $request) {
-            if ($request->get('cash') >= $sale->due && $sale->due > 0) {
+            if (!$sale->dispensed_at) {
                 $sale->items->each(function ($item) {
                     $item->product->sell($item->qty);
                     Event::fire(new ProductSold($item->product, $item));
                 });
+                $sale->dispensed_at = Carbon::now();
+                $sale->save();
+            }
+            if ($request->get('cash') >= $sale->due && $sale->due > 0) {
                 $sale->payments()->create(['amount' => $sale->due, 'person_name' => $sale->customer_name, 'mode' => 'Cash']);
-
-                return redirect_with_info(route('sales.invoice', $sale->id));
             }
 
-            return with_info('Error processing payment', 'Error', 'error');
+            return redirect_with_info(route('sales.invoice', $sale->id));
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Stock;
 use App\Entities\Payment;
 
 class HomeController extends Controller
@@ -23,7 +24,7 @@ class HomeController extends Controller
     {
         $tiles = [
                 'sales_today' => Payment::getTodaySales(),
-                'expenses' => Payment::getExpensesThisMonth(),
+                'expenses' => Stock::getThisMonth(),
                 'sales_month' => Payment::getSalesThisMonth(),
                 'stock_value' => resolve('App\Contracts\Repositories\StockRepository')->getStockValue(),
         ];

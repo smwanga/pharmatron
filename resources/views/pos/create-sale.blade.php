@@ -78,7 +78,7 @@
                                     <td colspan="2" width="30%">
                                       <div>
 
-                                        <small>To add a sale as credit the customer must belong to an exiating company</small><br><br>
+                                        <small>To add a sale as credit the customer must belong to an existing company</small><br><br>
                                         <div class="col-xs-3">
                                         <label class="switch mini">
                                           <input type="checkbox" name="credit_sale" value="credit" {{$sale->company_id ? 'checked' : ''}}>

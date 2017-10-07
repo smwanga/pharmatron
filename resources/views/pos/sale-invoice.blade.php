@@ -16,6 +16,16 @@
                   </button>
                   @endif
                   @endcan
+                  @can('dispense.medicine')
+                    @if(!$sale->dispensed_at && $sale->company_id && $sale->due > 0)
+                      <form method="post" action="{{ route('sales.invoice.accept_pay', $sale->id) }}">
+                        {{csrf_field()}}
+                        <button  class="btn btn-primary btn-block m-t-10" type="submit"><i class="fa fa-send"></i>
+                        @lang('main.dispense_medicine')
+                      </button>
+                      </form>
+                    @endif
+                  @endcan
                   @can('can_update_dispensed_sale')
                     @if($sale->paid === 0)
                       <a href="{{ route('sales.index', $sale->id) }}" class="btn btn-info m-t-10 btn-block"><i class="fa fa-pencil"></i> Edit Invoice</a>

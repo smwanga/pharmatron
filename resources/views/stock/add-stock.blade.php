@@ -4,7 +4,7 @@
                             <div class="m-b-lg">
                                 <div class="grid simple hirzontal">
                                     <div class="grid-title">
-                                        General Information
+                                        Add stock for {{$product->item_name}}
                                     </div>
                                     <div class="grid-body">
                                         <form action="{{ route('stock.save', $product->id) }}" method="post">
@@ -16,7 +16,7 @@
                                                     <select class="select2" name="supplier_id">
                                                         <optgroup label="@lang('main.suppliers')">
                                                             @foreach($suppliers as $supplier)
-                                                            <option value="{{$supplier->id}}">{{$supplier->supplier_name}}</option>
+                                                            <option {{ session('supplier_id') == $supplier->id ? 'selected' : '' }} value="{{$supplier->id}}">{{$supplier->supplier_name}}</option>
                                                             @endforeach
                                                         </optgroup>
                                                     </select>
@@ -26,7 +26,7 @@
                                                     <div class="form-group col-md-6 {{error('ref_number')}}">
                                                         <strong for="ref_number">@lang('main.ref_number')</strong>
                                                         <div class="input-group">
-                                                            <input value="{{old('ref_number')}}" type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
+                                                            <input value="{{old('ref_number', session('ref_number'))}}" type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
                                                             <span id="generate-ref" style="cursor: pointer; color:#fff !important;" class="input-group-addon primary">
                                                                 <span class="arrow"></span>
                                                                 <span style="color:#fff !important;"  class="addon" data-toggle="tooltip" title="Generate Reference Number"><i class="fa fa-random"></i></span>
@@ -36,7 +36,7 @@
                                                     </div>
                                                     <div class="form-group  col-md-6 {{error('lpo_number')}}">
                                                         <strong for="lpo_number">@lang('main.lpo_number')</strong>
-                                                        <input value="{{old('lpo_number', session('lpo_number'))}}" type="text" class="form-control col-md-6" name="lpo_number" id="lpo_number" placeholder="LPO Number">
+                                                        <input value="{{old('lpo_number', session('lpo_number'))}}" type="text" class="form-control" name="lpo_number" id="lpo_number" placeholder="LPO Number">
                                                         {!! error_msg('lpo_number') !!}
                                                     </div>
                                                 </div>
@@ -100,10 +100,10 @@
                                         <div class="col-md-12">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <strong class="control-label col-xs-9">Save LPO Number for the next transaction</strong>
+                                                    <strong class="control-label col-xs-9">Save Supplier Details for the next transaction</strong>
                                                     <div class="col-xs-3">
                                                         <label class="switch">
-                                                            <input type="checkbox" name="save_lpo_number">
+                                                            <input type="checkbox" name="save_lpo_number" {{session()->has('save_lpo_number') ? 'checked' : ''}}>
                                                             <span class="slider"></span>
                                                         </label>
                                                     </div>

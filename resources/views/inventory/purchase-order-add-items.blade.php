@@ -149,6 +149,7 @@
        $('#add-item').on('click', function(event) {
             $errorDiv = $('#error-messages');
             $errorDiv.html('');
+            $(event.target).attr('disabled', true);
             $data = $('#add-lpo-item').getFormData();
             axios.post(route('purchase_order.add_item', $lpo.id), $data).then(function(response) {
                 $.fn.notify(response.data.message);
@@ -157,6 +158,7 @@
                  }, 2000);
                
             }).catch(function(error) {
+              $(event.target).removeAttr('disabled');
                 if(error.response.status == 422){
                     $html = '<div class="row-fluid">'+
                         '<div class="alert alert-error">';
@@ -193,7 +195,12 @@
                         swal("Delete Operation was cancelled"); 
                   }
                 });
-       })
+       });
+       $('#save-lpo').on('click', function(event) {
+          axios.post(route('purchase_order.save.items', $lpo.id)).then(function(response) {
+              location.href = route('purchase_order.show', $lpo.id);
+          });
+       });
        function update() {
          var total = 0;
          $('.total').each(function(i) {

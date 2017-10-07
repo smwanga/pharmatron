@@ -18,7 +18,7 @@ class CreatePurchaseOrderItemsTable extends Migration
             $table->string('product_name')->nullable();
             $table->integer('pack_size')->nullable();
             $table->double('unit_cost')->nullable();
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('CASCADE');

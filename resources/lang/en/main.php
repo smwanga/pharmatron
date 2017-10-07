@@ -199,4 +199,5 @@ return [
         'people' => 'People',
         'add_person' => 'Add Person',
         'update_category' => 'Update Category',
+        'dispense_medicine' => 'Dispense Medicine',
 ];

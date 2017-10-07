@@ -166,6 +166,11 @@ class StockController extends Controller
         } else {
             $result = $this->repository
                             ->getModel()
+                            ->select(
+                                'stocks.*',
+                                'products.*',
+                                'stocks.id as id'
+                            )
                             ->join(
                                 'products',
                                 'products.id',
@@ -234,10 +239,15 @@ class StockController extends Controller
     public function store(Product $product, StockRequest $request)
     {
         $this->repository->create($product, $request->input());
-        if ($lpo = request('save_lpo_number')) {
-            session(['lpo_number' => request('lpo_number')]);
+        $data = $request->only('supplier_id', 'ref_number', 'lpo_number', 'save_lpo_number');
+        if ($request->has('save_lpo_number')) {
+            session($data);
         } else {
-            session()->has('lpo_number') ? session()->forget('lpo_number') : '';
+            foreach ($data as $key => $value) {
+                if (session()->has($key)) {
+                    session()->forget($key);
+                }
+            }
         }
 
         return redirect_with_info(route('stock.add'));

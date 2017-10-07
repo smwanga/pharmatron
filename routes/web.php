@@ -249,6 +249,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('save', 'PurchaseOrdersController@savePurchaseOrder')
         ->name('purchase_order.save');
 
+        Route::post('{order}/save-items', 'PurchaseOrdersController@savePurchaseOrderItems')
+        ->name('purchase_order.save.items');
+
         Route::patch('update-order/{order}', 'PurchaseOrdersController@updatePurchaseOrder')
         ->name('purchase_order.update');
 

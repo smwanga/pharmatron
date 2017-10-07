@@ -68,7 +68,7 @@ class PurchaseOrdersController extends Controller
     public function search(Request $request)
     {
         return $this->repository->orders()->where(function ($query) use ($request) {
-            return $query->where('invoiced', false)->where('reference_no', 'like', '%'.$request->get('query').'%');
+            return $query->where('invoiced', null)->where('reference_no', 'like', '%'.$request->get('query').'%');
         })->get()
         ->map(function ($lpo) {
             return ['value' => $lpo->reference_no."[ {$lpo->supplier->supplier_name}]", 'data' => $lpo->reference_no];
@@ -144,6 +144,29 @@ class PurchaseOrdersController extends Controller
         }
 
         return redirect_with_info(route('purchase_order.add_items', $order->id), $response['message']);
+    }
+
+    /**
+     * Save a newly created purchase order to the database.
+     *
+     * @param Invoice $order
+     *
+     * @return \Illuminate\Http\Response
+     **/
+    public function savePurchaseOrderItems(Invoice $order)
+    {
+        $order->status = 'Pending';
+        $order->save();
+        $response = [
+            'status' => 'success',
+            'order' => $order,
+            'message' => trans('messages.lpo_created'),
+        ];
+        if (request()->wantsJson()) {
+            return response()->json($response);
+        }
+
+        return redirect_with_info(route('purchase_order.show', $order->id), $response['message']);
     }
 
     /**
@@ -347,6 +370,8 @@ class PurchaseOrdersController extends Controller
         $payment = $invoice->payments()->create($request->only('amount', 'notes'));
         $payment->status = 'Expense';
         $payment->save();
+        $invoice->status = $invoice->due == 0 ? 'Fully Paid' : 'Partially Paid';
+        $invoice->save();
 
         return with_info('Invoice payment has been added');
     }

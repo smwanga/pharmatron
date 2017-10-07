@@ -1,6 +1,14 @@
 @extends('layouts.app')
     @section('content')
         <div class="grid simple ">
+              <div class="p-l-20 p-r-20 p-b-20 hidden-print">
+                <div class="row">
+                    <button class="btn btn-primary pull-right" onclick="print()">
+                        <i class="fa fa-print"></i>  
+                        Print Order
+                    </button>
+                  </div>
+              </div>
             <div class="tiles white add-margin">
                 <div class="p-t-20 p-l-20 p-r-20 p-b-20">
                     <div class="row">
@@ -43,7 +51,7 @@
                     </div>
                     <br>
                     <br>
-                    <div class="row b-grey">
+                    <div class="row">
                         <div class="col-sm-12" id="error-messages">
                           
                         </div>
@@ -84,12 +92,13 @@
                                 
                             </tbody>
                         </table>
+                        <div class="col-sm-12 m-b-20">
+                            <p class="h5 text-center">
+                              {{$lpo->notes}}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <p>
-                  {{$lpo->notes}}
-                </p>
-                
+                </div>                
             </div>
         </div>
     @endsection

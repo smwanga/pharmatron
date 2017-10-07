@@ -157,4 +157,14 @@ class Stock extends Model
     {
         return $this->attributes['selling_price'] * $this->attributes['stock_available'];
     }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public static function getThisMonth()
+    {
+        return static::where('created_at', 'like', date('Y-m-').'%')->sum('marked_price');
+    }
 }

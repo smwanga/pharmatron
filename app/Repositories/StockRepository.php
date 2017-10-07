@@ -64,7 +64,7 @@ class StockRepository extends BaseRepository implements Repository
             'stocks.*',
             'suppliers.supplier_name',
             'products.*',
-            'products.id as p_id'
+            'stocks.id as id'
         )->join(
             'suppliers',
             'stocks.supplier_id',

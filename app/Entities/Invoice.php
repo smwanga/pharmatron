@@ -14,7 +14,7 @@ class Invoice extends Model
      *
      * @var array
      **/
-    protected $fillable = ['supplier_id', 'due_after', 'notes', 'address_id', 'currency_id', 'delivery_date', 'invoiced', 'lpo_number', 'type'];
+    protected $fillable = ['supplier_id', 'due_after', 'notes', 'address_id', 'currency_id', 'delivery_date', 'invoiced', 'lpo_number', 'type', 'status'];
 
     /**
      * Date motators.
@@ -32,7 +32,7 @@ class Invoice extends Model
     {
         parent::boot();
         static::creating(function ($model) {
-            switch ($model->attributes['type']) {
+            switch ($model->type) {
                 case 'LPO':
                     $ref = tr_code(app_config('lpo_prefix'));
                     break;

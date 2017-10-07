@@ -31,7 +31,7 @@
               <div class="col-md-3 col-sm-6 spacing-bottom">
                 <div class="tiles red added-margin">
                   <div class="tiles-body">
-                    <div class="tiles-title"> EXPENSES THIS MONTH </div>
+                    <div class="tiles-title"> STOCK RECEIVED THIS MONTH </div>
                     <div class="heading">{{app_cry()->symbol_left}} <span class="animate-number" data-value="{{$tiles['expenses']}}" data-animation-duration="1200">{{number_format($tiles['expenses'])}}</span> </div>
                     <div class="progress transparent progress-white progress-small no-radius">
                       <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="45%" style="width: 45%;"></div>
