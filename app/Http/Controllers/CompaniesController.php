@@ -149,7 +149,7 @@ class CompaniesController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:64|unique:people',
+            'email' => 'nullable|email|max:64|unique:people',
             'phone_number' => 'required|string|max:25|unique:people',
             'address' => 'nullable|string|max:35',
         ];

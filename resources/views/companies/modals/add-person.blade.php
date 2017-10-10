@@ -16,16 +16,16 @@
                                 <input type="text" class="form-control" name="name" id="name" placeholder="@lang('main.contact_name')">
                                 <span class="help-block"></span>
                             </div>
-                            <div class="form-group  col-md-6">
-                                <label for="email">@lang('main.email')</label>
-                                <input type="email" class="form-control col-md-6" name="email" placeholder="@lang('main.example_email')">
+                            <div class="form-group col-md-6">
+                                <label for="phone">@lang('main.phone')</label>
+                                <input type="text" class="form-control" name="phone_number" id="phone" placeholder="@lang('main.primary_phone')">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="phone">@lang('main.phone')</label>
-                                <input type="text" class="form-control" name="phone_number" id="phone" placeholder="@lang('main.primary_phone')">
+                            <div class="form-group  col-md-6">
+                                <label for="email">@lang('main.email')</label>
+                                <input type="email" class="form-control col-md-6" name="email" placeholder="@lang('main.example_email')">
                                 <span class="help-block"></span>
                             </div>
                             <div class="form-group col-md-6">
@@ -47,14 +47,14 @@
     </div>
 </div>                                     
 <script type="text/javascript">
-    let company = {!!json_encode($company)!!};
-    $('#add-contact').on('submit', function(event) {
-        event.preventDefault();
+    var $company = {!!json_encode($company)!!};
+    $('#add-contact').on('submit', function(e) {
+        e.preventDefault();
         let $button = $(this).find('button[type=submit]');
         $button.prop('disabled', true);
         $('.form-group').removeClass('has-error');
         $('.help-block').text('');
-        axios.post(route('companies.people.save', company.id), $(this).getFormData())
+        axios.post(route('companies.people.save', $company.id), $(this).getFormData())
         .then(function(response) {
             $.fn.notify(response.data.message);
             setTimeout(function() {location.reload(true)}, 4000);

@@ -37,10 +37,10 @@
                                 <h5 class="card-title text-center">{{$product->item_name}}</h5>
                                 <strong class="pull-left" style="padding-left: 15px;">@lang('main.available'): </strong> &nbsp; {{number_format($product->available_stock)}} {{str_plural($product->dispensing_unit, $product->available_stock)}}
                                 <br>
-                                    <strong class="pull-left" style="padding-left: 15px;">
-                                        @lang('main.formulation'):
-                                    </strong> &nbsp; {{$product->category->category}}
-                                    <br><br>
+{{--                                 <strong class="pull-left" style="padding-left: 15px;">
+                                    @lang('main.formulation'):
+                                </strong> &nbsp; {{$product->category->category}} --}}
+                                <br>
                             </div>
                         </div>
                     </div>

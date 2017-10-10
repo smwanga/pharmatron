@@ -48,9 +48,11 @@ class ProductsController extends Controller
     {
         $products = $this->repository->getModel()->where(function ($query) {
             return $query->when($q = request('query'), function ($query) use ($q) {
-                return $query->where('item_name', 'like', "%{$q}%")
-                            ->orWhere('generic_name', 'like', "%{$q}%")
-                            ->orWhere('barcode', 'like', "%{$q}%");
+                return $query->where(function ($query) use ($q) {
+                    return $query->where('item_name', 'like', "%{$q}%")
+                                ->orWhere('generic_name', 'like', "%{$q}%")
+                                ->orWhere('barcode', 'like', "%{$q}%");
+                });
             });
         })->orderBy('item_name', 'ASC')->paginate(16);
         $this->data['pagetitle'] = trans('main.products');
