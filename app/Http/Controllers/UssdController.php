@@ -21,14 +21,14 @@ class UssdController extends Controller
         // Here we assume that the data comes from the backend
         $users = [
             (object) [
-                 'phoneNumber' => '0711000000',
+                 'phoneNumber' => '+254711000000',
                  'name' => 'John Doe',
                  'account' => 'ACC001',
                  'balance' => 35000,
                  'currency' => 'KES',
             ],
             (object) [
-                 'phoneNumber' => '0711000001',
+                 'phoneNumber' => '+254711000001',
                  'name' => 'Mary Doe',
                  'account' => 'ACC002',
                  'balance' => 27000,
