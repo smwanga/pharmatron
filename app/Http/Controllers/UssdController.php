@@ -63,7 +63,7 @@ class UssdController extends Controller
                     break;
 
                 default:
-                     $response = 'END Sorry but you choice is invalid';
+                     $response = 'END Sorry but your choice is invalid';
                     break;
             }
         }
@@ -72,7 +72,6 @@ class UssdController extends Controller
             $response = 'END Bad request';
         }
             // Print the response onto the page so that our gateway can read it
-            return response($response, 200)->header('Content-type', 'text/plain');
-            // DONE!!!
+        return response($response, 200)->header('Content-type', 'text/plain');
     }
 }

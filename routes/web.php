@@ -11,7 +11,7 @@
 |
 */
 Route::group(['prefix' => 'ussd'], function () {
-    Route::post('demo-app', 'UssdController');
+    Route::match(['GET', 'POST'], 'demo-app', 'UssdController');
 });
 Route::get('/', function () {
     return redirect()->route('login');
