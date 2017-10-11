@@ -50,14 +50,14 @@ class UssdController extends Controller
         } elseif (null != $user && $text !== '') {
             // We are go
             switch ($text) {
-                case '1*1':
+                case '1':
                     $account = "Name : {$user->name} \n";
                     $account .= "Account : {$user->account} \n";
                     $account .= "Currency : {$user->currency} \n";
                     $response = "END You Account Details \n";
                     $response .= $account;
                     break;
-                case '1*2':
+                case '2':
                     $balance = $user->currency.' '.number_format($user->balance, 2);
                     $response = "END Your account balance is {$balance} \n";
                     break;
