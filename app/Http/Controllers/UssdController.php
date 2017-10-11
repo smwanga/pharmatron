@@ -16,7 +16,7 @@ class UssdController extends Controller
         // Reads the variables sent via POST from our gateway
         $sessionId = $request->get('sessionId');
         $serviceCode = $request->get('serviceCode');
-        $phoneNumber = $request->get('phoneNumber');
+        $phoneNumber = str_replace('+', '', $request->get('phoneNumber'));
         $text = $request->get('text');
         // Here we assume that the data comes from the backend
         $users = [
