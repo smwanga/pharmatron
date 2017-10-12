@@ -28,7 +28,6 @@ class ProductRequest extends FormRequest
             'generic_name' => 'required_if:item_name,',
             'stock_code' => 'required|unique:products',
             'barcode' => 'nullable|numeric|unique:products',
-            'category_id' => 'required',
             'unit' => 'required',
             'alert_level' => 'nullable|numeric|min:0',
             'instructions' => 'required|string',

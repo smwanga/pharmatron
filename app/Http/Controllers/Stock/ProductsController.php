@@ -55,6 +55,7 @@ class ProductsController extends Controller
                 });
             });
         })->orderBy('item_name', 'ASC')->paginate(16);
+
         $this->data['pagetitle'] = trans('main.products');
         $this->data['products'] = $products;
         $this->data['datatables'] = true;
@@ -221,7 +222,6 @@ class ProductsController extends Controller
             'generic_name' => 'required',
             'stock_code' => 'required|unique:products,stock_code,'.$product->id,
             'barcode' => 'nullable|numeric|unique:products,barcode,'.$product->id,
-            'category_id' => 'required',
             'unit' => 'required',
             'alert_level' => 'nullable|numeric|min:0',
             'description' => 'required|string',
@@ -231,6 +231,9 @@ class ProductsController extends Controller
         $product->update($request->input());
 
         Event::fire(new ProductUpdated($dirty, $product));
+        if ($request->wantsJson()) {
+            return ['status' => 'success', 'message' => 'The product '.$product->item_name.' has been updated', 'product' => $product];
+        }
 
         return redirect_with_info(route('products.index'));
     }

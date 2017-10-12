@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['generic_name', 'item_name', 'stock_code', 'alert_level', 'barcode', 'category_id', 'unit', 'instructions', 'description'];
+    protected $fillable = ['generic_name', 'item_name', 'stock_code', 'alert_level', 'barcode', 'unit', 'instructions', 'description'];
 
     /**
      * Return the product category relation.
@@ -126,16 +126,6 @@ class Product extends Model
 
             return $new_level;
         }
-    }
-
-    /**
-     * undocumented function.
-     *
-     * @author
-     **/
-    protected function getGenericNameAttribute()
-    {
-        return $this->attributes['generic_name'] ?: $this->attributes['item_name'];
     }
 
     /**

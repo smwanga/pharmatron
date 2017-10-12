@@ -7,11 +7,11 @@
         </div>
         <div class="grid-body row-fluid">
             <div class="col-sm-12 row">
-                <div class="col-sm-4 pull-right">
+                <div class="col-sm-6 pull-right">
                     <div class="p-b-40 ">
                         <form id="search-form">
                             <div class="input-group">
-                                <input placeholder="Product Name or barcode " name="query" value="{{request()->get('query')}}" type="text" class="form-control">
+                                <input placeholder="Product Name or Barcode or Generic Name " name="query" value="{{request()->get('query')}}" type="text" class="form-control">
                                 <span class="input-group-addon primary" onclick="$('#search-form').submit()" style="cursor: pointer;">    
                                     <span class="arrow"></span>
                                         <i class="fa fa-search"></i>
@@ -37,10 +37,10 @@
                                 <h5 class="card-title text-center">{{$product->item_name}}</h5>
                                 <strong class="pull-left" style="padding-left: 15px;">@lang('main.available'): </strong> &nbsp; {{number_format($product->available_stock)}} {{str_plural($product->dispensing_unit, $product->available_stock)}}
                                 <br>
-{{--                                 <strong class="pull-left" style="padding-left: 15px;">
-                                    @lang('main.formulation'):
-                                </strong> &nbsp; {{$product->category->category}} --}}
-                                <br>
+                                <strong class="pull-left" style="padding-left: 15px;">
+                                    @lang('main.generic_name'):
+                                </strong> &nbsp; {{$product->generic_name}}
+                                <br><br>
                             </div>
                         </div>
                     </div>

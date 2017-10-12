@@ -38,8 +38,8 @@
                       <div class="row b-grey">
                         <div class="col-md-3 col-sm-3 col-xs-6">
                           <div class="m-t-10">
-                            <p class="text-success">@lang('main.formulation')</p>
-                            <p class="text-black">{{$product->category->category}}</p>
+                            <p class="text-success">@lang('main.generic_name')</p>
+                            <p class="text-black">{{$product->generic_name}}</p>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-6">

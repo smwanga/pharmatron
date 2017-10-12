@@ -1,9 +1,10 @@
 
-                @extends('partials.form-wizard')
-                    @section('form-body')
-                        <div class="tab-pane active fade in" id="tab1">
-                        @include('components.errors')
-                            <div class="row m-b-lg">
+                @extends('layouts.app')
+                    @section('content')
+                       <div class="grid simple horizontal green">
+                            <div class="grid-title"><h4><strong class="text-uppercase">{{$pagetitle}}</strong></h4></div>
+                            <div class="grid-body">
+                                <form id="wizardForm" novalidate="novalidate" >
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="form-group col-md-6">
@@ -29,18 +30,8 @@
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-                                        <div class="form-group col-md-12">
-                                            <label for="exampleInputPassword1">@lang('main.formulation')</label>
-                                            <select class="select2" name="category_id">
-                                                <optgroup label="">
-                                                    @foreach($categories as $category)
-                                                    <option {{$product->category_id == $category->id ? 'selected' : ''}} value="{{$category->id}}">{{$category->category}}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                            </select>
-                                            <span class="help-block"></span>
-                                        </div>
-                                        <div class="form-group col-md-12">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
                                             <label for="unit">@lang('main.dispense_unit')</label>
                                             <select class="select2" name="unit">
                                                 <optgroup label="@lang('main.dispense_unit')">
@@ -51,15 +42,16 @@
                                             </select>
                                             <span class="help-block"></span>
                                         </div>
-                                        
-                                    </div>
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label for="alert">@lang('main.alert_level')</label>
                                             <input value="{{old('alert_level', $product->alert_level)}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
                                             <span class="help-block"></span>
                                         </div>
+                                    </div>
+                                    </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        
                                         <div class="form-group col-md-12">
                                             <label for="description">@lang('main.description')</label>
                                             <textarea class="form-control" rows="4" name="description" id="description" placeholder="Product description">{{old('description', $product->description)}}</textarea>
@@ -78,14 +70,24 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
+                </div>
                     @endsection
                     @push('scripts')
                     <script type="text/javascript">
-                        $('#generate-code').on('click', function() {
-                            var tmp = String(Math.floor(Math.random() * (616110999998 - 616110000000 + 1)) + 616110000000);
-                            $('#barcode').barcode(tmp);
+                        var $product = {!! json_encode($product)!!}
+                        $('#wizardForm').on('submit', function(e) {
+                            e.preventDefault();
+                            $(this).find('.form-group').removeClass('has-error');
+                            $('.help-block').text('');
+                            axios.patch(route('products.update', $product.id), $(this).getFormData())
+                            .then(response => {
+                                $.fn.notify(response.data.message);
+                                location.assign(route('products.show', response.data.product.id));
+                            }).catch(error => {
+                                @include('partials.js-validation-errors')
+                            })
                         })
                     </script>
                     @endpush

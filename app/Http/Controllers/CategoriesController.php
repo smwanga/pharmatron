@@ -53,10 +53,10 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['category' => 'required|max:255', 'category' => 'required|max:35']);
+        $this->validate($request, ['category' => 'required|max:255']);
         Category::create($request->all());
 
-        return back();
+        return with_info();
     }
 
     /**
@@ -81,8 +81,8 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $this->validate($request, ['category' => 'required|max:255', 'category' => 'required|max:35']);
-        $category->update($request->all());
+        $this->validate($request, ['category' => 'required|max:255']);
+        $category->update($request->only('category'));
 
         return with_info();
     }
