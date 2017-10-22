@@ -14,9 +14,9 @@
               <li class="{{is_active('settings/email-*')}}">
                 <a href="{{ route('settings.email') }}">Email Settings</a>
               </li>
-              {{-- <li>
-                <a href="">Invoice Settings</a>
-              </li> --}}
+              <li>
+                <a class="{{ is_active('backups*') }}" href="{{route('backup.list')}}">Backups</a>
+              </li>
               <li>
                 <a href="{{ route('settings.products') }}">Product Settings</a>
               </li>

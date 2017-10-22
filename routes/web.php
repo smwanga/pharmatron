@@ -363,4 +363,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete-person/{person}', 'CompaniesController@deletePerson')
         ->name('companies.people.delete');
     });
+    Route::group(['prefix' => 'backups'], function () {
+        Route::get('/', 'BackupsController@index')
+        ->name('backup.list');
+        Route::get('download', 'BackupsController@download')
+        ->name('backup.download');
+        Route::get('delete', 'BackupsController@delete')
+        ->name('backup.delete');
+        Route::get('create', 'BackupsController@create')
+        ->name('backup.create');
+    });
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
