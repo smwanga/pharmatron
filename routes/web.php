@@ -269,6 +269,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('payment-invoice/{invoice}', 'PurchaseOrdersController@payInvoice')
         ->name('purchase_order.invoice.pay');
+
+        Route::get('receive-stock/{item}', 'PurchaseOrdersController@receiveStock')
+        ->name('purchase_order.receive_stock');
     });
 
     Route::group(['prefix' => 'sales', 'namespace' => 'Pos'], function () {

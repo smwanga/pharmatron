@@ -222,6 +222,7 @@ class StockController extends Controller
                     'method' => 'post',
                 ],
             ],
+            'item' => optional(null),
             'suppliers' => $this->suppliers->all(),
             'product' => $product,
         ];

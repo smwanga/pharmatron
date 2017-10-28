@@ -19,6 +19,13 @@ class StockRepository extends BaseRepository implements Repository
     protected $attributes;
 
     /**
+     * Http Response.
+     *
+     * @var \Illuminate\Http\Response
+     */
+    protected $response;
+
+    /**
      * Instantiate a new Repository object.
      *
      * @param Stock $stock
@@ -42,24 +49,30 @@ class StockRepository extends BaseRepository implements Repository
         //Check if the stock being added has an purchase order number
         //If it has update the order with the stock value added
         if ($lpo = $this->attributes->get('lpo_number')) {
-            $order = Invoice::where('lpo_number', $lpo)->first();
+            $order = Invoice::where('reference_no', $lpo)->first();
             if (!$order) {
                 return with_info("The purchase order with reference number $lpo was nor found", 'error')->withInput();
             }
 
-            return $order->tems->where('product_id', $product->id)
-                ->pipe(function ($orderItem) {
-                    return $orderItem->map(function ($item) {
-                        $qty = $item->received_qty + $this->attributes->get('qty');
-                        if ($item->received_qty < $qty) {
-                            $item->update(['received_qty' => $qty]);
-                            $this->save($this->attributes->all());
+            return $order->lpoItems->where('product_id', $product->id)
+                ->each(function ($item) {
+                    $qty = $item->received_qty + $this->attributes->get('qty');
+                    if ($item->qty < $qty) {
+                        $this->attributes->push('supplier_id', $item->invoice->supplier->id);
+                        $item->update(['received_qty' => $qty]);
+                        $this->save($this->attributes->all());
 
-                            return redirect_with_info(route('stock.add'));
-                        }
+                        return $this->response = redirect_with_info(route('stock.add'));
+                    }
 
-                        return with_info('The quantity exceeds that spicified in the purchase order', 'error');
-                    });
+                    $this->response = with_info('The quantity exceeds that spicified in the purchase order', 'error', 'Error on request')->withInput();
+                })
+                ->pipe(function ($orderItems) {
+                    if (!$orderItems->count()) {
+                        $this->response = with_info('The product was not found in the purchase order please make sure it was added to the order', 'error', 'Error on request')->withInput();
+                    }
+
+                    return $this->response;
                 });
         }
         $this->save($this->attributes->all());

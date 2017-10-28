@@ -21,7 +21,6 @@
                         <div class="pull-right"> {{$sale->customer_name}} </div>
                       @endif
                       </div>
-                      <br>
                       <div>
                         <div class="pull-left"> INVOICE NO : </div>
                         <div class="pull-right"> {{$sale->ref_number}} </div>

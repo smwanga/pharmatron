@@ -18,7 +18,6 @@
                     <h3 class="pull-right">@lang('main.invoice')</h3>
                   </div>
                   <div class="clearfix"></div>
-                  <br>
                   <div class="row">
                     <div class="col-xs-8">
                       @if($sale->company)
@@ -44,7 +43,6 @@
                         <div class="pull-right"> {{$sale->created_at->format('d-m-Y')}} </div>
                         <div class="clearfix"></div>
                       </div>
-                      <br>
                       <div class="well well-small green h5">
                         <div class="pull-right"> {{app_cry()->symbol_left}}. {{number_format($sale->due, 2)}} </div>
                         <div class="pull-right"> Total Due : &nbsp; &nbsp;</div>

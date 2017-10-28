@@ -201,4 +201,6 @@ return [
         'update_category' => 'Update Category',
         'dispense_medicine' => 'Dispense Medicine',
         'pay_dispense' => 'Pay & Dispense',
+        'received_qty' => 'Received Qty',
+        'receive' => 'Receive',
 ];

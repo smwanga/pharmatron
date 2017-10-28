@@ -375,4 +375,16 @@ class PurchaseOrdersController extends Controller
 
         return with_info('Invoice payment has been added');
     }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function receiveStock(PurchaseOrderItem $item)
+    {
+        $product = $item->product;
+
+        return view('stock.add-stock-from-order', compact('product', 'item'));
+    }
 }

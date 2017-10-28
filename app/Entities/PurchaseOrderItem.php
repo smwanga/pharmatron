@@ -14,13 +14,23 @@ class PurchaseOrderItem extends Model
     protected $fillable = ['qty', 'invoice_id', 'product_name', 'unit_cost', 'notes', 'pack_size', 'product_id', 'received_qty'];
 
     /**
-     * Product relation.
+     * Invoice relation.
      *
-     * @return Product
+     * @return Invoice
      **/
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);
+    }
+
+    /**
+     * Product relation.
+     *
+     * @return Product
+     **/
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 
     /**

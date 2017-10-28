@@ -64,7 +64,7 @@
                         <td class="v-align-middle">
                           {{++$key}}
                         </td>
-                        <td class="v-align-middle">{{$sale->customer_name}}</td>
+                        <td class="v-align-middle">{{$sale->customer_name ?: 'Cash Sale'}}</td>
                         <td class="v-align-middle"><span class="muted">{{$sale->ref_number}}</span>
                         </td>
                         <td><span class="muted">{{number_format($sale->total, 2) }}</span>

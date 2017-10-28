@@ -63,6 +63,7 @@
                                    <th>@lang('main.description')</th>
                                    <th>@lang('main.pack_size')</th>
                                    <th>@lang('main.qty')</th>
+                                   <th>@lang('main.received_qty')</th>
                                    <th>@lang('main.price')</th>
                                    <th>@lang('main.total')</th>
                                    
@@ -77,8 +78,14 @@
                                     <td><span class="text-muted">{{$item->notes}}</span></td>
                                     <td>{{$item->pack_size}}</td>
                                     <td>{{$item->qty}}</td>
+                                    <td>{{$item->received_qty}}</td>
                                     <td>{{$item->unit_cost}}</td>
                                     <td class="total">{{number_format($item->qty * $item->unit_cost, 2)}}</td>
+                                    @if($item->product)
+                                    <td class="hidden-print">
+                                      <a href="{{ route('purchase_order.receive_stock', $item->id) }}" class="btn btn-success btn-small">@lang('main.receive')</a>
+                                    </td>
+                                    @endif
                                </tr>
                                @endforeach
                            </tbody>
