@@ -238,7 +238,7 @@ class StockController extends Controller
      **/
     public function store(Product $product, StockRequest $request)
     {
-        $this->repository->create($product, $request->input());
+        $response = $this->repository->create($product, $request->input());
         $data = $request->only('supplier_id', 'ref_number', 'lpo_number', 'save_lpo_number');
         if ($request->has('save_lpo_number')) {
             session($data);
@@ -250,7 +250,7 @@ class StockController extends Controller
             }
         }
 
-        return redirect_with_info(route('stock.add'));
+        return $response;
     }
 
     /**

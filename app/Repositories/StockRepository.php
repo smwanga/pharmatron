@@ -5,11 +5,19 @@ namespace App\Repositories;
 use Event;
 use Closure;
 use App\Entities\Stock;
+use App\Entities\Invoice;
 use App\Events\StockAdded;
 use App\Contracts\Repositories\StockRepository as Repository;
 
 class StockRepository extends BaseRepository implements Repository
 {
+    /**
+     * Model attributes.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    protected $attributes;
+
     /**
      * Instantiate a new Repository object.
      *
@@ -30,8 +38,44 @@ class StockRepository extends BaseRepository implements Repository
     public function create($product, array $attributes)
     {
         $attributes['product_id'] = $product->id;
+        $this->attributes = collect($attributes);
+        //Check if the stock being added has an purchase order number
+        //If it has update the order with the stock value added
+        if ($lpo = $this->attributes->get('lpo_number')) {
+            $order = Invoice::where('lpo_number', $lpo)->first();
+            if (!$order) {
+                return with_info("The purchase order with reference number $lpo was nor found", 'error')->withInput();
+            }
+
+            return $order->tems->where('product_id', $product->id)
+                ->pipe(function ($orderItem) {
+                    return $orderItem->map(function ($item) {
+                        $qty = $item->received_qty + $this->attributes->get('qty');
+                        if ($item->received_qty < $qty) {
+                            $item->update(['received_qty' => $qty]);
+                            $this->save($this->attributes->all());
+
+                            return redirect_with_info(route('stock.add'));
+                        }
+
+                        return with_info('The quantity exceeds that spicified in the purchase order', 'error');
+                    });
+                });
+        }
+        $this->save($this->attributes->all());
+
+        return redirect_with_info(route('stock.add'));
+    }
+
+    /**
+     * Persist record to the database.
+     *
+     * @return Stock
+     **/
+    protected function save(array $attributes)
+    {
         $stock = $this->model->create($attributes);
-        Event::fire(new StockAdded($stock));
+        event(new StockAdded($stock));
 
         return $stock;
     }

@@ -87,6 +87,7 @@
                                @endforeach
                                <tr>
                                   <form id="add-lpo-item" method="post">
+                                    <input type="hidden" name="product_id">
                                     <td>{{++$key}}</td>
                                     <td><input type="text" name="product_name" class="search form-control"></td>
                                     <td><input type="number" name="pack_size" class="item-pack-size form-control"></td>
@@ -130,6 +131,7 @@
             serviceUrl:route('sales.search'),
             onSelect: function (result) {
                 $(this).val(result.product)
+                $('input[name=product_id]').val(result.data)
             }
         });
        $('.item-qty').on('change keyup', function(e) {
@@ -163,7 +165,7 @@
                     $html = '<div class="row-fluid">'+
                         '<div class="alert alert-error">';
                             $.map(error.response.data, function(el, i) {
-                                $html +='<small>'+el[0]+'</small> <br>';
+                                $html +='<p>'+el[0]+'</p>';
                             });
                         $html + '</div>'+
                         '</div>';

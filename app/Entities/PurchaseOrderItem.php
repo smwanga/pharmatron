@@ -11,7 +11,7 @@ class PurchaseOrderItem extends Model
      *
      * @var array
      **/
-    protected $fillable = ['qty', 'invoice_id', 'product_name', 'unit_cost', 'notes', 'pack_size'];
+    protected $fillable = ['qty', 'invoice_id', 'product_name', 'unit_cost', 'notes', 'pack_size', 'product_id', 'received_qty'];
 
     /**
      * Product relation.

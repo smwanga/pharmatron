@@ -147,7 +147,7 @@ class PurchaseOrdersController extends Controller
     }
 
     /**
-     * Save a newly created purchase order to the database.
+     * Save a newly created order item to the database.
      *
      * @param Invoice $order
      *
@@ -226,7 +226,7 @@ class PurchaseOrdersController extends Controller
      **/
     public function addLPOItem(Invoice $lpo, LPOItemRequest $request)
     {
-        $lpo->lpoItems()->create(array_merge(['notes' => $request->get('notes', 'N/A')], $request->input()));
+        $lpo->lpoItems()->updateOrCreate($request->only('product_id'), array_merge(['notes' => $request->get('notes', 'N/A')], $request->input()));
 
         return ['status' => 'success', 'message' => 'Item added successfully'];
     }

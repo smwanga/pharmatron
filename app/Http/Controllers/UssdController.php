@@ -43,28 +43,35 @@ class UssdController extends Controller
             if (null == $user) {
                 $response = 'END We are sorry but you are not registered with us';
             } else {
-                $response = "CON Welcome {$user->name}. What do you want to do\n";
-                $response .= "1. My Account \n";
-                $response .= '2. Check Balance';
+                $response = 'CON Please enter your Account Number';
             }
         } elseif (null != $user && $text !== '') {
-            // We are go
-            switch ($text) {
-                case '1':
-                    $account = "Name : {$user->name} \n";
-                    $account .= "Account : {$user->account} \n";
-                    $account .= "Currency : {$user->currency} \n";
-                    $response = "END You Account Details \n";
-                    $response .= $account;
-                    break;
-                case '2':
-                    $balance = $user->currency.' '.number_format($user->balance, 2);
-                    $response = "END Your account balance is {$balance} \n";
-                    break;
+            if (starts_with(strtoupper($text), $user->account)) {
+                if (strtoupper($text) == $user->account) {
+                    $response = "CON Welcome {$user->name}. What do you want to do\n";
+                    $response .= "1. My Account \n";
+                    $response .= '2. Check Balance';
+                } else {
+                    switch (strtoupper($text)) {
+                        case $user->account.'*1':
+                            $account = "Name : {$user->name} \n";
+                            $account .= "Account : {$user->account} \n";
+                            $account .= "Currency : {$user->currency} \n";
+                            $response = "END You Account Details \n";
+                            $response .= $account;
+                            break;
+                        case $user->account.'*2':
+                            $balance = $user->currency.' '.number_format($user->balance, 2);
+                            $response = "END Your account balance is {$balance} \n";
+                            break;
 
-                default:
-                     $response = 'END Sorry but your choice is invalid';
-                    break;
+                        default:
+                             $response = 'END Sorry but your choice or account number is invalid is invalid';
+                            break;
+                    }
+                }
+            } else {
+                $response = 'END Your account is invalid';
             }
         }
         // Handle skiped steps above
