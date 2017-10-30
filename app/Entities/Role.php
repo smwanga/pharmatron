@@ -7,9 +7,9 @@ use Silber\Bouncer\Database\Role as BouncerRole;
 class Role extends BouncerRole
 {
     /**
-     * undocumented function.
+     * Determin if a role has an ability.
      *
-     * @author
+     * @return bool
      **/
     public function hasAbility($ability)
     {

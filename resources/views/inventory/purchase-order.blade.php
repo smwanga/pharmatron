@@ -66,6 +66,7 @@
                                    <th>@lang('main.received_qty')</th>
                                    <th>@lang('main.price')</th>
                                    <th>@lang('main.total')</th>
+                                   <th>@lang('main.receive')</th>
                                    
                                </tr>
                            </thead> 
@@ -81,11 +82,13 @@
                                     <td>{{$item->received_qty}}</td>
                                     <td>{{$item->unit_cost}}</td>
                                     <td class="total">{{number_format($item->qty * $item->unit_cost, 2)}}</td>
-                                    @if($item->product)
+                                    
                                     <td class="hidden-print">
-                                      <a href="{{ route('purchase_order.receive_stock', $item->id) }}" class="btn btn-success btn-small">@lang('main.receive')</a>
+                                      @if($item->product && $item->remaining)
+                                        <a href="{{ route('purchase_order.receive_stock', $item->id) }}" class="btn btn-success btn-small">@lang('main.receive')</a>
+                                      @endif
                                     </td>
-                                    @endif
+                                   
                                </tr>
                                @endforeach
                            </tbody>

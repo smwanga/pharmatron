@@ -40,8 +40,9 @@
                                               @endcan
                                                 @can('create_purchase_orders')
                                                 <li><a href="{{ route('purchase_order.edit', $order->id) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-                                                
+                                                @if($order->received)
                                                 <li><a href="{{ route('purchase_order.create_invoice', $order->id) }}"><i class="fa fa-credit-card"></i> Invoice Order</a></li>
+                                                @endif
                                                 @endcan
                                                 @else
                                                 <li><a href="{{ route('purchase_order.invoice', $order->id) }}"> <i class="fa fa-ticket"></i> View Invoice</a></li>

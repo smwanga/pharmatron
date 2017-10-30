@@ -34,7 +34,7 @@ class PurchaseOrderItem extends Model
     }
 
     /**
-     * undocumented function.
+     * Scope the total cost for the item.
      *
      * @author
      **/
@@ -43,5 +43,15 @@ class PurchaseOrderItem extends Model
         return $query->get()->map(function ($item) {
             return $item->unit_cost * $item->qty;
         })->sum();
+    }
+
+    /**
+     * Get the number of items that has not been received as stock.
+     *
+     * @return int
+     **/
+    public function getRemainingAttribute()
+    {
+        return $this->qty - $this->received_qty;
     }
 }

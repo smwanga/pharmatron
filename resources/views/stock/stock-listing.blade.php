@@ -135,6 +135,9 @@
                       @endforeach
                     </tbody>
                   </table>
+                  <div>
+                    {!! $stock->render() !!}
+                  </div>
                 </div>
             </div>
         </div><!-- END SALES WIDGET WITH FLOT CHART -->

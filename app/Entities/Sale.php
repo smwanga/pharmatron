@@ -158,9 +158,9 @@ class Sale extends Model
     }
 
     /**
-     * undocumented function.
+     * Get additional ifo about the sale.
      *
-     * @author
+     * @return array
      **/
     public function getMetaAttribute()
     {
@@ -172,9 +172,9 @@ class Sale extends Model
     }
 
     /**
-     * undocumented function.
+     * Get the total amount for the sale.
      *
-     * @author
+     * @return float
      **/
     public function scopeTotal($query)
     {

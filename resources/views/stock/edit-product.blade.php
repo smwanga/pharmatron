@@ -29,18 +29,12 @@
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-                                        <div class="form-group col-md-12">
-                                            <label for="exampleInputPassword1">@lang('main.formulation')</label>
-                                            <select class="select2" name="category_id">
-                                                <optgroup label="">
-                                                    @foreach($categories as $category)
-                                                    <option {{$product->category_id == $category->id ? 'selected' : ''}} value="{{$category->id}}">{{$category->category}}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                            </select>
+                                    <div class="form-group col-md-6">
+                                            <label for="alert">@lang('main.alert_level')</label>
+                                            <input value="{{old('alert_level', $product->alert_level)}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
                                             <span class="help-block"></span>
                                         </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label for="unit">@lang('main.dispense_unit')</label>
                                             <select class="select2" name="unit">
                                                 <optgroup label="@lang('main.dispense_unit')">
@@ -55,11 +49,7 @@
                                     </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label for="alert">@lang('main.alert_level')</label>
-                                            <input value="{{old('alert_level', $product->alert_level)}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
-                                            <span class="help-block"></span>
-                                        </div>
+
                                         <div class="form-group col-md-12">
                                             <label for="description">@lang('main.description')</label>
                                             <textarea class="form-control" rows="4" name="description" id="description" placeholder="Product description">{{old('description', $product->description)}}</textarea>

@@ -57,12 +57,16 @@ class StockRepository extends BaseRepository implements Repository
             return $order->lpoItems->where('product_id', $product->id)
                 ->each(function ($item) {
                     $qty = $item->received_qty + $this->attributes->get('qty');
-                    if ($item->qty < $qty) {
+                    if ($item->qty >= $qty) {
                         $this->attributes->push('supplier_id', $item->invoice->supplier->id);
                         $item->update(['received_qty' => $qty]);
                         $this->save($this->attributes->all());
 
-                        return $this->response = redirect_with_info(route('stock.add'));
+                        return
+                        $this->response =
+                        $this->attributes->has('order_id') ?
+                        redirect_with_info(route('purchase_order.show', $item->invoice->id)) :
+                        redirect_with_info(route('stock.add'));
                     }
 
                     $this->response = with_info('The quantity exceeds that spicified in the purchase order', 'error', 'Error on request')->withInput();

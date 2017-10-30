@@ -42,7 +42,12 @@ class Stock extends Model
      **/
     public function scopeAvailable(Builder $query)
     {
-        return $query->whereDate('expire_at', '>', Carbon::now())->where('active', true)->orderBy('expire_at', 'ASC')->where('stock_available', '>', 0);
+        return $query->whereDate('expire_at', '>', Carbon::now())
+                ->where('active', true)
+                ->where(function ($query) {
+                    return $query->where('stock_available', '>', 0);
+                })
+                ->orderBy('expire_at', 'ASC');
     }
 
     /**
@@ -78,25 +83,27 @@ class Stock extends Model
     }
 
     /**
-     * undocumented function.
+     * Get the status of the stock item.
      *
-     * @author
+     * @return array
      **/
     protected function getStatusAttribute()
     {
         if ($this->expire_at->isPast() and $this->active) {
             return ['class' => 'danger', 'text' => trans('main.expired')];
-        } elseif ($this->available()->count() > 0 and $this->active) {
+        } elseif ($this->stock_available > 0 and $this->active) {
             return ['class' => 'success', 'text' => trans('main.available')];
         } elseif (!$this->active) {
             return ['class' => 'warning', 'text' => trans('main.inactive')];
+        } elseif ($this->stock_available == 0 and $this->active) {
+            return ['class' => 'danger', 'text' => trans('main.low_stock')];
         }
 
         return ['class' => 'info', 'text' => trans('main.uknown')];
     }
 
     /**
-     * undocumented function.
+     * Get the expiry date attribute in Y-m-d format.
      *
      * @author
      **/
@@ -105,6 +112,13 @@ class Stock extends Model
         return $this->expire_at->format('Y-m-d');
     }
 
+    /**
+     * Get scope for expired stock.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
     public function scopeExpired($query)
     {
         return $query->active()->where('expire_at', '<', Carbon::now());
@@ -121,9 +135,9 @@ class Stock extends Model
     }
 
     /**
-     * undocumented function.
+     * Determine if the stock item is avilable.
      *
-     * @author
+     * @return bool
      **/
     protected function getIsAvailableAttribute()
     {
@@ -131,9 +145,9 @@ class Stock extends Model
     }
 
     /**
-     * undocumented function.
+     * Determin if stock has been deactivated.
      *
-     * @author
+     * @return bool
      **/
     protected function getIsInactiveAttribute()
     {
@@ -141,7 +155,7 @@ class Stock extends Model
     }
 
     /**
-     * undocumented function.
+     * Determine if a stock has expired.
      *
      * @author
      **/
@@ -151,7 +165,9 @@ class Stock extends Model
     }
 
     /**
-     * @author
+     * Get the total stock value of the available stock.
+     *
+     * @return float
      **/
     public function getStockValueAttribute()
     {
@@ -159,9 +175,9 @@ class Stock extends Model
     }
 
     /**
-     * undocumented function.
+     * Get the total stock value of stock received this month.
      *
-     * @author
+     * @return float
      **/
     public static function getThisMonth()
     {

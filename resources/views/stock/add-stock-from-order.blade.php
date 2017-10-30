@@ -7,12 +7,11 @@
                                         Add stock for {{$product->item_name}}
                                     </div>
                                     <div class="grid-body">
-                                        <form action="{{ route('stock.save', $product->id) }}" method="post">
+                                        <form action="{{ route('stock.save', $product->id) }}" method="post" autocomplete="off">
                                         {{csrf_field()}}
-                                        <div class="col-md-6">
-                                            <div class="row">
+                                            <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="form-group col-md-6 {{error('ref_number')}}">
+                                                    <div class="form-group col-md-4 {{error('ref_number')}}">
                                                         <strong for="ref_number">@lang('main.ref_number')</strong>
                                                         <div class="input-group">
                                                             <input value="{{old('ref_number', session('ref_number'))}}" type="text" class="form-control" name="ref_number" id="ref_number" placeholder="Reference Number">
@@ -23,17 +22,24 @@
                                                         </div>
                                                         {!! error_msg('ref_number') !!}
                                                     </div>
-                                                    <div class="form-group col-md-6 {{error('expire_at')}}">
+                                                    <div class="form-group col-md-4 {{error('expire_at')}}">
                                                     <strong for="expire_at">@lang('main.expiry_date')</strong>
                                                     <input value="{{old('expire_at')}}"  type="text" class="form-control date-picker" name="expire_at" id="expire_at" placeholder="Expiry date">
                                                     {!! error_msg('expire_at') !!}
                                                 </div>
+                                                <div class="form-group col-md-4 {{error('batch_no')}}">
+                                                    <strong for="batch_no">@lang('main.batch_no')</strong>
+                                                    <input value="{{old('batch_no')}}"  type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch Number">
+                                                    {!! error_msg('batch_no') !!}
+                                                </div>
                                                         <input value="{{old('lpo_number', $item->invoice->reference_no)}}" type="hidden" name="lpo_number">
+                                                        <input value="{{old('supplier_id', $item->invoice->supplier_id)}}" type="hidden" name="supplier_id">
+                                                        <input value="{{old('order_id', $item->invoice->id)}}" type="hidden" name="order_id">
                                                     </div>
                                                 <div class="row">
                                                     <div class="form-group col-md-4 {{error('qty')}}">
                                                         <strong for="qty">@lang('main.quantity')</strong>
-                                                        <input value="{{old('qty', $item->qty)}}" type="number" class="form-control" name="qty" id="qty" placeholder="Quantity">
+                                                        <input value="{{old('qty', $item->remaining)}}" type="number" class="form-control" name="qty" id="qty" placeholder="Quantity">
                                                     {!! error_msg('qty') !!}
                                                     </div>
                                                     <div class="form-group col-md-4 {{error('pack_size')}}">
@@ -47,50 +53,55 @@
                                                         {!! error_msg('total_stock') !!}
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="form-group col-md-12 {{error('batch_no')}}">
-                                                    <strong for="batch_no">@lang('main.batch_no')</strong>
-                                                    <input value="{{old('batch_no')}}"  type="text" class="form-control" name="batch_no" id="batch_no" placeholder="Batch Number">
-                                                    {!! error_msg('batch_no') !!}
-                                                </div>
                                                <div class="row">
                                                 <div class="col-md-12">
-                                                    <div class="form-group col-md-4 {{error('marked_price')}}">
-                                                        <strong for="marked_price">
-                                                            @lang('main.marked_price')
-                                                        </strong>
-                                                        <input value="{{old('marked_price', $item->unit_cost)}}"  id="m-price" type="number" class="form-control" name="marked_price" id="marked_price" placeholder="Buying price (Marked Price)">
-                                                        {!! error_msg('marked_price') !!}
+                                                    <div class="row">
+                                                        <div class="form-group col-md-4 {{error('marked_price')}}">
+                                                            <strong for="marked_price">
+                                                                @lang('main.marked_price')
+                                                            </strong>
+                                                            <input value="{{old('marked_price', $item->unit_cost)}}"  id="m-price" type="number" class="form-control" name="marked_price" id="marked_price" placeholder="Buying price (Marked Price)">
+                                                            {!! error_msg('marked_price') !!}
+                                                        </div>
+                                                        <div class="form-group col-md-4 {{error('selling_price')}}">
+                                                            <strong for="selling_price">
+                                                                @lang('main.selling_price')
+                                                            </strong>
+                                                            <input value="{{old('selling_price')}}"  id="s-price" type="text" class="form-control" name="selling_price" id="selling_price" placeholder="Selling price" value="{{old('selling_price')}}">
+                                                            {!! error_msg('selling_price') !!}
+                                                        </div>
+                                                        <div class="form-group col-md-4 {{error('discount')}}">
+                                                            <strong for="discount">@lang('main.discount') (%)</strong>
+                                                            <input value="{{old('discount', 0)}}"  id="s-price" type="text" class="form-control" name="discount" id="discount" placeholder="Apply discount">
+                                                            {!! error_msg('discount') !!}
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group col-md-4 {{error('selling_price')}}">
-                                                        <strong for="selling_price">
-                                                            @lang('main.selling_price')
-                                                        </strong>
-                                                        <input value="{{old('selling_price')}}"  id="s-price" type="text" class="form-control" name="selling_price" id="selling_price" placeholder="Selling price">
-                                                        {!! error_msg('selling_price') !!}
-                                                    </div>
-                                                    <div class="form-group col-md-4 {{error('discount')}}">
-                                                        <strong for="discount">@lang('main.discount') (%)</strong>
-                                                        <input value="{{old('discount', 0)}}"  id="s-price" type="text" class="form-control" name="discount" id="discount" placeholder="Apply discount">
-                                                        {!! error_msg('discount') !!}
-                                                    </div>
-                                            </div>
                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary pull-right" type="submit">
-                                                <i class="fa fa-plus"></i> &nbsp;&nbsp;
-                                                @lang('main.add_stock')
-                                            </button>
+                                            <div class="col-md-6 row">
+                                                <div class="form-group">
+                                                    <strong class="control-label col-xs-9">Save Reference number for the next transaction</strong>
+                                                    <div class="col-xs-3">
+                                                        <label class="switch mini">
+                                                            <input type="checkbox" name="save_lpo_number" {{session()->has('save_lpo_number') ? 'checked' : ''}}>
+                                                            <span class="slider"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary pull-right" type="submit">
+                                                    <i class="fa fa-plus"></i> &nbsp;&nbsp;
+                                                    @lang('main.add_stock')
+                                                </button>
+                                            </div>
                                         </div>
                                     </form>
-                                    </div>
                                 </div>
                             </div>
+                        </div>
                     @endsection
                     @push('scripts')
                         @php
@@ -107,7 +118,8 @@
                                 var stock = $('#qty').val()*$pack_size.val();
                                 $('#total-stock').val(stock);
                             }
-                            $(window).on('load', [callback, callback2])
+                            $(window).on('load', callback)
+                            $(window).on('load', callback2)
                             // Suscribe to input events
                             $('#m-price').on('keyup', callback).on('focus', callback).on('blur', callback);
                             $('#qty').on('keyup', callback2).on('focus', callback2).on('blur', callback2);

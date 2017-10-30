@@ -203,4 +203,5 @@ return [
         'pay_dispense' => 'Pay & Dispense',
         'received_qty' => 'Received Qty',
         'receive' => 'Receive',
+        'created_at' => 'Created At',
 ];

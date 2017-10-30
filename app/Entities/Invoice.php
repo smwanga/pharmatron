@@ -24,9 +24,12 @@ class Invoice extends Model
     protected $dates = ['due_after', 'delivery_date'];
 
     /**
-     * undocumented function.
-     *
-     * @author
+     * Order status.
+     */
+    private $status = true;
+
+    /**
+     * Boot the invoice model.
      **/
     protected static function boot()
     {
@@ -166,5 +169,21 @@ class Invoice extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Determine if an order has been received fully.
+     *
+     * @return bool
+     **/
+    public function getReceivedAttribute()
+    {
+        return $this->lpoItems->map(function ($item) {
+            if ($item->remaining > 0) {
+                $this->status = false;
+            }
+
+            return $this->status;
+        });
     }
 }

@@ -384,7 +384,8 @@ class PurchaseOrdersController extends Controller
     public function receiveStock(PurchaseOrderItem $item)
     {
         $product = $item->product;
+        $forms = true;
 
-        return view('stock.add-stock-from-order', compact('product', 'item'));
+        return view('stock.add-stock-from-order', compact('product', 'item', 'forms'));
     }
 }

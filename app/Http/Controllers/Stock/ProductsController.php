@@ -221,7 +221,6 @@ class ProductsController extends Controller
             'generic_name' => 'required',
             'stock_code' => 'required|unique:products,stock_code,'.$product->id,
             'barcode' => 'nullable|numeric|unique:products,barcode,'.$product->id,
-            'category_id' => 'required',
             'unit' => 'required',
             'alert_level' => 'nullable|numeric|min:0',
             'description' => 'required|string',

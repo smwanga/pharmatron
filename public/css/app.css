@@ -2548,3 +2548,7 @@ tfoot {
   display: table-footer-group;
 }
 
+.header {
+  top: 0;
+}
+

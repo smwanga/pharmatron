@@ -21,7 +21,7 @@ class Supplier extends Model
     }
 
     /**
-     * undocumented function.
+     * Fetch supplier invoices and orders.
      *
      * @author
      **/
@@ -31,9 +31,9 @@ class Supplier extends Model
     }
 
     /**
-     * undocumented function.
+     * Get purchase orders for a particular supplier.
      *
-     * @author
+     * @return \Illuminate\Database\Collection
      **/
     public function orders()
     {
