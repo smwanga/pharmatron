@@ -22,16 +22,6 @@
                                 <input value="{{$category->category}}" type="text" name="category" class="form-control" placeholder="@lang('main.category_name')">
                         </div>
                         <div class="form-group">
-                            <strong class="control-label">@lang('main.group')</strong>
-                            <select class="select-input" name="group">
-                                <optgroup label="@lang('main.categories')">
-                                    <option disabled="" value="">Select a Group</option>
-                                    <option {{$category->group== 'dispense_unit' ? 'selected' : ''}} value="dispense_unit">@lang('main.dispense_unit')</option>
-                                    <option {{$category->group== 'formulation' ? 'selected' : ''}} value="formulation">@lang('main.formulation')</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <button type="submit" class="btn btn-success pull-right"><i class="fa fa-pencil"></i> &nbsp; @lang('main.update')</button>
                         </div>
                     </form>

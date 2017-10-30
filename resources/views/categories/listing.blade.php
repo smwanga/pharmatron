@@ -9,34 +9,12 @@
                         <p> Easily group products by a common attribute, i.e Drugs that are distributed as tablets can be put in a category <code> Tablets </code> with <code>Dispensing unit</code> as the group</p>
                     </div>
                     <div class="col-xs-2">
-                        <button data-toggle="dropdown" href="#" class="btn btn-small btn-white pull-right">
-                             Options
-                             &nbsp;&nbsp;&nbsp; <i class="caret"></i>
-                         </button>
-                         <ul class="dropdown-menu pull-right">
-                             <li>
-                                <a href="?group=formulation">
-                                    <i class="fa fa-folder-open"></i> 
-                                    @lang('main.formulation')
-                                </a>
-                            </li>
-                            <li>
-                                <a href="?group=dispense_unit">
-                                    <i class="fa fa-wrench"></i> 
-                                    @lang('main.dispense_unit')
-                                </a>
-                            </li>
                             @can('manage_stock_categories')
-                            <li>
-                                <a href="{{ route('categories.create') }}" class="ajaxModal">
+                                <a href="{{ route('categories.create') }}" class="btn btn-white btn-small ajaxModal">
                                     <i class="fa fa-plus"></i> 
                                     &nbsp; @lang('main.add_category')
                                 </a>
-                            </li>
                             @endcan
-                         </ul>
-                    </div>
-                    
                     
                 </div>
                 <hr>

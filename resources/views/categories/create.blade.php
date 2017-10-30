@@ -21,16 +21,6 @@
                                 <input type="text" name="category" class="form-control" placeholder="@lang('main.category_name')">
                         </div>
                         <div class="form-group">
-                            <strong class="control-label">@lang('main.group')</strong>
-                            <select class="select-input" name="group">
-                                <optgroup label="@lang('main.categories')">
-                                    <option disabled="" value="">Select a Group</option>
-                                    <option value="dispense_unit">@lang('main.dispense_unit')</option>
-                                    <option value="product">@lang('main.formulation')</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <button type="submit" id="add-row" class="btn btn-success"><i class="fa fa-check"></i> &nbsp; @lang('main.create')</button>
                         </div>
                     </form>

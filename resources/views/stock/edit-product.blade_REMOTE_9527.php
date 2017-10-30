@@ -30,15 +30,7 @@
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-<<<<<<< HEAD
-                                    <div class="form-group col-md-6">
-                                            <label for="alert">@lang('main.alert_level')</label>
-                                            <input value="{{old('alert_level', $product->alert_level)}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
-                                            <span class="help-block"></span>
-                                        </div>
-=======
                                     <div class="row">
->>>>>>> 2325e81c5d7b0863ff15bc60962270f62bee94be
                                         <div class="form-group col-md-6">
                                             <label for="unit">@lang('main.dispense_unit')</label>
                                             <select class="select2" name="unit">
@@ -50,13 +42,6 @@
                                             </select>
                                             <span class="help-block"></span>
                                         </div>
-<<<<<<< HEAD
-                                        
-                                    </div>
-                                <div class="col-md-6">
-                                    <div class="row">
-
-=======
                                         <div class="form-group col-md-6">
                                             <label for="alert">@lang('main.alert_level')</label>
                                             <input value="{{old('alert_level', $product->alert_level)}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
@@ -67,7 +52,6 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         
->>>>>>> 2325e81c5d7b0863ff15bc60962270f62bee94be
                                         <div class="form-group col-md-12">
                                             <label for="description">@lang('main.description')</label>
                                             <textarea class="form-control" rows="4" name="description" id="description" placeholder="Product description">{{old('description', $product->description)}}</textarea>

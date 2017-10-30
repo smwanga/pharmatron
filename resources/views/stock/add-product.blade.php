@@ -1,8 +1,10 @@
 
-                @extends('partials.form-wizard')
-                    @section('form-body')
-                        <div class="tab-pane active fade in" id="tab1">
-                            <div class="row-fluid m-b-lg">
+                @extends('layouts.app')
+                    @section('content')
+                        <div class="grid simple horizontal green">
+                            <div class="grid-title"><h4><strong class="text-uppercase">{{$pagetitle}}</strong></h4></div>
+                            <div class="grid-body">
+                                <form id="wizardForm" novalidate="novalidate" >
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="form-group  col-md-6">
@@ -35,18 +37,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label for="exampleInputPassword1">@lang('main.formulation')</label>
-                                            <select class="select2" name="category_id">
-                                                <optgroup label="@lang('main.formulations')">
-                                                    @foreach($categories as $category)
-                                                    <option value="{{$category->id}}">{{$category->category}}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                            </select>
-                                            <span class="help-block"></span>
-                                        </div>
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             <label for="unit">@lang('main.dispense_unit')</label>
                                             <select class="select2" name="unit">
                                                 <optgroup label="@lang('main.dispense_unit')">
@@ -57,23 +48,23 @@
                                             </select>
                                             <span class="help-block"></span>
                                         </div>
+                                         <div class="form-group col-md-6">
+                                            <label for="alert">@lang('main.alert_level')</label>
+                                            <input value="{{old('alert_level')}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
+                                            <span class="help-block"></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="form-group col-md-12">
-                                            <label for="alert">@lang('main.alert_level')</label>
-                                            <input value="{{old('alert_level')}}" type="number" class="form-control" name="alert_level" id="alert" placeholder="Level to alert low stock">
-                                            <span class="help-block"></span>
-                                        </div>
-                                        <div class="form-group col-md-12">
                                             <label for="description">@lang('main.description')</label>
-                                            <textarea class="form-control" rows="3" name="description" id="description" placeholder="Product description">{{old('description')}}</textarea>
+                                            <textarea class="form-control" rows="4" name="description" id="description" placeholder="Product description">{{old('description')}}</textarea>
                                             <span class="help-block"></span>
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="instructions">@lang('main.instructions')</label>
-                                            <textarea class="form-control" rows="3" name="instructions" id="instructions" placeholder="Usage instructions">{{old('instructions')}}</textarea>
+                                            <textarea class="form-control" rows="4" name="instructions" id="instructions" placeholder="Usage instructions">{{old('instructions')}}</textarea>
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
@@ -82,7 +73,8 @@
                                             <button class="btn btn-primary pull-right" type="submit"><span class="fa fa-check"></span> &nbsp; @lang('main.save')</button>
                                         </div>
                             </div>
-                        </div>
+                        </form>
+                    </div>
 
                     @endsection
                     @push('scripts')
