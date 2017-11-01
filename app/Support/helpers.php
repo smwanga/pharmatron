@@ -52,7 +52,7 @@ if (!function_exists('is_active')) {
      *
      * @return null|string
      */
-    function is_active(string $route, string $class = 'active')
+    function is_active(string $route, $class = 'active')
     {
         $check = function ($route, $class) {
             if (request()->path() == $route) {
