@@ -28,7 +28,8 @@ class HomeController extends Controller
                 'sales_month' => Payment::getSalesThisMonth(),
                 'stock_value' => resolve('App\Contracts\Repositories\StockRepository')->getStockValue(),
         ];
+        $sales = json_encode(Payment::getSalesThisYear());
 
-        return view('home', ['tiles' => $tiles, 'pagetitle' => trans('titles.dashboard')]);
+        return view('home', ['sales' => $sales, 'tiles' => $tiles, 'pagetitle' => trans('titles.dashboard')]);
     }
 }

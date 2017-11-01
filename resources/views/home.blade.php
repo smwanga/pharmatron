@@ -55,7 +55,15 @@
             </div>
         </div>
 </div>
-<div class="col-md-12">
+<div class="col-md-8">
+  <div class="grid horizontal simple green">
+      <div class="grid-title"><h4>Sales Overview This Year</h4></div>
+        <div class="grid-body">
+          <div id="revenue" style="max-height: 300px;"></div>
+        </div>
+      </div>
+</div>
+<div class="col-md-4">
         <div class="grid horizontal simple green">
             <div class="grid-title"><h4>Recent Sales</h4></div>
             <div class="grid-body">
@@ -65,10 +73,8 @@
                         <th style="width:1%">
                           #
                         </th>
-                        <th>Customer Name</th>
-                        <th>Ref Number</th>
+                        <th>Ref</th>
                         <th>Total</th>
-                        <th>Created By</th>
                         <th>...</th>
                       </tr>
                     </thead>
@@ -78,13 +84,9 @@
                         <td class="v-align-middle">
                           {{++$key}}
                         </td>
-                        <td class="v-align-middle">{{$sale->customer_name}}</td>
                         <td class="v-align-middle"><span class="muted">{{$sale->ref_number}}</span>
                         </td>
                         <td><span class="muted">{{number_format($sale->total, 2) }}</span>
-                        </td>
-                        <td>
-                            {{optional($sale->user)->name}}
                         </td>
                         <td>
                             <a href="{{ route('sales.invoice', $sale->id) }}" class="btn btn-small btn-primary">View</a>
@@ -115,3 +117,42 @@
     </div>
 </div> --}}
 @endsection
+@push('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/jquery-morris-chart/css/morris.min.css') }}">
+@endpush
+@push('scripts')
+<script type="text/javascript" src="{{asset('assets/plugins/jquery-ricksaw-chart/js/raphael-min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/jquery-morris-chart/js/morris.min.js') }}"></script>
+<script type="text/javascript">
+    Morris.Area({
+        element: 'revenue',
+        data: {!! $sales !!},
+        xkey: 'period',
+        ykeys: ['income'],
+        labels: ['Total sales made'],
+        hoverCallback: function (index, options, content) {
+            return(content);
+        },
+        hideHover: 'auto',
+        behaveLikeLine: true,
+        pointFillColors: ['#fff'],
+        pointStrokeColors: ['black'],
+        xLabelMargin: 10,
+        xLabelAngle: 0,
+        preUnits: ['{{app_cry()->symbol_left}} '],
+        lineColors: ['rgb(0, 150, 136)'],
+        xLabelFormat: function (x) {
+            var IndexToMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var month = IndexToMonth[ x.getMonth() ];
+            return month;
+        },
+        dateFormat: function (x) {
+            var IndexToMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var month = IndexToMonth[ new Date(x).getMonth() ];
+            var year = new Date(x).getFullYear();
+            return year + ' ' + month;
+        },
+        resize: true
+    });
+</script>
+@endpush

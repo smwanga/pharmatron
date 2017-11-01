@@ -54,6 +54,18 @@ class Payment extends Model
         return static::where('created_at', 'like', Carbon::now()->format('Y-m').'%')->where('status', 'Payment')->sum('amount');
     }
 
+    public static function getSalesThisYear()
+    {
+        $data = [];
+        for ($month = 1; $month <= 12; ++$month) {
+            $date = date("Y-{$month}-01");
+            $sales = static::where('created_at', 'like', Carbon::parse($date)->format('Y-m').'%')->where('status', 'Payment')->sum('amount');
+            $data[] = ['period' => date("Y-{$month}"), 'income' => $sales];
+        }
+
+        return $data;
+    }
+
     public static function getExpensesThisMonth()
     {
         return static::where('created_at', 'like', Carbon::now()->format('Y-m').'%')->where('status', 'Expense')->sum('amount');

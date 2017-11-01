@@ -174,7 +174,7 @@ return [
         //RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
         Tightenco\Ziggy\ZiggyServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        //Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         /*
          * Application Service Providers...

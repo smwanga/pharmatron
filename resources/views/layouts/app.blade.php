@@ -31,6 +31,7 @@
     <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
     @routes
+    @stack('css')
   </head>
   <body >
       <!-- BEGIN HEADER -->
