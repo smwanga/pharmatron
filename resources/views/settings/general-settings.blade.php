@@ -6,7 +6,7 @@
         General Settings
     </div>
     <div class="grid-body">
-        <form action="{{ route('settings.config.update') }}" class="form-horizontal" style="width: 100%;" method="post">
+        <form action="{{ route('settings.config.update') }}" class="form-horizontal" style="width: 100%;" method="post" accept="multipart/form-data" runat="server">
             {{csrf_field()}}
             <div class="form-group">
                 <strong class="col-sm-3 control-label">Site Name</strong>
@@ -44,12 +44,13 @@
                     <input type="text" name="zip_code" class="form-control" value="{{$config->zip_code}}">
                 </div>           
             </div>
-           {{--  <div class="form-group">
+           <div class="form-group">
                 <strong class="col-sm-3 control-label">Logo</strong>
                 <div class="col-sm-9">
-                    <img src="{{asset('img/'.$config->app_logo)}}" width="100">
+                    <input type="file" accept="image/*"  id="logo-img" onchange="readURL(this)">
+                    <img src="{{asset('img/'.$config->app_logo)}}" width="300" id="logo-preview">
                 </div>           
-            </div> --}}
+            </div>
             <div class="col-sm-12">
                 <button class="btn btn-success pull-right" type="submit"><i class="fa fa-save"></i> &nbsp; @lang('main.save')</button>
             </div>
@@ -58,3 +59,20 @@
 </div>
 <!-- END PAGE -->
 @endsection
+@push('scripts')
+<script type="text/javascript">
+    function readURL($input) {
+
+      if ($input.files && $input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#logo-preview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL($input.files[0]);
+      }
+      console.log($input)
+    }
+</script>
+@endpush

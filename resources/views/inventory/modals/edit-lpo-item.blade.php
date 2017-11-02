@@ -11,6 +11,7 @@
                 <div class="row">
                       <form  id="edit-item-form" class="form form-horizontal"  style="width: 100% !important;" action="{{ route('purchase_order.update_item', $item->id) }}" method="post">
                             {{csrf_field()}}
+                        <input type="hidden" name="product_id" value="{{$item->product_id}}">
                         <div class="form-group">
                             <strong class="control-label col-sm-3">@lang('main.item_name') <span class="text-danger">*</span></strong>
                                 <div class="col-sm-8">

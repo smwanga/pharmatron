@@ -20,10 +20,6 @@
     <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/bootstrap-select2/select2.css')}}" rel="stylesheet" type="text/css" media="screen" />
     @endisset
-    @isset($datatables)
-    <link href="{{asset('assets/plugins/jquery-datatable/css/jquery.dataTables.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/plugins/datatables-responsive/css/datatables.responsive.css')}}" rel="stylesheet" type="text/css" media="screen" />
-    @endisset
     <!-- END PLUGIN CSS -->
     <!-- BEGIN CORE CSS FRAMEWORK -->
     <link href="{{asset('css/materialfonts.css')}}" rel="stylesheet">
@@ -69,7 +65,7 @@
     <script src="{{asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/pnotify/pnotify.custom.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('assets/plugins/daterange/moment.min.js')}}" type="text/javascript"></script>    
+    <script src="{{asset('assets/plugins/daterange/moment.min.js')}}" type="text/javascript"></script>     
     @isset($forms)
     <script src="{{asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/daterange/daterangepicker.js')}}" type="text/javascript"></script>

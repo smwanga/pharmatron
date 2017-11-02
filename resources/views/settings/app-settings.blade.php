@@ -2,9 +2,9 @@
     @section('side-menu-nav')
       <div class="inner-menu nav-collapse">
           <div id="inner-menu">
-            {{-- <div class="inner-wrapper">
+            <div class="inner-wrapper">
               <a class="btn btn-block btn-primary ajaxModal" href="{{ route('settings.config.create') }}"><span class="bold">ADD CONFIG</span></a>
-            </div> --}}
+            </div> 
             <div class="inner-menu-content">
             </div>
             <ul class="big-items">

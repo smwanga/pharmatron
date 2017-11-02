@@ -176,7 +176,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('save-config-item', 'SettingsController@saveConfigItem')
         ->name('settings.config.save');
 
-        Route::post('save-config-item', 'SettingsController@saveConfigSettings')
+        Route::post('update-config-item', 'SettingsController@saveConfigSettings')
         ->name('settings.config.update');
     });
 
