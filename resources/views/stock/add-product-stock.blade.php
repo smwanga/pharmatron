@@ -4,7 +4,7 @@
 @section('content')
     <div class="grid simple horizontal no-border">
     	<div class="grid-title">
-    		<strong class="text-uppercase">{{$pagetitle}}</strong>
+    		<strong class="text-uppercase">@lang('main.add_stock')</strong>
     	</div>
         <div class="grid-body row-fluid">
         	<div class="m-t-40 m-b-40">

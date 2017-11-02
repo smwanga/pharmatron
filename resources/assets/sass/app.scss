@@ -124,3 +124,28 @@ tfoot { display:table-footer-group }
 .header{
   top:0;
 }
+@mixin box-shadow($shadow) {
+    -webkit-box-shadow: $shadow !important;
+    box-shadow: $shadow !important;
+}
+.form-control {
+        padding-left: 0;
+        padding-right: 0;
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+        @include box-shadow(0 1px 0 $form-border-color);
+
+        &:focus {
+            background-color: transparent;
+            @include box-shadow(0 2px 0 #4fc08d);
+
+            + label {
+                color: $text-color;
+            }
+
+            ~ .input-group-addon {
+                @include box-shadow(0 2px 0 $text-color);
+            }
+        }
+    }

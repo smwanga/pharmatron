@@ -2552,3 +2552,28 @@ tfoot {
   top: 0;
 }
 
+.form-control {
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  -webkit-box-shadow: 0 1px 0 #e6e6e6 !important;
+  box-shadow: 0 1px 0 #e6e6e6 !important;
+}
+
+.form-control:focus {
+  background-color: transparent;
+  -webkit-box-shadow: 0 2px 0 #4fc08d !important;
+  box-shadow: 0 2px 0 #4fc08d !important;
+}
+
+.form-control:focus + label {
+  color: #636b6f;
+}
+
+.form-control:focus ~ .input-group-addon {
+  -webkit-box-shadow: 0 2px 0 #636b6f !important;
+  box-shadow: 0 2px 0 #636b6f !important;
+}
+

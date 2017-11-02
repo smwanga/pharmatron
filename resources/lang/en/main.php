@@ -56,7 +56,7 @@ return [
         'delete' => 'Delete',
         'print_barcodes' => 'Print Barcodes',
         'product_sku' => 'Product SKU',
-        'add_stock' => 'Add Stock',
+        'add_stock' => 'Receive Stock',
         'dashboard' => 'Dashboard',
         'stock' => 'Stock',
         'invoices' => 'Invoices',

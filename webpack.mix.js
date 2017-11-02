@@ -18,5 +18,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
 .copy('node_modules/cropper/dist/cropper.min.css', 'public/css')
 .version()
 .extract(['jsbarcode', 'axios', 'lodash', 'sweetalert'])
-.browserSync('pharma-tron.dev');
+.browserSync('https://pharma-tron.dev');
 
