@@ -38,6 +38,12 @@
                     <input type="text" name="mark_up_rate" class="form-control" value="{{$config->mark_up_rate}}">
                 </div>           
             </div>
+            <div class="form-group">
+                <strong class="col-sm-3 control-label">Sale Invoice Notes</strong>
+                <div class="col-sm-9">
+                    <input type="text" name="sale_invoice_notes" class="form-control" value="{{$config->sale_invoice_notes}}">
+                </div>           
+            </div>
 
             <div class="col-sm-12">
                 <button class="btn btn-success pull-right" type="submit"><i class="fa fa-save"></i> &nbsp; @lang('main.save')</button>

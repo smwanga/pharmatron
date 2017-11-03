@@ -81,6 +81,8 @@
                     <script type="text/javascript">
                         $('#generate-code').on('click', function() {
                             var tmp = String(Math.floor(Math.random() * (616110999998 - 616110000000 + 1)) + 616110000000);
+                            var prefix = '{{app_config('barcode_prefix')}}'.substr(0, 7);
+                            tmp = prefix+''+tmp.substr(prefix.length);
                             $('#barcode').barcode(tmp);
                         });
                         $('#wizardForm').on('submit', function(e) {

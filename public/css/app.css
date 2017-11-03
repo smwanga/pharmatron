@@ -2553,8 +2553,8 @@ tfoot {
 }
 
 .form-control {
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 10px;
+  padding-right: 10px;
   border: 0;
   border-radius: 0;
   background-color: transparent;

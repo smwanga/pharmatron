@@ -67,24 +67,24 @@
                         <td>{{optional($item->product)->item_name ?: 'N/A'}}</td>
                         <td>{{$item->qty}}</td>
                         <td class="text-right">{{$item->unit_cost}}</td>
-                        <td class="text-right">Ksh. {{$item->unit_cost * $item->qty}}</td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{$item->unit_cost * $item->qty}}</td>
                       </tr>
                       @endforeach
                       <tr>
                         <td colspan="3" rowspan="3">
                        {{--  <h4 class="semi-bold">terms and conditions</h4>
                         <p>Thank you for your business. We do expect payment within 21 days, so please process this invoice within that time. There will be a 1.5% interest charge per month on late invoices.</p> --}}
-                          <h5 class="text-right semi-bold">Thank you for shopping with us</h5></td>
+                          <h5 class="text-right semi-bold">{{app_config('sale_invoice_notes')}}</h5></td>
                         <td class="text-right"><strong class="h5">Subtotal</strong></td>
-                        <td class="text-right">Ksh. {{number_format($sale->sub_total, 2)}}</td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{number_format($sale->sub_total, 2)}}</td>
                       </tr>
                       <tr>
                         <td class="text-right no-border"><strong class="h5" style="font-weight: bold;">Discount</strong></td>
-                        <td class="text-right">Ksh. {{number_format($sale->discount_amount, 2)}}</td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{number_format($sale->discount_amount, 2)}}</td>
                       </tr>
                       <tr>
                         <td class="text-right no-border"><strong class="h5" style="font-weight: bold;">VAT Included in Total</strong></td>
-                        <td class="text-right">Ksh. {{number_format($sale->tax_amount, 2)}}</td>
+                        <td class="text-right">{{app_cry()->symbol_left}}. {{number_format($sale->tax_amount, 2)}}</td>
                       </tr>
                       <tr>
                         <td colspan="3">
@@ -94,7 +94,7 @@
                         <td class="text-right no-border">
                           <div class=""><strong class="h5" style="font-weight: bold;">Total</strong></div>
                         </td>
-                        <td class="text-right"><strong class="h5" style="font-weight: bold;">Ksh.{{number_format($sale->total, 2)}}</strong></td>
+                        <td class="text-right"><strong class="h5" style="font-weight: bold;">{{app_cry()->symbol_left}}.{{number_format($sale->total, 2)}}</strong></td>
                       </tr>
                     </tbody>
                   </table>
