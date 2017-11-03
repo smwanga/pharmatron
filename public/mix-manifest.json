@@ -1,9 +1,8 @@
 {
-    "/js/vendor.js": "/js/vendor.js?id=bb4ab48fed4cd8e01be4",
-    "/js/app.js": "/js/app.js?id=4fb2d919cda416405e71",
-    "/css/app.css": "/css/app.css?id=95f63d2783a3d9add8d0",
+    "/js/vendor.js": "/js/vendor.js?id=70ae7756dda4dd14ac68",
+    "/js/app.js": "/js/app.js?id=7980f1fc9587d2279e04",
+    "/css/app.css": "/css/app.css?id=6754d1a3ada64e08d537",
     "/js/pharmatron.js": "/js/pharmatron.js?id=fd814fb894b6c76edcc8",
     "/js/manifest.js": "/js/manifest.js?id=fa9b7913e5fac7840241",
-    "/js/cropper.min.js": "/js/cropper.min.js?id=f68e2d3f3e371c046f64",
     "/css/cropper.min.css": "/css/cropper.min.css?id=fa19c26e6f67189dc2a7"
 }

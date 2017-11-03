@@ -15,7 +15,7 @@ require('jsbarcode');
  */
 
 window.axios = require('axios');
-
+window.Cropper = require('cropperjs');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

@@ -8,7 +8,7 @@
                   </div> 
                   <div class="col-xs-8">
                           <div class="col-xs-3">
-                            <img src="{{asset('img/150-150-logo.png')}}" width="100" height="100" class="invoice-logo" alt="">
+                            <img src="{{asset('img/'.app_config('app_logo'))}}" width="100" height="100" class="invoice-logo" alt="">
                           </div>
                           <div class="col-xs-9">
                             @include('partials.company-address')

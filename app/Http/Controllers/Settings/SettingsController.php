@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Settings;
 use Bouncer;
 use App\Entities\Role;
 use App\Support\Config;
+use Spatie\Image\Image;
 use App\Entities\Ability;
 use App\Entities\AppConfig;
 use Illuminate\Http\Request;
+use Spatie\Image\Manipulations;
 use App\Http\Controllers\Controller;
 
 class SettingsController extends Controller
@@ -132,6 +134,9 @@ class SettingsController extends Controller
         foreach ($request->input() as $key => $value) {
             $this->config->where('key', $key)->update(['value' => $value]);
         }
+        if ($file = $request->file('invoice_logo')) {
+            $this->cropImage($file, $request);
+        }
         cache()->forget('app_config');
 
         return with_info('Settings updated');
@@ -152,5 +157,37 @@ class SettingsController extends Controller
         }
 
         return with_info();
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author
+     **/
+    protected function cropImage($file, $request)
+    {
+        if ($file->isValid()) {
+            $currentLogo = app_config('app_logo');
+
+            $filename = 'tmp-logo.'.$file->extension();
+            $tmp = public_path('tmp').DIRECTORY_SEPARATOR. $filename;
+            $file->move(public_path('tmp'), $filename);
+            $logo = md5(time().str_random(16)).'.jpg';
+            Image::load($tmp)
+            ->manualCrop($request->get('w'), $request->get('h'), $request->get('x'), $request->get('y'))
+            ->format(Manipulations::FORMAT_JPG)
+            ->save(public_path('img'.DIRECTORY_SEPARATOR.$logo));
+            $this->config->where('key', 'app_logo')->update(['value' => $logo]);
+            $unlink = public_path('img/'.$currentLogo);
+            if (file_exists($unlink)) {
+                unlink($unlink);
+            }
+            $unlink = public_path('tmp/'.$filename);
+            if (file_exists($unlink)) {
+                unlink($unlink);
+            }
+
+        }
     }
 }

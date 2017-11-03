@@ -105,7 +105,7 @@ class User extends Authenticatable
      *
      * @author
      **/
-    protected function getIsLoggedInAttribute()
+    protected function isLoggedIn()
     {
         return $this->id === auth()->user()->id;
     }

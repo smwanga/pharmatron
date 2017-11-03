@@ -1,7 +1,7 @@
 @extends('reports.stock-value')
     @section('pdf-content')
     <div class="col-sm-12">
-        <h4 class="text-center">{{$title}} {{ request()->has('range') ? 'From '.request()->get('range') : ''}}</h3>
+        <h4 class="text-center">{{$title?: $option}} {{ request()->has('range') ? 'From '.request()->get('range') : ''}}</h3>
     </div>
     <div class="col-sm-12">
         <table class="table table-striped">

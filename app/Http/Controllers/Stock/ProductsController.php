@@ -20,13 +20,6 @@ class ProductsController extends Controller
      * @var Repository
      **/
     protected $repository;
-
-    /**
-     * Create a new controller object.
-     *
-     * @param Repository $repository
-     */
-
     /**
      * View data.
      *
@@ -34,15 +27,22 @@ class ProductsController extends Controller
      **/
     protected $data = [];
 
+    /**
+     * Create a new controller object.
+     *
+     * @param Repository $repository
+     */
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
     }
 
     /**
-     * undocumented function.
+     * Show all the available products
      *
-     * @author
+     * Display all products and also apply filtering based on query parameters
+     *
+     * @return \Illuminante\Http\Response
      **/
     public function index()
     {

@@ -80,7 +80,7 @@ class StockController extends Controller
 
                 return $print == 'download' ? $pdf->download('stock-value-report.pdf') : $pdf->inline('stock-value-report.pdf');
             } catch (\Exception $e) {
-                return view('reports.stock-value-report', ['product_stock' => $data['stock']->get()]);
+                return view('reports.stock-value-report', ['title' => $data['option'], 'product_stock' => $data['stock']->get()]);
             }
         }
         // Paginate the result for a better viewing experience

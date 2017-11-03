@@ -10,8 +10,8 @@
             </li>
           </ul>
           <!-- BEGIN LOGO -->
-          <a href="index.html">
-            <img src="{{asset('img/pharma-tron.png')}}" class="logo" alt="" data-src="{{asset('img/pharma-tron.png')}}" data-src-retina="{{asset('img/pharma-tron.png')}}" width="156" height="41" />
+          <a href="{{ route('home') }}">
+            <h3 style="color: #fff; padding-left: 40px; padding-top: 10px;">Pharmatron</h3>
           </a>
           <!-- END LOGO -->
           <ul class="nav pull-right notifcation-center">

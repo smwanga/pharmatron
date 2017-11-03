@@ -149,3 +149,8 @@ tfoot { display:table-footer-group }
             }
         }
     }
+.image-cropper{
+  img {
+    max-width: 100%; /* This rule is very important, please do not ignore this! */
+  }
+}

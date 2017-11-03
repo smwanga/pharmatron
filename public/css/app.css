@@ -2577,3 +2577,8 @@ tfoot {
   box-shadow: 0 2px 0 #636b6f !important;
 }
 
+.image-cropper img {
+  max-width: 100%;
+  /* This rule is very important, please do not ignore this! */
+}
+

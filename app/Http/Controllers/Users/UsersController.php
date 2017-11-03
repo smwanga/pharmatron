@@ -121,7 +121,7 @@ class UsersController extends Controller
      **/
     public function showTimeline(User $user)
     {
-        if (Gate::allows('users.manage') || $user->is_logged_in) {
+        if (Gate::allows('users.manage') || $user->isLoggedIn()) {
             $forms = true;
             $timeline = $user->activity()->orderBy('created_at', 'DESC')->paginate();
 
@@ -140,13 +140,14 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        if (!Gate::allows('users.manage') || !$user->is_logged_in) {
-            return abort(401);
-        }
-        $roles = Role::get()->pluck('name', 'name');
-        $pagetitle = trans('main.edit_user');
+        if (Gate::allows('users.manage') || $user->isLoggedIn()) {
+            $roles = Role::get()->pluck('name', 'name');
+            $pagetitle = trans('main.edit_user');
 
-        return view('users.modals.edit-user-details', compact('user', 'roles', 'pagetitle'));
+            return view('users.modals.edit-user-details', compact('user', 'roles', 'pagetitle'));
+        }
+
+        return abort(401);
     }
 
     /**
@@ -158,7 +159,7 @@ class UsersController extends Controller
      */
     public function changePassword(User $user)
     {
-        if (!$user->is_logged_in) {
+        if (!$user->isLoggedIn()) {
             return abort(401);
         }
         $pagetitle = 'Change Auth Password';
@@ -175,7 +176,7 @@ class UsersController extends Controller
      */
     public function updatePassword(Request $request, User $user)
     {
-        if (!auth()->user()->id === $user->id) {
+        if (!auth()->user()->isLoggedIn()) {
             return abort(401);
         }
         $this->validate($request, ['new_password' => 'required|confirmed|min:6']);
@@ -196,23 +197,24 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUsersRequest $request, $id)
+    public function update(UpdateUsersRequest $request, User $user)
     {
-        if (!Gate::allows('users.manage')) {
-            return abort(401);
-        }
-        $user = User::findOrFail($id);
-        $user->person()->updateOrCreate(['id' => $user->id], $request->input());
-        $user->update($request->input());
-        foreach ($user->roles as $role) {
-            $user->retract($role);
-        }
-        $user->assign($request->input('role'));
-        if ($request->wantsJson()) {
-            return ['status' => 'success', 'message' => 'User details Updated', 'data' => [$user, $request->input()]];
-        }
+        if (Gate::allows('users.manage') || auth()->user()->isLoggedIn()) {
+            $user->person()->updateOrCreate(['user_id' => $user->id], $request->input());
+            $user->update($request->input());
+            if (Gate::allows('users.manage')) {
+                foreach ($user->roles as $role) {
+                    $user->retract($role);
+                }
+                $user->assign($request->input('role'));
+            }
+            if ($request->wantsJson()) {
+                return ['status' => 'success', 'message' => 'User details Updated', 'data' => [$user, $request->input()]];
+            }
 
-        return redirect()->route('users.index');
+            return redirect()->route('users.index');
+        }
+        return abort(401);
     }
 
     /**

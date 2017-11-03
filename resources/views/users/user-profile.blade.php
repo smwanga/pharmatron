@@ -37,12 +37,14 @@
                                         </a>
                                     </li>
                                    @endcan
+                                   @if(auth()->user()->id === $user->id)
                                     <li>
                                         <a class="ajaxModal" data-url="{{ route('users.pass_change', $user->id) }}">
                                             <i class="fa fa-lock"></i>
                                             &nbsp; @lang('main.reset_password')
                                         </a>
                                     </li>
+                                    @endif
                                     <li>
                                         <a href="{{ route('users.timeline', $user->id) }}">
                                             <i class="fa fa-comments"></i>

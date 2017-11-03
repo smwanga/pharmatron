@@ -14,9 +14,8 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
 .js('resources/assets/js/pharmatron.js', 'public/js')
 .sass('resources/assets/sass/app.scss', 'public/css')
-.copy('node_modules/cropper/dist/cropper.min.js', 'public/js')
 .copy('node_modules/cropper/dist/cropper.min.css', 'public/css')
 .version()
-.extract(['jsbarcode', 'axios', 'lodash', 'sweetalert'])
+.extract(['jsbarcode', 'axios', 'lodash', 'sweetalert', 'cropperjs'])
 .browserSync('https://pharma-tron.dev');
 

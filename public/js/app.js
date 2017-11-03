@@ -1672,7 +1672,7 @@ __webpack_require__("./node_modules/jsbarcode/bin/JsBarcode.js");
  */
 
 window.axios = __webpack_require__("./node_modules/axios/index.js");
-
+window.Cropper = __webpack_require__("./node_modules/cropperjs/dist/cropper.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
