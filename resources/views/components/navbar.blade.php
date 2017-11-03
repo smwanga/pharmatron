@@ -11,7 +11,7 @@
           </ul>
           <!-- BEGIN LOGO -->
           <a href="{{ route('home') }}">
-            <h3 style="color: #fff; padding-left: 40px; padding-top: 10px;">Pharmatron</h3>
+            <h3 style="color: #fff; padding-left: 40px; padding-top: 10px;">{{app_config('app_name')}}</h3>
           </a>
           <!-- END LOGO -->
           <ul class="nav pull-right notifcation-center">

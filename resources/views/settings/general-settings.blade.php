@@ -14,6 +14,12 @@
                     <input type="text" name="site_name" class="form-control" value="{{$config->site_name}}">
                 </div>           
             </div>
+            <div class="form-group">
+                <strong class="col-sm-3 control-label">Short Name</strong>
+                <div class="col-sm-9">
+                    <input type="text" name="app_name" class="form-control" value="{{$config->app_name}}">
+                </div>           
+            </div>
              <div class="form-group">
                 <strong class="col-sm-3 control-label">Company Address</strong>
                 <div class="col-sm-9">
