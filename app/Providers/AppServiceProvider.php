@@ -7,6 +7,7 @@ use Validator;
 use App\Entities\Role;
 use App\Entities\Ability;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+	Schema::defaultStringLength(191);
         Validator::extend('greater_than', function ($attribute, $value, $parameters, $validator) {
             $min_field = $parameters[0];
             $data = $validator->getData();
