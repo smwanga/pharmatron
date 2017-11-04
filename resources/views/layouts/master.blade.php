@@ -10,7 +10,6 @@
     <!-- BEGIN PLUGIN CSS -->
     <link href="{{asset('assets/plugins/bootstrapv3/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/plugins/bootstrapv3/css/bootstrap-theme.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/plugins/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
   </head>
