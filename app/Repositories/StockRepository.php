@@ -143,6 +143,7 @@ class StockRepository extends BaseRepository implements Repository
                 return $query->orWhere('stocks.ref_number', 'like', "%{$q}%")
                     ->orWhere('suppliers.supplier_name', 'like', "%{$q}%")
                     ->orWhere('products.item_name', 'like', "%{$q}%")
+                    ->orWhere('products.generic_name', 'like', "%{$q}%")
                     ->orWhere('products.stock_code', 'like', "%{$q}%")
                     ->orWhere('products.barcode', 'like', "%{$q}%")
                     ->orWhere('stocks.lpo_number', 'like', "%{$q}%");

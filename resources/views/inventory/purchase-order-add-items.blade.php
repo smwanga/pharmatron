@@ -128,10 +128,10 @@
 
         var $lpo = {!!json_encode($lpo)!!};
         $('.search').autocomplete({
-            serviceUrl:route('sales.search'),
+            serviceUrl:route('products.search'),
             onSelect: function (result) {
-                $(this).val(result.product)
-                $('input[name=product_id]').val(result.data)
+                $(this).val(result.data.item_name)
+                $('input[name=product_id]').val(result.data.id)
             }
         });
        $('.item-qty').on('change keyup', function(e) {
