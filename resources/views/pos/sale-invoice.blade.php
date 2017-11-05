@@ -4,7 +4,7 @@
             <div class="col-md-2 hidden-print">
               <div class="invoice-button-action-set">
                 <p>
-                  <a target="_blank" href="?print=true" class="btn btn-white btn-block" type="button"><i class="fa fa-print"></i> Print Invoice
+                  <a target="_blank" onclick="print()" href="#" class="btn btn-white btn-block" type="button"><i class="fa fa-print"></i> Print Invoice
                   </a>
                   <a target="_blank" href="?receipt=true" class="btn m-t-10 btn-white btn-block" type="button"><i class="fa fa-laptop"></i> Print Receipt
                   </a>
