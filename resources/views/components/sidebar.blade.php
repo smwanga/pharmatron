@@ -15,7 +15,7 @@
           <!-- END MINI-PROFILE -->
           <!-- BEGIN SIDEBAR MENU -->
           <ul>
-            <li class="start active "> <a href="{{ route('home') }}"><i class="fa-tachometer"></i> <span class="title">@lang('main.dashboard')</span> <span class="selected"></span> </a>
+            <li class="start active "> <a href="{{ route('home') }}"><i class="fa fa-desktop"></i> <span class="title">@lang('main.dashboard')</span> <span class="selected"></span> </a>
             </li>
             <li class="">
               <a href="{{ route('sales') }}"> <i class="fa fa-shopping-basket"></i> <span class="title">@lang('main.sales')</span></a>
@@ -76,7 +76,7 @@
             </li>
             @can('change_system_settings')
             <li class="">
-              <a href="{{ route('settings.index') }}"> <i class="material-icons">settings</i> <span class="title">@lang('main.settings')</span></a>
+              <a href="{{ route('settings.index') }}"> <i class="fa fa-gear"></i> <span class="title">@lang('main.settings')</span></a>
             </li>
             @endcan
           </ul>

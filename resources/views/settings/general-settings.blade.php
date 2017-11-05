@@ -14,6 +14,19 @@
                     <input type="text" name="site_name" class="form-control" value="{{$config->site_name}}">
                 </div>           
             </div>
+            <div class="form-group {{error('currency_id')}}">
+                <label class="control-label col-sm-3">@lang('main.currency')</label>
+                <div class="col-sm-9">
+                    <select class="select2" name="currency_id">
+                        <optgroup label="@lang('main.suppliers')">
+                        @foreach($currencies as $currency)
+                            <option {{app_config('currency_id') == $currency->id ? 'selected' : ''}} value="{{$currency->id}}">{{$currency->title}}</option>
+                        @endforeach
+                        </optgroup>
+                    </select>
+                </div>
+            <span class="help-block"></span>
+            </div>
             <div class="form-group">
                 <strong class="col-sm-3 control-label">Short Name</strong>
                 <div class="col-sm-9">

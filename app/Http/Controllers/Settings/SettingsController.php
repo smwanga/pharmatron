@@ -46,9 +46,12 @@ class SettingsController extends Controller
      **/
     public function index()
     {
-        $config = $this->repository;
-
-        return view('settings.general-settings', compact('config'));
+        $data = [
+            'config' =>$this->repository,
+            'currencies' => currency(),
+            'forms' => true
+        ];
+        return view('settings.general-settings', $data);
     }
 
     /**
@@ -187,7 +190,6 @@ class SettingsController extends Controller
             if (file_exists($unlink)) {
                 unlink($unlink);
             }
-
         }
     }
 }
