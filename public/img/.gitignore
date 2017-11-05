@@ -1,0 +1,6 @@
+*
+!.gitignore
+!avatar.png
+!placeholder.jog
+# ...even if they are in subdirectories
+!*/
