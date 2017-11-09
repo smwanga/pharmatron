@@ -19,12 +19,14 @@ class CreatePaymentsTable extends Migration
             $table->string('tr_code', 255);
             $table->integer('authorized_by')->nullable()->unsigned();
             $table->integer('invoice_id')->nullable()->unsigned();
+            $table->integer('sale_id')->nullable()->unsigned();
             $table->string('status', 255)->default('Payment');
             $table->text('notes');
             $table->integer('currency_id')->nullable()->unsigned();
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('SET NULL');
+            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('SET NULL');
             $table->foreign('authorized_by')->references('id')->on('users')->onDelete('SET NULL');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('SET NULL');
         });
