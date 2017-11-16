@@ -14,7 +14,7 @@
                         <div class="row b-grey b-b xs-p-b-20">
                             <div class="col-md-4 col-sm-4">
                                 <h5 class="text-black semi-bold">Total Invoice Amount</h5>
-                                <h4 class="text-success semi-bold">Ksh {{$sale->total}}</h4>
+                                <h4 class="text-success semi-bold">{{app_cry()->symbol_left}}. {{$sale->total}}</h4>
                             </div>
                             <div class="col-md-3 col-sm-3">
                                 <h5 class="text-black semi-bold">Total Due</h5>
@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-md-5 col-sm-5">
                                 <div class="m-t-20">
-                                    <input type="number" name="cash" class="dark form-control" id="cash" placeholder="Amount Received" min="{{$sale->due}}">
+                                    <input type="number" name="cash" class="dark form-control" id="cash" placeholder="Amount Received" min="{{$sale->due}}" step="0.01">
                                 </div>
                             </div>
                         </div>
@@ -41,6 +41,7 @@
 </div>                                     
 <script type="text/javascript">
     $('#cash').on('keyup', function(e) {
-        $('#due').animateNumbers({{$sale->due}} - parseInt($(this).val()));
+        var change = parseFloat({{$sale->due}} - parseInt($(this).val())).toFixed(2);
+        $('#due').animateNumbers(change);
     })
 </script>
