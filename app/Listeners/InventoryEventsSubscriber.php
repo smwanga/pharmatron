@@ -87,7 +87,7 @@ class InventoryEventsSubscriber
             'qty' => 0,
             'on_stock' => 0,
             'product_id' => $event->product->id,
-            'comment' => trans('messages.product_added'),
+            'comment' => trans('messages.add_product'),
             'tr_type' => 'add_product',
         ];
         $this->updateInventory($data);

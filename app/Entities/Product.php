@@ -9,6 +9,19 @@ class Product extends Model
     protected $fillable = ['generic_name', 'item_name', 'stock_code', 'alert_level', 'barcode', 'unit', 'instructions', 'description'];
 
     /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($product) {
+            // code...
+        });
+    }
+
+    /**
      * Return the product category relation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -146,5 +159,18 @@ class Product extends Model
     public function stockMovement()
     {
         return $this->hasMany(Inventory::class);
+    }
+
+    /**
+     * Dynamicaly set the category based on the input provided.
+     *
+     * @param string $unit
+     **/
+    public function setDispensingUnitAttribute($unit)
+    {
+        $category = Category::where('category', $unit)->first();
+        //To be on the safe side we wrap this on an optional function
+        //At times the category will be missing
+        $this->attributes['unit'] = optional($category)->id;
     }
 }

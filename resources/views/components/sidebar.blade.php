@@ -38,7 +38,7 @@
                   <li><a href="{{ route('products.create') }}">@lang('main.add_product')</a></li>
                   @endcan
                   <li><a href="{{ route('products.index') }}">@lang('main.products')</a></li>
-                  {{-- <li><a href="#">@lang('main.expenses')</a></li> --}}
+                  <li><a href="{{ route('products.import.create') }}">@lang('main.import_from_file')</a></li>
                   
               </ul>
             </li>

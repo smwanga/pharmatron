@@ -204,4 +204,5 @@ return [
         'received_qty' => 'Received Qty',
         'receive' => 'Receive',
         'created_at' => 'Created At',
+        'import_from_file' => 'Import From File',
 ];

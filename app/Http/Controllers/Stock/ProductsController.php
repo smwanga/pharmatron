@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Stock;
 
 use Event;
+use Excel;
 use App\Entities\Product;
 use App\Entities\Category;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use App\Events\ProductUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Transformers\ProductsTransformer;
+use App\Support\ProductListImport as ImportHandler;
+use App\Support\ProductListExport as ExportHandler;
 use App\Contracts\Repositories\ProductRepository as Repository;
 
 class ProductsController extends Controller
@@ -38,7 +41,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Show all the available products
+     * Show all the available products.
      *
      * Display all products and also apply filtering based on query parameters
      *
@@ -212,9 +215,12 @@ class ProductsController extends Controller
     }
 
     /**
-     * undocumented function.
+     * Update product details.
      *
-     * @author
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return \Illuminate\Http\Response
      **/
     public function update(Request $request, Product $product)
     {
@@ -238,6 +244,13 @@ class ProductsController extends Controller
         return redirect_with_info(route('products.index'));
     }
 
+    /**
+     * Delete a product from the records.
+     *
+     * @param Product $product [description]
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function delete(Product $product)
     {
         if ($product->delete()) {
@@ -245,5 +258,50 @@ class ProductsController extends Controller
         }
 
         return ['status' => 'error', 'message' => 'an error was encountered whie deleting product'];
+    }
+
+    /**
+     * Show html view for displaying file upload.
+     *
+     * @return \Illuminate\Http\Response
+     **/
+    public function importFromFile()
+    {
+        return view('stock.import-from-file', ['pagetitle' => trans('main.import_from_file')]);
+    }
+
+    /**
+     * Handle uploaded file and import the products from the file.
+     *
+     * @param Request $request
+     **/
+    public function uploadAndImport(Request $request, ImportHandler $import)
+    {
+        $this->validate(
+            $request,
+            [
+                'importedFile' => 'required|max:20000|mimetypes:'.join(
+                    ',',
+                    [
+                        'application/vnd.ms-excel',
+                        'application/vnd.oasis.opendocument.spreadsheet',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    ]
+                ),
+            ]
+        );
+        $errors = $import->handleImport();
+
+        return !empty($errors) ? response($errors, 422) : ['success' => 'File import complete'];
+    }
+
+    /**
+     * Download file for importing products.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function exportProductsFile(ExportHandler $handler)
+    {
+        return $handler->handleExport();
     }
 }

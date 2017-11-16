@@ -62,7 +62,7 @@ class Sale extends Model
      **/
     protected function getTotalAttribute()
     {
-        return (int) (($this->sub_total + $this->tax_amount) - $this->discount_amount);
+        return (float) (($this->sub_total + $this->tax_amount) - $this->discount_amount);
     }
 
     /**
@@ -164,8 +164,8 @@ class Sale extends Model
      **/
     public function getMetaAttribute()
     {
-        if ($this->type == 'invoice') {
-            return ['class' => 'success', 'text' => trans('main.sale')];
+        if ('invoice' == $this->type) {
+            return ['class' => 'info', 'text' => trans('main.sale')];
         }
 
         return ['class' => 'warning', 'text' => trans('main.draft')];

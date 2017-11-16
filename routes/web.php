@@ -10,9 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'ussd'], function () {
-    Route::match(['GET', 'POST'], 'demo-app', 'UssdController');
-});
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -47,6 +44,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('product-barcodes/{product}', 'ProductsController@showBarcodes')
         ->name('products.barcodes.show');
+
+        Route::get('import-from-file', 'ProductsController@importFromFile')
+        ->name('products.import.create');
+
+        Route::get('download-import-file', 'ProductsController@exportProductsFile')
+        ->name('products.import.download');
+
+        Route::post('import-from-file', 'ProductsController@uploadAndImport')
+        ->name('products.import.upload');
 
         Route::patch('update-product/{product}', 'ProductsController@update')
         ->name('products.update');
