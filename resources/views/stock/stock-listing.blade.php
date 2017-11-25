@@ -135,7 +135,7 @@
                       @endforeach
                     </tbody>
                   </table>
-                  <div>
+                  <div class="text-center">
                     {!! $stock->render() !!}
                   </div>
                 </div>

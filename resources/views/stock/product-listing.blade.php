@@ -46,6 +46,9 @@
                     </div>
                 @endforeach
             </div>
+            <div class="text-center">
+                {!! $products->render() !!}
+            </div>
         </div>
     </div>
 @endsection
