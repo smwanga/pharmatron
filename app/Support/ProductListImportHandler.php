@@ -16,6 +16,20 @@ class ProductListImportHandler implements ImportHandler
     protected $validationErrors = [];
 
     /**
+     * The total number of products in the file.
+     *
+     * @var int
+     **/
+    public $productCount = 0;
+
+    /**
+     * The total number of products that were successfully import.
+     *
+     * @var int
+     **/
+    public $importedCount = 0;
+
+    /**
      * Handle the import of products from an excel file.
      *
      * @param ProductListImport $file
@@ -27,13 +41,16 @@ class ProductListImportHandler implements ImportHandler
         $repository = app(Repository::class);
         $file->each(function ($sheet) use ($repository) {
             return $sheet->filter(function ($row) {
+                ++$this->productCount;
+
                 return $this->validate($row->toarray());
             })->map(function ($product) use ($repository) {
                 $repository->create($product->toarray());
+                ++$this->importedCount;
             });
         });
 
-        return $this->validationErrors;
+        return $this;
     }
 
     /**
@@ -46,9 +63,12 @@ class ProductListImportHandler implements ImportHandler
     protected function validate(array $data)
     {
         $units = Category::whereGroup('dispense_unit')->pluck('category')->toarray();
+        $data = collect($data)->map(function ($value) {
+            return is_string($value) ? trim($value) : $value;
+        })->all();
         $rules = [
             'item_name' => 'required',
-            'generic_name' => 'required_if:item_name,',
+            'generic_name' => 'nullable',
             'stock_code' => 'required|unique:products',
             'barcode' => 'nullable|numeric|unique:products',
             'dispensing_unit' => 'required|in:'.join(',', $units),
@@ -63,5 +83,15 @@ class ProductListImportHandler implements ImportHandler
         }
 
         return true;
+    }
+
+    /**
+     * Get the validation errors encountered during import.
+     *
+     * @return array
+     **/
+    public function errors()
+    {
+        return $this->validationErrors;
     }
 }

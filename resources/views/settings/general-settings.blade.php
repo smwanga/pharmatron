@@ -135,6 +135,7 @@
                     $('#image-crop').modal('show');
                     $("#image-crop").on("hidden.bs.modal", function () {
                         image.cropper('destroy');
+                        $('#logo-img').val('');
                     });
                 }
                 reader.readAsDataURL($input.files[0]);

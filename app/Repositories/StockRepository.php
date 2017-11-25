@@ -51,14 +51,15 @@ class StockRepository extends BaseRepository implements Repository
         if ($lpo = $this->attributes->get('lpo_number')) {
             $order = Invoice::where('reference_no', $lpo)->first();
             if (!$order) {
-                return with_info("The purchase order with reference number $lpo was nor found", 'error')->withInput();
+                return with_info("The purchase order with reference number $lpo was not found", 'error')->withInput();
             }
 
             return $order->lpoItems->where('product_id', $product->id)
                 ->each(function ($item) {
                     $qty = $item->received_qty + $this->attributes->get('qty');
                     if ($item->qty >= $qty) {
-                        $this->attributes->push('supplier_id', $item->invoice->supplier->id);
+                        $data = ['supplier_id' => $item->invoice->supplier->id];
+                        $this->attributes->push($data);
                         $item->update(['received_qty' => $qty]);
                         $this->save($this->attributes->all());
 

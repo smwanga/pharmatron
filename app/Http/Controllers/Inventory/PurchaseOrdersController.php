@@ -93,7 +93,7 @@ class PurchaseOrdersController extends Controller
             try {
                 $pdf = app('snappy.pdf.wrapper')->loadView('reports.purchase-orders-report', ['orders' => $data['orders']->get(), 'title' => $data['title']])->setOrientation('landscape');
 
-                return $print == 'download' ? $pdf->download('purchase-orders-report.pdf') : $pdf->inline('purchase-orders-report.pdf');
+                return 'download' == $print ? $pdf->download('purchase-orders-report.pdf') : $pdf->inline('purchase-orders-report.pdf');
             } catch (\Exception $e) {
                 return view('reports.purchase-orders-report', ['orders' => $data['orders']->get()]);
             }
@@ -365,12 +365,12 @@ class PurchaseOrdersController extends Controller
      **/
     public function payInvoice(Request $request, Invoice $invoice)
     {
-        $this->validate($request, ['amount' => 'required|numeric|between:0,'.$invoice->due]);
+        $this->validate($request, ['amount' => 'required|numeric|min:0']);
 
         $payment = $invoice->payments()->create($request->only('amount', 'notes'));
         $payment->status = 'Expense';
         $payment->save();
-        $invoice->status = $invoice->due == 0 ? 'Fully Paid' : 'Partially Paid';
+        $invoice->status = 0 == $invoice->due ? 'Fully Paid' : 'Partially Paid';
         $invoice->save();
 
         return with_info('Invoice payment has been added');

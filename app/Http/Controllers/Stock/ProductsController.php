@@ -275,7 +275,7 @@ class ProductsController extends Controller
      *
      * @param Request $request
      **/
-    public function uploadAndImport(Request $request, ImportHandler $import)
+    public function uploadAndImport(Request $request)
     {
         $this->validate(
             $request,
@@ -290,9 +290,12 @@ class ProductsController extends Controller
                 ),
             ]
         );
-        $errors = $import->handleImport();
+        // After we validate that the file is indeed a spreadsheet
+        // We can now safely import it
+        $import = app()->make(ImportHandler::class);
+        $result = $import->handleImport();
 
-        return !empty($errors) ? response($errors, 422) : ['success' => 'File import complete'];
+        return !empty($result->errors()) ? with_info('Invalid input detected while importing the products', 'error')->with(['uploadErrors' => $result->errors(), 'handler' => $result]) : with_info('File import complete')->with(['handler' => $result]);
     }
 
     /**

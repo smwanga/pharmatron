@@ -59,49 +59,47 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::delete('delete-product/{product}', 'ProductsController@delete')
         ->name('products.delete');
-
-        Route::group(['prefix' => 'stock'], function () {
-            Route::get('/', 'StockController@index')
+    });
+    Route::group(['prefix' => 'stock', 'namespace' => 'Stock'], function () {
+        Route::get('/', 'StockController@index')
             ->name('stock.index');
 
-            Route::get('add', 'StockController@addStock')
+        Route::get('add', 'StockController@addStock')
             ->name('stock.add');
 
-            Route::get('show-stock/{stock}', 'StockController@viewStock')
+        Route::get('show-stock/{stock}', 'StockController@viewStock')
             ->name('stock.show');
 
-            Route::get('edit-stock/{stock}', 'StockController@editStock')
+        Route::get('edit-stock/{stock}', 'StockController@editStock')
             ->name('stock.edit');
 
-            Route::patch('update-stock/{stock}', 'StockController@updateStock')
+        Route::patch('update-stock/{stock}', 'StockController@updateStock')
             ->name('stock.update');
 
-            Route::get('{product}/add', 'StockController@create')
+        Route::get('{product}/add', 'StockController@create')
             ->name('stock.create');
 
-            Route::get('expired', 'StockController@expired')
+        Route::get('expired', 'StockController@expired')
             ->name('stock.expired');
 
-            Route::get('in-active', 'StockController@archived')
+        Route::get('in-active', 'StockController@archived')
             ->name('stock.inactive');
 
-            Route::get('on-low-stock', 'StockController@lowStock')
+        Route::get('on-low-stock', 'StockController@lowStock')
             ->name('stock.low_stock');
 
-            Route::get('deactivate/{stock}', 'StockController@deactivateStock')
+        Route::get('deactivate/{stock}', 'StockController@deactivateStock')
             ->name('stock.deactivate');
 
-            Route::post('{product}/save-stock', 'StockController@store')
+        Route::post('{product}/save-stock', 'StockController@store')
             ->name('stock.save');
 
-            Route::get('{stock}/activate-stock', 'StockController@activateStock')
+        Route::get('{stock}/activate-stock', 'StockController@activateStock')
             ->name('stock.activate');
 
-            Route::delete('{stock}/delete-stock', 'StockController@destroy')
+        Route::delete('{stock}/delete-stock', 'StockController@destroy')
             ->name('stock.delete');
-        });
     });
-
     Route::group(['prefix' => 'suppliers', 'namespace' => 'Suppliers'], function () {
         Route::get('/', 'SuppliersController@index')
         ->name('suppliers.index');

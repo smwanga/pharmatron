@@ -205,4 +205,7 @@ return [
         'receive' => 'Receive',
         'created_at' => 'Created At',
         'import_from_file' => 'Import From File',
+        'invoice_amount' => 'Total Invoice Amount',
+        'invoice_due' => 'Due Invoice Amount',
+        'import_products' => 'Import products from file',
 ];

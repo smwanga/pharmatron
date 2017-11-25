@@ -13,16 +13,16 @@
                             {{csrf_field()}}
                         <div class="row b-grey b-b xs-p-b-20">
                             <div class="col-md-4 col-sm-4">
-                                <h5 class="text-black semi-bold">Total Invoice Amount</h5>
-                                <h4 class="text-success semi-bold">Ksh {{$invoice->total}}</h4>
+                                <h5 class="text-black semi-bold">@lang('main.invoice_amount')</h5>
+                                <h4 class="text-success semi-bold">{{app_cry()->symbol_left}}. {{$invoice->total}}</h4>
                             </div>
                             <div class="col-md-3 col-sm-3">
-                                <h5 class="text-black semi-bold">Total Due</h5>
+                                <h5 class="text-black semi-bold">@lang('main.invoice_due')</h5>
                                 <h4 id="due" class="text-success semi-bold">{{$invoice->due}}</h4>
                             </div>
                             <div class="col-md-5 col-sm-5">
                                 <div class="m-t-20">
-                                    <input type="number" name="amount" class="dark form-control" id="cash" placeholder="Amount To Pay">
+                                    <input type="number" name="amount" class="dark form-control" id="cash" placeholder="Amount Received" max="{{$invoice->due}}" step="0.01" value="{{$invoice->due}}">
                                 </div>
                             </div>
                             <div class="col-sm-12">
