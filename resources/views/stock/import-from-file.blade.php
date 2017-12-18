@@ -98,8 +98,8 @@
 
         // Firefox bug fix
         $input
-        .on( 'focus', function(){ $input.addClass( 'has-focus' ); })
-        .on( 'blur', function(){ $input.removeClass( 'has-focus' ); });
+        .on( 'focus', function(){ $input.addClass('has-focus'); })
+        .on( 'blur', function(){ $input.removeClass('has-focus'); });
     });
 })( jQuery, window, document );
     </script>
