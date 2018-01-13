@@ -208,4 +208,5 @@ return [
         'invoice_amount' => 'Total Invoice Amount',
         'invoice_due' => 'Due Invoice Amount',
         'import_products' => 'Import products from file',
+        'close' => 'Close',
 ];

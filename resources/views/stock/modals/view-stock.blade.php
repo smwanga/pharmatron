@@ -22,11 +22,11 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                       <strong class="semi-bold text-uppercase">@lang('main.selling_price')</strong>
-                      <h4><span class="item-count animate-number semi-bold" data-value="{{$stock->selling_price}}" data-animation-duration="700">{{number_format($stock->selling_price, 2)}}</span> {{app_cry()->symbol_left}}</h4>
+                      <h4>{{app_cry()->symbol_left}} <span class="item-count animate-number semi-bold" data-value="{{$stock->selling_price}}" data-animation-duration="700">{{number_format($stock->selling_price, 2)}}</span> </h4>
                     </div>
                     <div class="col-md-4 col-sm-4">
                       <p class="semi-bold text-uppercase">@lang('main.marked_price')</p>
-                      <h4><span class="item-count animate-number semi-bold" data-value="451" data-animation-duration="700">{{number_format($stock->marked_price)}}</span> {{app_cry()->symbol_left}}</h4>
+                      <h4> {{app_cry()->symbol_left}} <span class="item-count animate-number semi-bold" data-value="451" data-animation-duration="700">{{number_format($stock->marked_price)}}</span></h4>
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <p class="semi-bold text-uppercase">@lang('main.available_stock')</p>
@@ -68,7 +68,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-                Close
+                {{trans('main.close')}}
             </button>
         </div>
     </div>

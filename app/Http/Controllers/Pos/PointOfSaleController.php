@@ -66,8 +66,8 @@ class PointOfSaleController extends Controller
             'pagetitle' => trans('main.create_sale'),
             'items' => [],
         ];
-        if ($sale->type !== null) {
-            if ($sale->type !== 'draft') {
+        if (null !== $sale->type) {
+            if ('draft' !== $sale->type) {
                 if (!\Bouncer::allows('can_update_dispensed_sale') || $sale->paid > 0) {
                     return with_info('Editing of this prescription is not permited', 'error', 'Sorry!!');
                 }
@@ -90,7 +90,10 @@ class PointOfSaleController extends Controller
             return $query->where('barcode', 'like', '%'.$request->get('query').'%')->orWhere('item_name', 'like', '%'.$request->get('query').'%');
         })->map(function ($product) {
             if ($product->available_stock > 0) {
-                return ['value' => $product->item_name.'[ '.$product->barcode.']', 'data' => $product->id, 'product' => $product->item_name];
+                return [
+                    'value' => $product->item_name.'[ '.$product->barcode.']',
+                    'data' => $product->id, 'product' => $product->item_name,
+                ];
             }
         });
 
@@ -99,7 +102,7 @@ class PointOfSaleController extends Controller
             'query' => $request->get('query'),
         ];
         foreach ($result->all() as $key => $value) {
-            if ($value !== null) {
+            if (null !== $value) {
                 $q['suggestions'][] = $value;
             }
         }
@@ -236,7 +239,7 @@ class PointOfSaleController extends Controller
             if (!$company) {
                 return response(['status' => 'error', 'message' => 'There is no company to credit this invoice. check if the selected customer belongs to a company', 'title' => 'No Company selected']);
             }
-            $id = $credit === 'credit' ? $company->id : null;
+            $id = 'credit' === $credit ? $company->id : null;
             $sale->company_id = $id;
             $sale->save();
             if ($id) {
@@ -277,7 +280,7 @@ class PointOfSaleController extends Controller
         if ($print = request()->get('print')) {
             $pdf = \PDF::loadView('pos.pdf-labels', $data);
 
-            return $print == 'download' ? $pdf->download() : $pdf->inline();
+            return 'download' == $print ? $pdf->download() : $pdf->inline();
         }
 
         return view('pos.labels', $data);

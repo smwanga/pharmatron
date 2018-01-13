@@ -24,7 +24,7 @@
    $('.search').autocomplete({
             serviceUrl:'{{ route('products.search') }}',
             onSelect: function (result) {
-                window.location.href = '{{ request()->root() }}/products/stock/'+result.data.id+'/add';
+                window.location.href = '{{ request()->root() }}/stock/'+result.data.id+'/add';
             }
         });
 </script>
