@@ -42,7 +42,7 @@
                   
               </ul>
             </li>
-            <li><a href="#"><i class="fa fa-usd"></i> <span class="title">@lang('main.expenses')</span></a></li>
+           {{--  <li><a href="#"><i class="fa fa-usd"></i> <span class="title">@lang('main.expenses')</span></a></li> --}}
             <li class="{{is_active('purchase-orders*')}}">
                 <a href="{{ route('purchase_order.index') }}">
                   <i class="fa fa-th-list"></i> 
