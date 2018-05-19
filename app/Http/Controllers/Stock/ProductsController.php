@@ -230,7 +230,8 @@ class ProductsController extends Controller
             'barcode' => 'nullable|numeric|unique:products,barcode,'.$product->id,
             'unit' => 'required',
             'alert_level' => 'nullable|numeric|min:0',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
+            'instructions' => 'required|string',
         ];
         $dirty = clone $product;
         $this->validate($request, $rules);

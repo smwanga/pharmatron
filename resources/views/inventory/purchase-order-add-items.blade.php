@@ -5,10 +5,10 @@
                 <div class="p-t-20 p-l-20 p-r-20 p-b-20">
                     <div class="row">
                         <div class="col-sm-8">
-                          <div class="col-xs-3">
+                          <div class="col-xs-4">
                             <img src="{{asset('img/'.app_config('app_logo'))}}" width="100" height="100" class="invoice-logo" alt="">
                           </div>
-                          <div class="col-xs-9">
+                          <div class="col-xs-8">
                             <address>
                                 <strong class="h4">{{app_config('site_name')}}</strong><br>
                                 {{app_config('street')}}, {{app_config('address')}}<br>

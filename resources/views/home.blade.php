@@ -67,7 +67,7 @@
         <div class="grid horizontal simple green">
             <div class="grid-title"><h4>Recent Sales</h4></div>
             <div class="grid-body">
-                <table class="table no-more-tables">
+                <table class="table table-striped table-condensed">
                     <thead>
                       <tr class="">
                         <th style="width:1%">

@@ -13,10 +13,10 @@
                 <div class="p-t-20 p-l-20 p-r-20 p-b-20">
                     <div class="row">
                         <div class="col-xs-8">
-                          <div class="col-xs-3">
+                          <div class="col-xs-4">
                             <img src="{{asset('img/'.app_config('app_logo'))}}" width="100" height="100" class="invoice-logo" alt="">
                           </div>
-                          <div class="col-xs-9">
+                          <div class="col-xs-8">
                             @include('partials.company-address')
                           </div>
                         </div>
@@ -66,7 +66,7 @@
                                    <th>@lang('main.received_qty')</th>
                                    <th>@lang('main.price')</th>
                                    <th>@lang('main.total')</th>
-                                   <th>@lang('main.receive')</th>
+                                   <th class="hidden-print">@lang('main.receive')</th>
                                    
                                </tr>
                            </thead> 

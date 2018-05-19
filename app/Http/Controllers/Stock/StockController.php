@@ -55,7 +55,7 @@ class StockController extends Controller
             $stock = $this->repository->getModel();
         }
         $data = [
-            'stock' => $stock,
+            'stock' => $stock->get(),
             'model' => new Stock(),
             'stock_value' => $this->repository->getStockValue(),
             'forms' => true,
@@ -76,15 +76,15 @@ class StockController extends Controller
     {
         if ($print = $request->get('print', false)) {
             try {
-                $pdf = app('snappy.pdf.wrapper')->loadView('reports.stock-value-report', ['product_stock' => $data['stock']->get(), 'title' => $data['option']])->setOrientation('landscape');
+                $pdf = app('snappy.pdf.wrapper')->loadView('reports.stock-value-report', ['product_stock' => $data['stock'], 'title' => $data['option']])->setOrientation('landscape');
 
-                return $print == 'download' ? $pdf->download('stock-value-report.pdf') : $pdf->inline('stock-value-report.pdf');
+                return 'download' == $print ? $pdf->download('stock-value-report.pdf') : $pdf->inline('stock-value-report.pdf');
             } catch (\Exception $e) {
-                return view('reports.stock-value-report', ['title' => $data['option'], 'product_stock' => $data['stock']->get()]);
+                return view('reports.stock-value-report', ['title' => $data['option'], 'product_stock' => $data['stock']]);
             }
         }
         // Paginate the result for a better viewing experience
-        $data['stock'] = $data['stock']->paginate(30);
+        $data['stock'] = $this->paginate($data['stock'], 30);
 
         return view('stock.stock-listing', $data);
     }
@@ -111,7 +111,7 @@ class StockController extends Controller
         }
 
         $data = [
-            'stock' => $stock,
+            'stock' => $stock->get(),
             'forms' => true,
             'option' => trans('main.expired_stock'),
         ];
@@ -142,7 +142,7 @@ class StockController extends Controller
                         ->where(function ($query) {
                             return $query->where('stocks.stock_available', '>', 0);
                         });
-            }),
+            })->get(),
             'forms' => true,
             'option' => trans('main.archived_stock'),
         ];
@@ -180,16 +180,11 @@ class StockController extends Controller
         }
 
         $data = [
-            'stock' => $result->where(function ($query) {
-                return $query->where('stocks.active', true)
-                        ->where(function ($query) {
-                            return $query->whereColumn(
-                                'stocks.stock_available',
-                                '<',
-                                'products.alert_level'
-                            );
-                        });
-            }),
+            'stock' => $result->where('stocks.active', true)->with('product')
+            ->get()
+            ->filter(function ($stock) {
+                return $stock->product->available_stock <= $stock->product->alert_level;
+            })->all(),
             'forms' => true,
             'option' => trans('main.low_stock'),
         ];

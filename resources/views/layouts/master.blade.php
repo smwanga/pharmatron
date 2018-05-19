@@ -14,8 +14,8 @@
     <!-- END CORE CSS FRAMEWORK -->
   </head>
   <body class="">
-      <div class="container">
-          <div class="container-fluid">
+      <div class="container-fluid">
+          <div class="col-sm-12">
               @yield('content')
           </div><!-- Row -->
       </div><!-- Main Wrapper -->

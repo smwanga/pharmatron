@@ -7,10 +7,10 @@
                       </div>
                   </div> 
                   <div class="col-xs-8">
-                          <div class="col-xs-3">
+                          <div class="col-xs-4">
                             <img src="{{asset('img/'.app_config('app_logo'))}}" width="100" height="100" class="invoice-logo" alt="">
                           </div>
-                          <div class="col-xs-9">
+                          <div class="col-xs-8">
                             @include('partials.company-address')
                           </div>
                         </div>

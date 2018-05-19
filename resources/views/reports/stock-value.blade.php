@@ -1,8 +1,8 @@
 @extends('layouts.master')
     @section('content')
-    <div class="col-md-12">
+    <div class="row">
         <div class="grid simple">
-            <div class="grid-body no-border invoice-body">
+            <div class="grid-body no-border">
                 <div class="row">
                     <div class="col-xs-8">
                         <div class="col-xs-3">

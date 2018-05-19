@@ -47,10 +47,11 @@ class SettingsController extends Controller
     public function index()
     {
         $data = [
-            'config' =>$this->repository,
+            'config' => $this->repository,
             'currencies' => currency(),
-            'forms' => true
+            'forms' => true,
         ];
+
         return view('settings.general-settings', $data);
     }
 
@@ -163,9 +164,8 @@ class SettingsController extends Controller
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
-     * @return void
      * @author
      **/
     protected function cropImage($file, $request)
@@ -173,10 +173,10 @@ class SettingsController extends Controller
         if ($file->isValid()) {
             $currentLogo = app_config('app_logo');
 
-            $filename = 'tmp-logo.'.$file->extension();
-            $tmp = public_path('tmp').DIRECTORY_SEPARATOR. $filename;
+            $filename = 'tmp-logo.'.$file->getClientOriginalExtension();
+            $tmp = public_path('tmp').DIRECTORY_SEPARATOR.$filename;
             $file->move(public_path('tmp'), $filename);
-            $logo = md5(time().str_random(16)).'.jpg';
+            $logo = md5(time().str_random(16)).'.'.$file->getClientOriginalExtension();
             Image::load($tmp)
             ->manualCrop($request->get('w'), $request->get('h'), $request->get('x'), $request->get('y'))
             ->format(Manipulations::FORMAT_JPG)

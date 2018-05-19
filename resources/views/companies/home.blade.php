@@ -6,12 +6,12 @@
                       <div class="row b-grey b-b">
                         <div class="col-md-4 col-sm-4">
                           <h4 class="text-black semi-bold">Total Invoice Amount</h4>
-                          <h3 class="text-success semi-bold">{{app_cry()->symbol_left}}. &nbsp;<span data-animation-duration="600" data-value="{{$total}}" class="animate-number">{{number_format($total,2)}}</span></h3>
+                          <h3 class="text-success semi-bold">{{app_cry()->symbol_left}}. &nbsp;<span data-animation-duration="600" data-value="{{number_format($total,2)}}" class="animate-number">{{number_format($total,2)}}</span></h3>
                         </div>
                         <div class="col-md-3 col-sm-3">
                           <div class="m-t-20">
                             <h5 class="text-black semi-bold">Total due</h5>
-                            <h4 class="text-success semi-bold">{{app_cry()->symbol_left}}. &nbsp;<span data-animation-duration="600" data-value="{{$due}}" class="animate-number">{{number_format($due,2)}}</span></h4>
+                            <h4 class="text-success semi-bold">{{app_cry()->symbol_left}}. &nbsp;<span data-animation-duration="600" data-value="{{number_format($due,2)}}" class="animate-number">{{number_format($due,2)}}</span></h4>
                           </div>
                         </div>
                         <div class="col-md-5 col-sm-5 xs-m-b-20">
