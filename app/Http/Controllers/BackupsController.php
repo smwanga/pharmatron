@@ -102,22 +102,4 @@ class BackupsController extends Controller
             return with_info('The backup file was deleted');
         }
     }
-
-    /**
-     * Paginate backup results.
-     *
-     * @param array|Collection $items
-     * @param int              $perPage
-     * @param int              $page
-     * @param array            $options
-     *
-     * @return LengthAwarePaginator
-     */
-    protected function paginate($items, $perPage = 15, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-    }
 }
